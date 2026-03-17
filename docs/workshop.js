@@ -37,6 +37,7 @@ function configurarModos() {
           var stickyMode = document.getElementById('sticky-mode');
           if (stickyMode) stickyMode.textContent = btn.childNodes[0].textContent.trim();
           actualizarSetupUrls(modo);
+          actualizarAskKiro(modo);
           guardarEstado();
         } catch (error) {
           console.error('Error: no se pudo cambiar de modo', error);
@@ -44,6 +45,7 @@ function configurarModos() {
       });
     });
     document.body.className = 'mode-self-service';
+    actualizarAskKiro('self-service');
   } catch (error) {
     console.error('Error: no se pudieron configurar los modos', error);
   }
@@ -320,6 +322,41 @@ function actualizarSetupUrls(modo) {
     if (zipLink) zipLink.href = base + '/archive/refs/heads/' + branch + '.zip';
   } catch (error) {
     console.error('Error: no se pudieron actualizar las URLs de setup', error);
+  }
+}
+
+/** @type {Object.<string, {title: string, desc: string, prompt: string}>} */
+var askKiroContent = {
+  'self-service': {
+    title: 'Pega esto en Kiro y deja que te guie',
+    desc: 'Copia este prompt, pegalo en el chat de Kiro, y el se convierte en tu instructor. Te lleva sesion por sesion, espera tu confirmacion antes de avanzar, y adapta las explicaciones a tu ritmo.',
+    prompt: 'Eres mi instructor para un workshop de Kiro llamado "De vibe coding a software real". Vamos a construir un conversor de temperaturas juntos, y en cada sesion me vas a ensenar una feature de Kiro resolviendo un problema real.\n\nLas 9 sesiones son:\n1. Vibe Coding \u2014 Crear la app con un solo prompt\n2. Steering \u2014 Crear convenciones del equipo que se apliquen siempre\n3. Specs \u2014 Planificar una feature (historial) con requirements, design y tasks\n4. Hooks \u2014 Automatizar revision de codigo al guardar\n5. Agents \u2014 Crear un agente revisor con criterio propio\n6. Skills \u2014 Crear conocimiento de dominio (fisica de temperaturas)\n7. Web Search \u2014 Buscar datos reales sin salir del IDE\n8. MCP \u2014 Conectar con documentacion oficial de AWS\n9. Powers \u2014 Empaquetar todo en una unidad distribuible\n\nReglas:\n- Presentame UNA sesion a la vez\n- Explicame primero el PROBLEMA que resuelve, luego guiame a la solucion\n- Esperame antes de avanzar a la siguiente\n- Si me pierdo, ayudame sin saltarte pasos\n- Habla en espanol, se conciso y practico\n\nEmpecemos por la sesion 1.'
+  },
+  'remix': {
+    title: 'Pega esto en Kiro para crear tu propia version',
+    desc: 'Este prompt le dice a Kiro que cree un workshop completo para otro dominio. El genera la app, el steering, los skills, agents, hooks, specs y el power desde cero. Tu solo eliges el tema.',
+    prompt: 'Quiero crear mi propia version del workshop "De vibe coding a software real" pero para un dominio diferente. Tu vas a guiarme para construir TODO el ecosistema de Kiro desde cero para ese dominio.\n\nPrimero preguntame que tipo de proyecto quiero (ejemplos: conversor de monedas, calculadora de IMC, tracker de habitos, generador de paletas de color, dashboard de marketing, etc).\n\nUna vez que elija, guiame por estas 9 sesiones adaptadas a mi dominio:\n1. Vibe Coding \u2014 Crear la app base con un solo prompt\n2. Steering \u2014 Crear convenciones especificas para este proyecto (.kiro/steering/)\n3. Specs \u2014 Planificar una feature relevante al dominio con requirements, design y tasks\n4. Hooks \u2014 Crear automatizacion al guardar archivos\n5. Agents \u2014 Crear un agente revisor adaptado al dominio\n6. Skills \u2014 Crear conocimiento de dominio especifico (.kiro/skills/)\n7. Web Search \u2014 Buscar datos reales del dominio\n8. MCP \u2014 Conectar con documentacion de AWS para deploy\n9. Powers \u2014 Empaquetar todo en un Power distribuible\n\nReglas:\n- Presentame UNA sesion a la vez\n- Adapta cada sesion al dominio que elegi\n- Crea archivos reales en .kiro/ (steering, skills, agents, hooks, specs)\n- Al final debo tener un proyecto funcional con todo el ecosistema Kiro configurado\n- Habla en espanol, se conciso y practico\n\nEmpecemos. Preguntame que proyecto quiero hacer.'
+  }
+};
+
+/**
+ * Actualiza el contenido del Ask Kiro card segun el modo.
+ * @param {string} modo - El modo activo.
+ */
+function actualizarAskKiro(modo) {
+  try {
+    var content = askKiroContent[modo];
+    if (!content) return;
+
+    var title = document.getElementById('ask-kiro-title');
+    var desc = document.getElementById('ask-kiro-desc');
+    var text = document.getElementById('ask-kiro-text');
+
+    if (title) title.textContent = content.title;
+    if (desc) desc.textContent = content.desc;
+    if (text) text.textContent = content.prompt;
+  } catch (error) {
+    console.error('Error: no se pudo actualizar el Ask Kiro card', error);
   }
 }
 
