@@ -13,25 +13,22 @@ Workshop interactivo para aprender las features de Kiro construyendo un converso
 | 📋 Specs | Desarrollo guiado por requisitos | `starter/.kiro/specs/` |
 | 📦 Powers | Todo empaquetado y distribuible | `starter/powers/` |
 
-## Estructura del repo
+## Estructura
 
 ```
-kiro-paso-a-paso/
-├── docs/                  # Guía web interactiva (GitHub Pages)
-├── starter/               # Punto de partida para el participante
-│   ├── .kiro/             # Assets de Kiro (steering, skills, agents, hooks, specs)
-│   ├── powers/            # Power empaquetado
-│   ├── index.html         # App básica (sin historial)
-│   ├── app.js             # Lógica de conversión
-│   ├── styles.css         # Estilos base
-│   └── ejemplo.js         # Archivo para practicar
-├── solucion/              # App completa (referencia final)
-│   ├── index.html         # App con historial
-│   ├── app.js             # Lógica + integración historial
-│   ├── history.js         # Módulo de historial
-│   ├── styles.css         # Estilos completos
-│   └── ejemplo.js
+main (este branch)
+├── docs/              # Guía web interactiva (GitHub Pages)
+├── starter/           # Punto de partida para el participante
+│   ├── .kiro/         # Assets de Kiro (steering, skills, agents, hooks, specs)
+│   ├── powers/        # Power empaquetado
+│   ├── index.html     # App básica (sin historial)
+│   ├── app.js         # Lógica de conversión
+│   ├── styles.css     # Estilos base
+│   └── ejemplo.js     # Archivo para practicar
 └── README.md
+
+solucion (branch aparte)
+└── starter/           # App completa con historial implementado
 ```
 
 ## Elige tu modo
@@ -41,7 +38,7 @@ kiro-paso-a-paso/
 1. Clona este repo
 2. Abre la carpeta `starter/` como workspace en Kiro
 3. En el chat, escribe `#workshop-guide` y luego "empezar workshop"
-4. Kiro te guiará paso a paso por cada feature
+4. Kiro te guiará paso a paso
 
 ### 🎤 Presentador (clase guiada)
 
@@ -55,15 +52,16 @@ kiro-paso-a-paso/
 2. Pídele: "Quiero adaptar este proyecto a un conversor de [monedas/peso/distancias]"
 3. Kiro usará la estructura existente como patrón para crear tu versión
 
+## Ver la solución
+
+La app completa (con historial) está en el branch `solucion`:
+
+```bash
+git checkout solucion
+```
+
 ## GitHub Pages
 
 La guía web se sirve desde `docs/`. Para activarla:
 
-1. Ve a Settings → Pages
-2. Source: Deploy from branch
-3. Branch: `main`, folder: `/docs`
-4. La guía estará en `https://deltamacuro.github.io/kiro-paso-a-paso/`
-
-## ¿Cómo funciona?
-
-El participante abre `starter/` como workspace. Al hacerlo, Kiro lee automáticamente los archivos en `.kiro/` y tiene todo el contexto: convenciones del equipo, conocimiento de física, el agente revisor y los hooks de validación. La carpeta `solucion/` sirve como referencia para comparar el resultado final.
+Settings → Pages → Source: Deploy from branch → Branch: `main` → Folder: `/docs`
