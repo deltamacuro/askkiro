@@ -77,6 +77,91 @@
       <div class="progress-fill" id="progress-fill"></div>
     </div>
     <p class="progress-text" id="progress-text">0 de 10 completados</p>
+      <div class="clone-block">
+        <code id="clone-self-service">git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-self-service" aria-label="Copiar comando">Copiar</button>
+      </div>
+    </section>
+    <section class="mode-description hidden" id="desc-presenter">
+      <p>Guion para dictar como clase. Cada sesion incluye que decir, que demostrar y cuando pausar.</p>
+      <div class="clone-block">
+        <code id="clone-presenter">git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-presenter" aria-label="Copiar comando">Copiar</button>
+      </div>
+    </section>
+    <section class="mode-description hidden" id="desc-remix">
+      <p>Usa la estructura como base y pidele a Kiro que lo adapte a otro dominio: monedas, peso, distancias.</p>
+      <div class="clone-block">
+        <code id="clone-remix">git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-remix" aria-label="Copiar comando">Copiar</button>
+      </div>
+    </section>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-text" id="progress-text">0 de 10 completados</p>
+
+    <!-- SETUP -->
+    <article class="setup-card">
+      <h2 class="setup-title">Antes de empezar</h2>
+      <p class="setup-intro">Necesitas dos cosas: Kiro y el proyecto. Si ya las tienes, salta directo a la sesion 1.</p>
+
+      <div class="setup-steps">
+        <div class="setup-step">
+          <span class="setup-step-num">1</span>
+          <div class="setup-step-content">
+            <p class="setup-step-title">Instala Kiro</p>
+            <p>Descargalo gratis desde la pagina oficial. Disponible para macOS, Windows y Linux.</p>
+            <a href="https://kiro.dev" target="_blank" rel="noopener" class="setup-link">Descargar Kiro &rarr;</a>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <span class="setup-step-num">2</span>
+          <div class="setup-step-content">
+            <p class="setup-step-title">Descarga el proyecto</p>
+            <p>Elige la opcion que prefieras:</p>
+
+            <div class="setup-tabs">
+              <button class="setup-tab active" data-tab="tab-terminal">Terminal</button>
+              <button class="setup-tab" data-tab="tab-zip">Descarga ZIP</button>
+              <button class="setup-tab" data-tab="tab-kiro">Desde Kiro</button>
+            </div>
+
+            <div class="setup-tab-content active" id="tab-terminal">
+              <p>Si tienes git instalado, copia y pega en tu terminal:</p>
+              <div class="clone-block" id="setup-clone-area">
+                <code id="clone-setup">git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+                <button class="copy-btn" data-target="clone-setup" aria-label="Copiar comando">Copiar</button>
+              </div>
+            </div>
+
+            <div class="setup-tab-content" id="tab-zip">
+              <p>Sin terminal, sin git. Descarga el ZIP y descomprimelo donde quieras.</p>
+              <a href="https://github.com/deltamacuro/kiro-paso-a-paso/archive/refs/heads/modo-self-service.zip" class="setup-link" id="zip-link">Descargar ZIP &rarr;</a>
+            </div>
+
+            <div class="setup-tab-content" id="tab-kiro">
+              <p>Abre Kiro, usa el comando <code>Git: Clone</code> desde la paleta de comandos (Cmd+Shift+P) y pega esta URL:</p>
+              <div class="clone-block">
+                <code id="clone-kiro">https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+                <button class="copy-btn" data-target="clone-kiro" aria-label="Copiar URL">Copiar</button>
+              </div>
+              <p>Selecciona el branch <code>modo-self-service</code> cuando te lo pida.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <span class="setup-step-num">3</span>
+          <div class="setup-step-content">
+            <p class="setup-step-title">Abre el proyecto en Kiro</p>
+            <p>File &rarr; Open Folder &rarr; selecciona la carpeta que acabas de clonar o descomprimir. Asegurate de que Kiro este en modo <strong>Autopilot</strong> (lo ves abajo a la derecha).</p>
+          </div>
+        </div>
+      </div>
+    </article>
 
     <!-- SESIÓN 1 -->
     <article class="step open" data-step="1">

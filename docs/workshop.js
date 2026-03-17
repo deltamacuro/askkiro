@@ -9,6 +9,7 @@ function inicializarWorkshop() {
     configurarCopyButtons();
     configurarStickyBar();
     configurarReset();
+    configurarSetupTabs();
     cargarEstado();
   } catch (error) {
     console.error('Error: no se pudo inicializar el workshop', error);
@@ -35,6 +36,7 @@ function configurarModos() {
           if (desc) desc.classList.remove('hidden');
           var stickyMode = document.getElementById('sticky-mode');
           if (stickyMode) stickyMode.textContent = btn.childNodes[0].textContent.trim();
+          actualizarSetupUrls(modo);
           guardarEstado();
         } catch (error) {
           console.error('Error: no se pudo cambiar de modo', error);
@@ -268,6 +270,56 @@ function cargarEstado() {
   } catch (error) {
     console.error('Error: no se pudo cargar el estado guardado', error);
     actualizarProgreso();
+  }
+}
+
+/**
+ * Configura los tabs del setup (Terminal, ZIP, Desde Kiro).
+ */
+function configurarSetupTabs() {
+  try {
+    var tabs = document.querySelectorAll('.setup-tab');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        try {
+          tabs.forEach(function(t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          document.querySelectorAll('.setup-tab-content').forEach(function(c) {
+            c.classList.remove('active');
+          });
+          var target = document.getElementById(tab.getAttribute('data-tab'));
+          if (target) target.classList.add('active');
+        } catch (error) {
+          console.error('Error: no se pudo cambiar de tab', error);
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Error: no se pudieron configurar los tabs de setup', error);
+  }
+}
+
+/**
+ * Actualiza las URLs del setup segun el modo seleccionado.
+ * @param {string} modo - El modo activo (self-service, presenter, remix).
+ */
+function actualizarSetupUrls(modo) {
+  try {
+    var branches = {
+      'self-service': 'modo-self-service',
+      'presenter': 'modo-presentador',
+      'remix': 'modo-remix'
+    };
+    var branch = branches[modo] || 'modo-self-service';
+    var base = 'https://github.com/deltamacuro/kiro-paso-a-paso';
+
+    var cloneSetup = document.getElementById('clone-setup');
+    if (cloneSetup) cloneSetup.textContent = 'git clone -b ' + branch + ' ' + base + '.git';
+
+    var zipLink = document.getElementById('zip-link');
+    if (zipLink) zipLink.href = base + '/archive/refs/heads/' + branch + '.zip';
+  } catch (error) {
+    console.error('Error: no se pudieron actualizar las URLs de setup', error);
   }
 }
 
