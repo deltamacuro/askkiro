@@ -51,27 +51,9 @@
 
   <main class="container">
 
-    <section class="mode-description" id="desc-self-service">
-      <p>Sigue los pasos a tu ritmo. Clona el repo, abre Kiro en Autopilot, y construye todo desde cero.</p>
-      <div class="clone-block">
-        <code id="clone-self-service">git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
-        <button class="copy-btn" data-target="clone-self-service" aria-label="Copiar comando">Copiar</button>
-      </div>
-    </section>
-    <section class="mode-description hidden" id="desc-presenter">
-      <p>Guion para dictar como clase. Cada sesion incluye que decir, que demostrar y cuando pausar.</p>
-      <div class="clone-block">
-        <code id="clone-presenter">git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
-        <button class="copy-btn" data-target="clone-presenter" aria-label="Copiar comando">Copiar</button>
-      </div>
-    </section>
-    <section class="mode-description hidden" id="desc-remix">
-      <p>Usa la estructura como base y pidele a Kiro que lo adapte a otro dominio: monedas, peso, distancias.</p>
-      <div class="clone-block">
-        <code id="clone-remix">git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
-        <button class="copy-btn" data-target="clone-remix" aria-label="Copiar comando">Copiar</button>
-      </div>
-    </section>
+    <section class="mode-description hidden" id="desc-self-service"></section>
+    <section class="mode-description hidden" id="desc-presenter"></section>
+    <section class="mode-description hidden" id="desc-remix"></section>
 
     <div class="progress-bar">
       <div class="progress-fill" id="progress-fill"></div>
@@ -160,6 +142,38 @@
             <p>File &rarr; Open Folder &rarr; selecciona la carpeta que acabas de clonar o descomprimir. Asegurate de que Kiro este en modo <strong>Autopilot</strong> (lo ves abajo a la derecha).</p>
           </div>
         </div>
+      </div>
+    </article>
+
+    <!-- ASK KIRO -->
+    <article class="ask-kiro-card">
+      <div class="ask-kiro-header">
+        <h2>Pega esto en Kiro y deja que te guie</h2>
+        <p>Copia este prompt, pegalo en el chat de Kiro, y el se convierte en tu instructor. Te lleva sesion por sesion, espera tu confirmacion antes de avanzar, y adapta las explicaciones a tu ritmo.</p>
+      </div>
+      <div class="ask-kiro-prompt">
+        <code id="ask-kiro-text">Eres mi instructor para un workshop de Kiro llamado "De vibe coding a software real". Vamos a construir un conversor de temperaturas juntos, y en cada sesion me vas a ensenar una feature de Kiro resolviendo un problema real.
+
+Las 9 sesiones son:
+1. Vibe Coding — Crear la app con un solo prompt
+2. Steering — Crear convenciones del equipo que se apliquen siempre
+3. Specs — Planificar una feature (historial) con requirements, design y tasks
+4. Hooks — Automatizar revision de codigo al guardar
+5. Agents — Crear un agente revisor con criterio propio
+6. Skills — Crear conocimiento de dominio (fisica de temperaturas)
+7. Web Search — Buscar datos reales sin salir del IDE
+8. MCP — Conectar con documentacion oficial de AWS
+9. Powers — Empaquetar todo en una unidad distribuible
+
+Reglas:
+- Presentame UNA sesion a la vez
+- Explicame primero el PROBLEMA que resuelve, luego guiame a la solucion
+- Esperame antes de avanzar a la siguiente
+- Si me pierdo, ayudame sin saltarte pasos
+- Habla en espanol, se conciso y practico
+
+Empecemos por la sesion 1.</code>
+        <button class="copy-btn ask-kiro-copy" data-target="ask-kiro-text" aria-label="Copiar prompt para Kiro">Copiar prompt</button>
       </div>
     </article>
 
