@@ -4,64 +4,49 @@ Workshop interactivo para aprender las features de Kiro construyendo un converso
 
 ## ¿Qué vas a aprender?
 
-| Feature | Qué hace | Dónde verlo |
-|---------|----------|-------------|
-| 📐 Steering | Reglas que Kiro sigue siempre | `starter/.kiro/steering/` |
-| 🧠 Skills | Conocimiento de dominio inyectado | `starter/.kiro/skills/` |
-| ⚡ Hooks | Automatización basada en eventos | `starter/.kiro/hooks/` |
-| 🤖 Agents | Roles especializados reutilizables | `starter/.kiro/agents/` |
-| 📋 Specs | Desarrollo guiado por requisitos | `starter/.kiro/specs/` |
-| 📦 Powers | Todo empaquetado y distribuible | `starter/powers/` |
-
-## Estructura
-
-```
-main (este branch)
-├── docs/              # Guía web interactiva (GitHub Pages)
-├── starter/           # Punto de partida para el participante
-│   ├── .kiro/         # Assets de Kiro (steering, skills, agents, hooks, specs)
-│   ├── powers/        # Power empaquetado
-│   ├── index.html     # App básica (sin historial)
-│   ├── app.js         # Lógica de conversión
-│   ├── styles.css     # Estilos base
-│   └── ejemplo.js     # Archivo para practicar
-└── README.md
-
-solucion (branch aparte)
-└── starter/           # App completa con historial implementado
-```
+| Feature | Qué hace |
+|---------|----------|
+| 📐 Steering | Reglas que Kiro sigue siempre |
+| 🧠 Skills | Conocimiento de dominio inyectado |
+| ⚡ Hooks | Automatización basada en eventos |
+| 🤖 Agents | Roles especializados reutilizables |
+| 📋 Specs | Desarrollo guiado por requisitos |
+| 📦 Powers | Todo empaquetado y distribuible |
 
 ## Elige tu modo
 
 ### 🧑‍💻 Self-Service (autoguiado)
 
-1. Clona este repo
-2. Abre la carpeta `starter/` como workspace en Kiro
-3. En el chat, escribe `#workshop-guide` y luego "empezar workshop"
-4. Kiro te guiará paso a paso
+```bash
+git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git
+```
+
+Abre la carpeta en Kiro, escribe `#workshop-guide` en el chat y luego "empezar workshop". Kiro te guía paso a paso.
 
 ### 🎤 Presentador (clase guiada)
 
-1. Abre la [guía web interactiva](https://deltamacuro.github.io/kiro-paso-a-paso/)
-2. Selecciona el modo "Presentador" para ver notas y tiempos
-3. Los participantes abren `starter/` en Kiro y siguen las instrucciones
+```bash
+git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git
+```
+
+Incluye notas para el presentador y un guión paso a paso. Abre la [guía web](https://deltamacuro.github.io/kiro-paso-a-paso/) en modo Presentador como apoyo visual.
 
 ### 🎨 Remix (versión personalizada)
 
-1. Abre `starter/` en Kiro
-2. Pídele: "Quiero adaptar este proyecto a un conversor de [monedas/peso/distancias]"
-3. Kiro usará la estructura existente como patrón para crear tu versión
-
-## Ver la solución
-
-La app completa (con historial) está en el branch `solucion`:
-
 ```bash
-git checkout solucion
+git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git
 ```
 
-## GitHub Pages
+Abre en Kiro y pídele adaptar el proyecto a otro dominio (monedas, peso, distancias). Kiro usa la estructura como patrón.
 
-La guía web se sirve desde `docs/`. Para activarla:
+### 📖 Ver la solución completa
 
-Settings → Pages → Source: Deploy from branch → Branch: `main` → Folder: `/docs`
+```bash
+git clone -b solucion https://github.com/deltamacuro/kiro-paso-a-paso.git
+```
+
+## Guía web interactiva
+
+👉 [deltamacuro.github.io/kiro-paso-a-paso](https://deltamacuro.github.io/kiro-paso-a-paso/)
+
+Soporta los tres modos con pasos interactivos, barra de progreso y notas contextuales.
