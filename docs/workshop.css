@@ -5,16 +5,15 @@
 }
 
 :root {
-  --kiro-bg: #111118;
-  --kiro-surface: #1a1a24;
-  --kiro-border: #2a2a3a;
-  --kiro-accent: #56d4a0;
-  --kiro-accent-dim: rgba(86, 212, 160, 0.12);
-  --kiro-purple: #a78bfa;
-  --kiro-purple-dim: rgba(167, 139, 250, 0.12);
-  --kiro-text: #e0e0e8;
-  --kiro-text-muted: #888898;
-  --kiro-text-dim: #555568;
+  --kiro-bg: #0c0c0f;
+  --kiro-surface: #141418;
+  --kiro-border: #232329;
+  --kiro-accent: #a78bfa;
+  --kiro-accent-dim: rgba(167, 139, 250, 0.10);
+  --kiro-accent-bright: #c4b5fd;
+  --kiro-text: #e8e8ed;
+  --kiro-text-muted: #8b8b98;
+  --kiro-text-dim: #55555f;
 }
 
 body {
@@ -28,7 +27,7 @@ body {
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(180deg, #13111c 0%, var(--kiro-bg) 100%);
   padding: 3rem 1.5rem;
   text-align: center;
   border-bottom: 1px solid var(--kiro-border);
@@ -45,7 +44,7 @@ body {
 .tagline {
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--kiro-purple);
+  color: var(--kiro-accent-bright);
   margin-bottom: 0.3rem;
 }
 
@@ -121,7 +120,7 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--kiro-accent), var(--kiro-purple));
+  background: linear-gradient(90deg, var(--kiro-accent), var(--kiro-accent-bright));
   border-radius: 8px;
   width: 0%;
   transition: width 0.4s ease;
@@ -184,8 +183,8 @@ body {
 }
 
 .step-tag {
-  background: var(--kiro-purple-dim);
-  color: var(--kiro-purple);
+  background: var(--kiro-accent-dim);
+  color: var(--kiro-accent);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
@@ -257,8 +256,8 @@ body {
 
 /* Presenter notes */
 .presenter-note {
-  background: var(--kiro-purple-dim);
-  border-left: 3px solid var(--kiro-purple);
+  background: var(--kiro-accent-dim);
+  border-left: 3px solid var(--kiro-accent);
   padding: 0.8rem 1rem;
   border-radius: 0 6px 6px 0;
   margin: 1rem 0;
@@ -277,7 +276,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.4rem;
-  color: var(--kiro-purple);
+  color: var(--kiro-accent);
 }
 
 body.mode-presenter .presenter-note {
@@ -361,7 +360,7 @@ body.mode-remix .remix-note {
 
 .cheat-sheet th {
   text-align: left;
-  color: var(--kiro-purple);
+  color: var(--kiro-accent);
   padding: 0.5rem 0.4rem;
   border-bottom: 2px solid var(--kiro-border);
 }
