@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Revisar JSDoc en JS",
+  "description": "Al guardar un archivo JavaScript, revisa si hay errores de sintaxis o funciones sin documentación JSDoc y avisa en el chat.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "*.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Revisa el archivo JavaScript que se acaba de guardar. Busca: 1) Errores de sintaxis o problemas en el código. 2) Funciones que no tengan comentarios JSDoc. Si encuentras problemas, avísame en español con los detalles. Si todo está bien, confirma brevemente que el archivo cumple las convenciones."
+  }
+}

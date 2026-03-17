@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Temperaturas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="card" role="main">
+    <h1>🌡️ Conversor de Temperaturas</h1>
+
+    <label for="value">Valor</label>
+    <input type="number" id="value" placeholder="Ej: 100" autofocus>
+
+    <div class="row">
+      <div>
+        <label for="from">De</label>
+        <select id="from">
+          <option value="C">Celsius (°C)</option>
+          <option value="F">Fahrenheit (°F)</option>
+          <option value="K">Kelvin (K)</option>
+        </select>
+      </div>
+      <div>
+        <label for="to">A</label>
+        <select id="to">
+          <option value="F">Fahrenheit (°F)</option>
+          <option value="C">Celsius (°C)</option>
+          <option value="K">Kelvin (K)</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="convert">Convertir</button>
+    <div class="result" id="result" aria-live="polite"></div>
+  </main>
+
+  <section class="history-card" aria-label="Historial de conversiones">
+    <div class="history-header">
+      <h2>📋 Historial</h2>
+      <button id="clear-history" class="btn-clear" style="display:none;">
+        Limpiar historial
+      </button>
+    </div>
+    <ul id="history-list" role="list" aria-live="polite">
+      <li class="history-empty">No hay conversiones en el historial</li>
+    </ul>
+  </section>
+
+  <script src="history.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
