@@ -23,7 +23,7 @@ Workshop interactivo para aprender las features de Kiro construyendo un converso
 
 ### 🎤 Presentador (clase guiada)
 
-1. Abre la [guía web interactiva](https://tu-usuario.github.io/kiro-demo-temperaturas/)
+1. Abre la [guía web interactiva](https://deltamacuro.github.io/kiro-paso-a-paso/)
 2. Selecciona el modo "Presentador" para ver notas y tiempos
 3. Sigue el guión paso a paso con demos en vivo
 
@@ -39,7 +39,7 @@ La carpeta `docs/` contiene una GitHub Pages con la guía interactiva del worksh
 
 1. Sube el repo a GitHub
 2. Ve a Settings → Pages → Source: Deploy from branch → Branch: `main`, folder: `/docs`
-3. La guía estará disponible en `https://tu-usuario.github.io/kiro-demo-temperaturas/`
+3. La guía estará disponible en `https://deltamacuro.github.io/kiro-paso-a-paso/`
 
 ## Estructura del proyecto
 
