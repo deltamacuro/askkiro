@@ -1,28 +1,30 @@
-# 🧑‍💻 Kiro Paso a Paso — Modo Self-Service
+# 🎤 Kiro Paso a Paso — Modo Presentador
 
-Workshop autoguiado. Kiro te lleva paso a paso por cada feature.
+Workshop en formato clase guiada. Incluye guión, tiempos y notas para el instructor.
 
 ## Cómo empezar
 
 1. Abre esta carpeta como workspace en Kiro
-2. En el chat, escribe `#workshop-guide` y luego "empezar workshop"
-3. Kiro te guiará por: Steering → Skills → Hooks → Agents → Specs → Powers
+2. Abre la [guía web](https://deltamacuro.github.io/kiro-paso-a-paso/) en modo Presentador como apoyo visual
+3. En el chat, escribe `#presentador-guide` para activar el modo instructor
+4. Sigue el guión paso a paso (45-60 min)
+
+## Guión rápido
+
+| Paso | Feature | Tiempo | Demo |
+|------|---------|--------|------|
+| 0 | Intro | 5 min | Mostrar estructura `.kiro/` |
+| 1 | Steering | 8 min | Crear función → convenciones automáticas |
+| 2 | Skills | 8 min | Preguntar sobre -300°C → cero absoluto |
+| 3 | Hooks | 8 min | Guardar función sin JSDoc → alerta automática |
+| 4 | Agents | 8 min | @revisor → ciclo RECHAZADO/APROBADO |
+| 5 | Specs | 10 min | Explorar spec + crear una nueva |
+| 6 | Powers | 5 min | Mostrar empaquetado completo |
+| 7 | Cierre | 5 min | Recap + Q&A |
 
 ## Estructura
 
-```
-├── .kiro/
-│   ├── steering/      # Convenciones + guía del workshop
-│   ├── skills/        # Conocimiento de física de temperaturas
-│   ├── agents/        # Agente revisor de código
-│   ├── hooks/         # Validación automática al guardar .js
-│   └── specs/         # Spec del historial de conversiones
-├── powers/            # Power empaquetado
-├── index.html         # App de conversión (sin historial)
-├── app.js             # Lógica de conversión
-├── styles.css         # Estilos
-└── ejemplo.js         # Archivo para practicar
-```
+Igual que modo-self-service, con el steering `presentador-guide.md` adicional.
 
 ## Ver la solución
 
