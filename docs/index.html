@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiro Workshop — Conversor de Temperaturas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="workshop.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-content">
+      <h1>🌡️ Kiro Workshop</h1>
+      <p class="subtitle">Aprende a usar Steering, Skills, Agents, Hooks, Specs y Powers construyendo un conversor de temperaturas.</p>
+      <div class="mode-selector">
+        <button class="mode-btn active" data-mode="self-service">🧑‍💻 Self-Service</button>
+        <button class="mode-btn" data-mode="presenter">🎤 Presentador</button>
+        <button class="mode-btn" data-mode="remix">🎨 Remix</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="mode-description" id="desc-self-service">
+      <p>Sigue los pasos a tu ritmo. Clona el repo, abre Kiro, y deja que te guíe paso a paso.</p>
+    </section>
+    <section class="mode-description hidden" id="desc-presenter">
+      <p>Guión para dictar el workshop como clase. Cada paso incluye notas para el presentador y pausas para demo en vivo.</p>
+    </section>
+    <section class="mode-description hidden" id="desc-remix">
+      <p>Usa la estructura del proyecto como base y pídele a Kiro que lo adapte a otro dominio: monedas, peso, distancias, lo que quieras.</p>
+    </section>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-text" id="progress-text">Paso 0 de 7</p>
+
+    <!-- Paso 0: Setup -->
+    <article class="step" data-step="0">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">0</span>
+        <h2>Preparación del entorno</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Clona el repositorio e instala Kiro si aún no lo tienes.</p>
+          <div class="code-block">
+            <code>git clone https://github.com/tu-usuario/kiro-demo-temperaturas.git</code>
+          </div>
+          <div class="code-block">
+            <code>cd kiro-demo-temperaturas</code>
+          </div>
+          <p>Abre el proyecto en Kiro. Al abrirlo, Kiro leerá automáticamente los archivos de configuración en <code>.kiro/</code>.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota para el presentador:</strong> Muestra la estructura de carpetas <code>.kiro/</code> y explica brevemente qué hay en cada subcarpeta (steering, skills, agents, hooks, specs). No entres en detalle aún.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Tengo el repo clonado y abierto en Kiro</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 1: Steering -->
+    <article class="step" data-step="1">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">1</span>
+        <h2>Steering — Convenciones del proyecto</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre <code>.kiro/steering/convenciones.md</code>. Este archivo le dice a Kiro las reglas del proyecto: idioma, nomenclatura, JSDoc, try/catch, colores y tipografía.</p>
+          <p>Kiro lo lee automáticamente en cada interacción gracias a <code>inclusion: always</code>.</p>
+          <h3>Pruébalo</h3>
+          <p>Pídele a Kiro en el chat:</p>
+          <div class="code-block">
+            <code>"Crea una función que convierta millas a kilómetros"</code>
+          </div>
+          <p>Observa cómo Kiro genera la función con JSDoc, try/catch, camelCase y mensajes de error en español, sin que se lo pidas explícitamente.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Haz la demo en vivo. Muestra el steering file primero, luego pide la función. Resalta que Kiro aplica TODAS las convenciones automáticamente.
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Modifica el steering para tu dominio. Por ejemplo, cambia los colores, agrega convenciones específicas de tu equipo, o cambia el idioma de los mensajes.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Kiro generó código siguiendo las convenciones</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 2: Skills -->
+    <article class="step" data-step="2">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">2</span>
+        <h2>Skills — Conocimiento de dominio</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre <code>.kiro/skills/fisica-temperaturas/SKILL.md</code>. Este skill le da a Kiro conocimiento sobre física de temperaturas: escalas, cero absoluto, fórmulas y validaciones.</p>
+          <h3>Pruébalo</h3>
+          <p>Pídele a Kiro:</p>
+          <div class="code-block">
+            <code>"Crea una función que convierta de Celsius a Kelvin con validación"</code>
+          </div>
+          <p>Kiro debería validar contra el cero absoluto (-273.15°C) sin que se lo pidas, porque el skill le da ese conocimiento.</p>
+          <p>Ahora prueba un caso extremo:</p>
+          <div class="code-block">
+            <code>"¿Qué pasa si intento convertir -300°C a Kelvin?"</code>
+          </div>
+          <p>Kiro debería explicar que está por debajo del cero absoluto.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Compara el resultado con y sin el skill. Sin él, Kiro no validaría el cero absoluto. Este es el momento de explicar que los skills inyectan conocimiento de dominio.
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Crea un skill para tu dominio. Si haces un conversor de monedas, el skill podría tener tasas de cambio, reglas de redondeo, o restricciones de divisas.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Kiro validó contra el cero absoluto</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 3: Hooks -->
+    <article class="step" data-step="3">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">3</span>
+        <h2>Hooks — Automatización al guardar</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre <code>.kiro/hooks/js-jsdoc-check.kiro.hook</code>. Este hook se activa cada vez que guardas un archivo <code>.js</code> y le pide a Kiro que revise JSDoc y errores.</p>
+          <h3>Pruébalo</h3>
+          <p>Abre <code>ejemplo.js</code> y agrega esta función sin JSDoc:</p>
+          <div class="code-block">
+            <code>function restar(a, b) { return a - b; }</code>
+          </div>
+          <p>Guarda el archivo. Observa cómo Kiro automáticamente te avisa que falta la documentación JSDoc.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Este es un momento "wow". Guarda el archivo y espera la reacción del público cuando Kiro responde automáticamente. Explica que los hooks son event-driven.
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Crea hooks para tu flujo: lint al guardar, tests al crear archivos, validación de imports, etc.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> El hook detectó la función sin JSDoc</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 4: Agents -->
+    <article class="step" data-step="4">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">4</span>
+        <h2>Agents — El revisor de código</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre <code>.kiro/agents/revisor.md</code>. Este agente actúa como un senior developer que revisa calidad de código: JSDoc, try/catch y camelCase.</p>
+          <h3>Pruébalo</h3>
+          <p>En el chat de Kiro, invoca al agente:</p>
+          <div class="code-block">
+            <code>@revisor revisa ejemplo.js</code>
+          </div>
+          <p>Si la función <code>restar</code> del paso anterior sigue sin JSDoc ni try/catch, el revisor la rechazará con detalles específicos.</p>
+          <p>Corrige el código según las indicaciones y vuelve a invocar al revisor hasta obtener ✅ APROBADO.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Muestra el ciclo completo: código malo → RECHAZADO → corrección → APROBADO. Explica que los agents son roles especializados reutilizables.
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Crea agentes para tu equipo: un revisor de seguridad, un optimizador de performance, un traductor de i18n, etc.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> El revisor aprobó el código corregido</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 5: Specs -->
+    <article class="step" data-step="5">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">5</span>
+        <h2>Specs — Desarrollo guiado por requisitos</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre la carpeta <code>.kiro/specs/conversion-history/</code>. Contiene tres archivos que forman una spec completa:</p>
+          <ul>
+            <li><code>requirements.md</code> — Requisitos con user stories y criterios de aceptación</li>
+            <li><code>design.md</code> — Diseño técnico con diagramas y modelos de datos</li>
+            <li><code>tasks.md</code> — Plan de implementación con tareas incrementales</li>
+          </ul>
+          <h3>Pruébalo</h3>
+          <p>Explora cada archivo para ver cómo Kiro estructura el desarrollo de una feature completa. El historial de conversiones que ves en la app fue construido siguiendo esta spec.</p>
+          <p>Para crear tu propia spec, pídele a Kiro:</p>
+          <div class="code-block">
+            <code>"Crea una spec para agregar un modo oscuro al conversor"</code>
+          </div>
+          <p>Kiro generará requirements, design y tasks automáticamente.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Muestra los tres archivos de la spec existente. Resalta la trazabilidad: cada tarea referencia requisitos específicos. Luego haz la demo de crear una spec nueva en vivo.
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Pídele a Kiro que cree una spec para una feature de tu dominio. Verás cómo adapta los requisitos y el diseño al contexto de tu proyecto.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Exploré la spec existente y/o creé una nueva</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 6: Powers -->
+    <article class="step" data-step="6">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">6</span>
+        <h2>Powers — Empaquetando todo</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <p>Abre <code>powers/temperature-dev/POWER.md</code>. Un Power empaqueta steering, skills, agents y hooks en un solo paquete distribuible.</p>
+          <p>Este power incluye todo lo que viste en los pasos anteriores. Cualquier desarrollador que lo instale tiene inmediatamente:</p>
+          <ul>
+            <li>✅ Convenciones del equipo (steering)</li>
+            <li>✅ Conocimiento de física (skill)</li>
+            <li>✅ Revisor de calidad (agent)</li>
+            <li>✅ Validación automática al guardar (hook)</li>
+          </ul>
+          <h3>Pruébalo</h3>
+          <p>Imagina que un nuevo dev se une al equipo. En vez de leer un wiki de 20 páginas, instala el power y Kiro ya sabe todo lo que necesita.</p>
+        </div>
+        <div class="presenter-note">
+          <strong>🎤 Nota:</strong> Este es el cierre conceptual. Muestra cómo todo lo anterior se empaqueta. Haz la analogía: "Es como un npm package, pero para el conocimiento del equipo."
+        </div>
+        <div class="remix-note">
+          <strong>🎨 Remix:</strong> Crea tu propio power para tu equipo o proyecto. Empaqueta tus convenciones, conocimiento de dominio y automatizaciones.
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Entiendo cómo un Power empaqueta todo el ecosistema</label>
+        </div>
+      </div>
+    </article>
+
+    <!-- Paso 7: Recap -->
+    <article class="step" data-step="7">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+        <span class="step-number">🎉</span>
+        <h2>Resumen y próximos pasos</h2>
+        <span class="step-toggle">▸</span>
+      </div>
+      <div class="step-body">
+        <div class="step-content all-modes">
+          <div class="recap-grid">
+            <div class="recap-item">
+              <span class="recap-icon">📐</span>
+              <strong>Steering</strong>
+              <p>Reglas que Kiro sigue siempre</p>
+            </div>
+            <div class="recap-item">
+              <span class="recap-icon">🧠</span>
+              <strong>Skills</strong>
+              <p>Conocimiento de dominio inyectado</p>
+            </div>
+            <div class="recap-item">
+              <span class="recap-icon">⚡</span>
+              <strong>Hooks</strong>
+              <p>Automatización basada en eventos</p>
+            </div>
+            <div class="recap-item">
+              <span class="recap-icon">🤖</span>
+              <strong>Agents</strong>
+              <p>Roles especializados reutilizables</p>
+            </div>
+            <div class="recap-item">
+              <span class="recap-icon">📋</span>
+              <strong>Specs</strong>
+              <p>Desarrollo guiado por requisitos</p>
+            </div>
+            <div class="recap-item">
+              <span class="recap-icon">📦</span>
+              <strong>Powers</strong>
+              <p>Todo empaquetado y distribuible</p>
+            </div>
+          </div>
+        </div>
+        <div class="check">
+          <label><input type="checkbox" class="step-check"> Workshop completado 🎉</label>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>Hecho con 🧡 para aprender Kiro</p>
+  </footer>
+
+  <script src="workshop.js"></script>
+</body>
+</html>
