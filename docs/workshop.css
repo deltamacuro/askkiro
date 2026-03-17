@@ -104,7 +104,8 @@ body {
 
 .hero-btn-icon {
   transition: transform 0.3s;
-  filter: brightness(0);
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .hero-btn:hover {
