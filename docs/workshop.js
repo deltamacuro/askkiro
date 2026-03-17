@@ -326,18 +326,18 @@ function actualizarSetupUrls(modo) {
   }
 }
 
-/** @type {Object.<string, {title: string, desc: string, prompt: string}>} */
+/** @type {Object.<string, {title: string, desc: string, btn: string, prompt: string}>} */
 var askKiroContent = {
   'self-service': {
     title: 'Empieza el workshop',
     desc: 'Copia el prompt y pegalo en el chat de Kiro',
-    btn: 'Abrir en Kiro',
+    btn: 'Ask Kiro',
     prompt: 'Eres mi instructor para un workshop de Kiro llamado "De vibe coding a software real". Vamos a construir un conversor de temperaturas juntos, y en cada sesion me vas a ensenar una feature de Kiro resolviendo un problema real.\n\nLas 9 sesiones son:\n1. Vibe Coding \u2014 Crear la app con un solo prompt\n2. Steering \u2014 Crear convenciones del equipo que se apliquen siempre\n3. Specs \u2014 Planificar una feature (historial) con requirements, design y tasks\n4. Hooks \u2014 Automatizar revision de codigo al guardar\n5. Agents \u2014 Crear un agente revisor con criterio propio\n6. Skills \u2014 Crear conocimiento de dominio (fisica de temperaturas)\n7. Web Search \u2014 Buscar datos reales sin salir del IDE\n8. MCP \u2014 Conectar con documentacion oficial de AWS\n9. Powers \u2014 Empaquetar todo en una unidad distribuible\n\nReglas:\n- Presentame UNA sesion a la vez\n- Explicame primero el PROBLEMA que resuelve, luego guiame a la solucion\n- Esperame antes de avanzar a la siguiente\n- Si me pierdo, ayudame sin saltarte pasos\n- Habla en espanol, se conciso y practico\n\nEmpecemos por la sesion 1.'
   },
   'remix': {
     title: 'Crea tu propia version',
     desc: 'Abre una carpeta vacia en Kiro y pega este prompt',
-    btn: 'Crear con Kiro',
+    btn: 'Ask Kiro',
     prompt: 'Quiero que me crees un workshop completo de Kiro para un dominio que yo elija, con la misma estructura que "De vibe coding a software real" pero aplicado a otro tema.\n\nPrimero preguntame que tipo de proyecto quiero. Ejemplos: conversor de monedas, calculadora de IMC, tracker de habitos, generador de paletas de color, dashboard de marketing, lista de tareas, calculadora de prestamos, etc.\n\nUna vez que elija, genera TODO esto en el workspace:\n\n1. La app base (index.html, app.js, styles.css) — funcional y con buena UI\n2. .kiro/steering/convenciones.md — convenciones adaptadas al dominio\n3. .kiro/skills/ — una skill con conocimiento de dominio relevante\n4. .kiro/agents/revisor.md — un agente revisor adaptado\n5. .kiro/hooks/ — un hook de validacion al guardar .js\n6. .kiro/specs/ — una spec completa (requirements, design, tasks) para una feature relevante\n7. powers/ — un Power que empaquete todo lo anterior con POWER.md\n8. README.md — con la guia del workshop adaptada al dominio, las 9 sesiones, y el cheat sheet\n\nEl README debe seguir esta estructura:\n- Titulo: "Kiro Demo — De vibe coding a software real"\n- Subtitulo: "Proyecto: [nombre del proyecto]"\n- Las 9 sesiones con el mismo formato: problema, solucion, prompt, "lo que dices"\n- Cheat sheet al final\n\nReglas:\n- Crea TODOS los archivos de una vez\n- El proyecto debe funcionar al abrir index.html en el browser\n- Usa las convenciones del steering que generes\n- Habla en espanol\n- Al terminar, dame un resumen de lo que creaste\n\nEmpecemos. Preguntame que proyecto quiero.'
   }
 };
@@ -382,15 +382,15 @@ function configurarAskKiroBtn() {
           btn.classList.add('copied');
           if (btnText) btnText.textContent = 'Prompt copiado';
           if (status) {
-            status.textContent = 'Abre Kiro y pega con Cmd+V en el chat';
+            status.textContent = 'Pega con Cmd+V en el chat de Kiro';
             status.classList.add('active');
           }
 
           setTimeout(function() {
             btn.classList.remove('copied');
-            if (btnText) btnText.textContent = 'Abrir en Kiro';
+            if (btnText) btnText.textContent = askKiroContent[getCurrentMode()].btn;
             if (status) {
-              status.textContent = 'Copia el prompt y pegalo en el chat de Kiro';
+              status.textContent = askKiroContent[getCurrentMode()].desc;
               status.classList.remove('active');
             }
           }, 4000);
@@ -401,6 +401,19 @@ function configurarAskKiroBtn() {
     });
   } catch (error) {
     console.error('Error: no se pudo configurar el boton Ask Kiro', error);
+  }
+}
+
+/**
+ * Retorna el modo activo actual.
+ * @returns {string}
+ */
+function getCurrentMode() {
+  try {
+    var active = document.querySelector('.mode-btn.active');
+    return active ? active.getAttribute('data-mode') : 'self-service';
+  } catch (error) {
+    return 'self-service';
   }
 }
 
