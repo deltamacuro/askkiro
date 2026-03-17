@@ -436,6 +436,10 @@ body {
 }
 
 body.mode-presenter .ask-kiro-card { display: none; }
+body.mode-remix .step { display: none; }
+body.mode-remix .progress-bar { display: none; }
+body.mode-remix .progress-text { display: none; }
+body.mode-remix .setup-card { display: none; }
 
 /* Steps */
 .step {
