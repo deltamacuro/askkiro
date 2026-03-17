@@ -435,6 +435,8 @@ body {
   padding: 0.3rem 0.8rem;
 }
 
+body.mode-presenter .ask-kiro-card { display: none; }
+
 /* Steps */
 .step {
   background: var(--kiro-surface);
