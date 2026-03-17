@@ -2,60 +2,84 @@
 inclusion: manual
 ---
 
-# Guía para el Presentador
+# Guía para el Presentador — De vibe coding a software real
 
-Este proyecto es un workshop para enseñar Kiro en formato clase. Cuando el presentador active esta guía, actúa como asistente del instructor mostrando demos en vivo.
+Guión completo para dictar el workshop como clase. Cada sesión incluye qué demostrar, qué decir y cuándo pausar.
 
 ## Tu rol
 
-Eres el asistente del presentador. Cuando te pida demostrar algo, hazlo de forma clara y visible. Explica brevemente qué está pasando para que la audiencia entienda.
+Eres el asistente del presentador. Cuando te pida demostrar algo, hazlo de forma clara y visible.
 
-## Guión del Workshop (45-60 min)
+## Guión (9 sesiones, ~60-75 min)
 
-### Intro (5 min)
-- El presentador explica qué es Kiro y muestra la estructura `.kiro/`
-- Demo: mostrar las carpetas steering, skills, agents, hooks, specs
+### Sesión 1 — Vibe Coding (5 min)
+- Demo: "Crea una web app de conversor de temperaturas"
+- Abrir en browser, mostrar que funciona
+- Decir: "Un prompt. Treinta segundos. Tenemos una app. Pero... ¿qué pasa cuando otro dev toca este código?"
 
-### Paso 1: Steering (8 min)
-- Abrir `.kiro/steering/convenciones.md` y explicar `inclusion: always`
-- Demo: pedir "Crea una función que calcule el IMC" y mostrar cómo Kiro aplica JSDoc, try/catch, camelCase y español automáticamente
+### Sesión 2 — Steering (8 min)
+- Explicar el problema: inconsistencia entre devs
+- Demo: crear steering con convenciones
+- Demo: refactorizar el conversor
+- Mostrar diff: JSDoc, español, try/catch
+- Decir: "No le repetí las reglas. Las leyó solas. Para siempre, para todo el equipo."
 - Pausa: preguntar a la audiencia qué convenciones agregarían
 
-### Paso 2: Skills (8 min)
-- Abrir `.kiro/skills/fisica-temperaturas/SKILL.md`
-- Demo: preguntar "¿Puedo convertir -300°C a Kelvin?" y mostrar que Kiro conoce el cero absoluto
-- Pausa: preguntar qué conocimiento de dominio tiene cada equipo
+### Sesión 3 — Specs (10 min)
+- Explicar: un prompt largo para algo complejo suele salir mal
+- Demo: Panel Specs → "+" → historial-conversiones
+- Mostrar los 3 documentos despacio
+- Aprobar cada sección
+- Decir: "No es un prompt que espero que funcione. Es un plan que yo revisé y aprobé."
 
-### Paso 3: Hooks (8 min)
-- Abrir `.kiro/hooks/js-jsdoc-check.kiro.hook`
-- Demo: agregar `function restar(a, b) { return a - b; }` a ejemplo.js y guardar
-- Esperar la reacción cuando Kiro responde automáticamente
-- Pausa: preguntar qué automatizarían en su flujo
+### Sesión 4 — Hooks (8 min)
+- Demo: Panel Hooks → "+" → crear hook de revisión al guardar
+- Demo 1: borrar paréntesis en app.js, guardar, ver chat
+- Demo 2: crear función sin JSDoc, guardar
+- Decir: "No corrí ningún comando. No instalé ningún linter. El IDE reaccionó solo."
+- Este es un momento "wow". Esperar la reacción.
 
-### Paso 4: Agents (8 min)
-- Abrir `.kiro/agents/revisor.md`
-- Demo: invocar `@revisor revisa ejemplo.js` y mostrar el ciclo RECHAZADO → corrección → APROBADO
+### Sesión 5 — Agents (8 min)
+- Explicar: la IA genérica aprueba cualquier cosa
+- Demo: crear agente "revisor"
+- Demo: @revisor revisa app.js
+- Mostrar ciclo RECHAZADO → corrección → APROBADO
+- Decir: "Tiene el criterio de tu equipo."
 - Pausa: preguntar qué roles especializados necesitan
 
-### Paso 5: Specs (10 min)
-- Abrir `.kiro/specs/conversion-history/` y mostrar los tres archivos
-- Explicar el flujo requirements → design → tasks
-- Demo: pedir "Crea una spec para agregar modo oscuro"
-- Pausa: discutir cómo esto cambia el flujo de desarrollo
+### Sesión 6 — Skills (8 min)
+- Explicar diferencia steering vs skills
+- Demo: crear skill "fisica-temperaturas"
+- Demo: "¿Qué pasa si intento convertir -300°C?"
+- Decir: "Steering son las reglas. Skills es la expertise."
 
-### Paso 6: Powers (5 min)
-- Abrir `powers/temperature-dev/POWER.md`
-- Explicar que empaqueta todo lo anterior
-- Analogía: "Es como un npm package, pero para el conocimiento del equipo"
+### Sesión 7 — Web Search (5 min)
+- Demo: "¿Cuál fue la temperatura más baja registrada en la Tierra?"
+- Demo: "¿Cuál es el estándar ISO para temperaturas en UI?"
+- Decir: "No abrí ninguna pestaña. La información llegó donde la necesitaba."
+
+### Sesión 8 — MCP (8 min)
+- Explicar: la IA no sabe qué servicios de AWS existen hoy
+- Demo: configurar mcp.json con aws-documentation-mcp-server
+- Demo: preguntar sobre deploy a hosting estático en AWS
+- Mostrar cómo cita fuentes oficiales
+- Decir: "Es la documentación oficial, leída en tiempo real."
+
+### Sesión 9 — Powers (5 min)
+- Explicar: todo vive disperso, difícil de compartir
+- Mostrar concepto de Power como paquete
+- Analogía: "Es como un npm package, pero para el conocimiento del equipo."
+- Decir: "Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual."
 
 ### Cierre (5 min)
-- Recap visual de las 6 features
-- Compartir link del repo para que practiquen
+- Leer la frase de cierre completa
+- Mostrar cheat sheet
+- Compartir link del repo
 - Q&A
 
-## Tips para el presentador
+## Tips
 
 - Mantén Kiro visible en pantalla grande
 - Haz las demos en vivo, no uses capturas
-- Deja que la audiencia vea los errores y correcciones en tiempo real
-- Si algo falla, úsalo como oportunidad para mostrar debugging con Kiro
+- Si algo falla, úsalo como oportunidad de debugging
+- Deja que la audiencia vea errores y correcciones en tiempo real
