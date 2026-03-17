@@ -20,11 +20,21 @@
     <div class="hero-content">
       <p class="hero-context">Workshop interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a>, el IDE con IA para desarrollo spec-driven.</p>
       <h1>De vibe coding a software real</h1>
-      <p class="subtitle">Proyecto: Conversor de Temperaturas. Mismo proyecto, cada sesion lo hace mas robusto. Cada paso resuelve un problema real.</p>
+      <p class="subtitle">Mismo proyecto, cada sesion lo hace mas robusto. Cada paso resuelve un problema real.</p>
+      <div class="hero-cta" id="hero-cta">
+        <button class="hero-btn" id="ask-kiro-btn">
+          <span class="hero-btn-text" id="hero-btn-text">Abrir en Kiro</span>
+        </button>
+        <p class="hero-hint" id="ask-kiro-status">Copia el prompt y pegalo en el chat de Kiro</p>
+        <details class="hero-details">
+          <summary>Ver prompt</summary>
+          <code id="ask-kiro-text"></code>
+        </details>
+      </div>
       <div class="mode-selector">
         <button class="mode-btn active" data-mode="self-service">Self-Service<span class="mode-hint">A tu ritmo</span></button>
         <button class="mode-btn" data-mode="presenter">Presentador<span class="mode-hint">Para dictar una clase</span></button>
-        <button class="mode-btn" data-mode="remix">Remix<span class="mode-hint">Adapta a tu dominio</span></button>
+        <button class="mode-btn" data-mode="remix">Remix<span class="mode-hint">Crea tu version</span></button>
       </div>
     </div>
   </header>
@@ -97,22 +107,6 @@
           </div>
         </div>
       </div>
-    </article>
-
-    <!-- ASK KIRO -->
-    <article class="ask-kiro-card" id="ask-kiro-card">
-      <div class="ask-kiro-main">
-        <p class="ask-kiro-label" id="ask-kiro-title">Empieza el workshop</p>
-        <button class="ask-kiro-btn" id="ask-kiro-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          Abrir en Kiro
-        </button>
-        <p class="ask-kiro-status" id="ask-kiro-status"></p>
-      </div>
-      <details class="ask-kiro-details">
-        <summary>Ver prompt</summary>
-        <code id="ask-kiro-text"></code>
-      </details>
     </article>
 
     <!-- SESIÓN 1 -->
