@@ -530,8 +530,34 @@ body.mode-presenter .ask-kiro-card { display: none; }
 }
 
 .step-content p { margin-bottom: 0.7rem; font-size: 0.9rem; }
-.step-content ul { margin: 0.4rem 0 0.7rem 1.5rem; font-size: 0.9rem; }
+.step-content ul, .step-content ol { margin: 0.4rem 0 0.7rem 1.5rem; font-size: 0.9rem; }
 .step-content li { margin-bottom: 0.2rem; }
+
+.step-content h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--kiro-text);
+  margin: 1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.step-quote {
+  border-left: 3px solid var(--kiro-accent);
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.8rem;
+  color: var(--kiro-text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  background: var(--kiro-accent-dim);
+  border-radius: 0 4px 4px 0;
+}
+
+.note-inline {
+  font-size: 0.85rem;
+  color: var(--kiro-text-dim);
+  font-style: italic;
+}
 
 /* Prompt blocks (what to type in Kiro chat) */
 .prompt-block {
