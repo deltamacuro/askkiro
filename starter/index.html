@@ -39,6 +39,19 @@
     <div class="result" id="result" aria-live="polite"></div>
   </main>
 
+  <section class="history-card" aria-label="Historial de conversiones">
+    <div class="history-header">
+      <h2>📋 Historial</h2>
+      <button id="clear-history" class="btn-clear" style="display:none;">
+        Limpiar historial
+      </button>
+    </div>
+    <ul id="history-list" role="list" aria-live="polite">
+      <li class="history-empty">No hay conversiones en el historial</li>
+    </ul>
+  </section>
+
+  <script src="history.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -32,6 +32,7 @@ function esTemperaturaValida(valor, unidad) {
   }
 }
 
+
 /**
  * Convierte un valor en Celsius a la unidad de destino.
  * @param {number} celsius - El valor en Celsius.
@@ -71,6 +72,12 @@ function convertir() {
 
     const convertido = desdeCelsius(aCelsius(valor, desde), hacia);
     resultado.textContent = `${valor} ${simbolos[desde]} = ${parseFloat(convertido.toFixed(2))} ${simbolos[hacia]}`;
+    agregarAlHistorial({
+      valor: valor,
+      desde: desde,
+      hacia: hacia,
+      resultado: String(parseFloat(convertido.toFixed(2)))
+    });
   } catch (error) {
     document.getElementById('result').textContent = 'Error: ocurrió un problema al convertir';
   }
@@ -81,6 +88,7 @@ function convertir() {
  */
 function inicializar() {
   try {
+    inicializarHistorial();
     document.getElementById('convert').addEventListener('click', convertir);
     document.getElementById('value').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') convertir();
