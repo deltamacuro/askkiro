@@ -377,62 +377,102 @@ body {
 
 /* Ask Kiro card */
 .ask-kiro-card {
-  background: var(--kiro-surface);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08) 0%, var(--kiro-surface) 100%);
   border: 2px solid var(--kiro-accent);
-  border-radius: 8px;
-  padding: 1.2rem;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
   margin-bottom: 1.5rem;
-  position: relative;
+  text-align: center;
 }
 
-.ask-kiro-header h2 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--kiro-text);
-  margin-bottom: 0.3rem;
+.ask-kiro-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-.ask-kiro-header p {
+.ask-kiro-label {
   font-size: 0.85rem;
   color: var(--kiro-text-muted);
-  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
-.ask-kiro-prompt {
+.ask-kiro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--kiro-accent);
+  color: var(--kiro-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+}
+
+.ask-kiro-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
+}
+
+.ask-kiro-btn:active {
+  transform: translateY(0);
+}
+
+.ask-kiro-btn.copied {
+  background: #22c55e;
+}
+
+.ask-kiro-status {
+  font-size: 0.82rem;
+  color: var(--kiro-accent);
+  min-height: 1.2em;
+  transition: opacity 0.3s;
+}
+
+.ask-kiro-details {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.ask-kiro-details summary {
+  font-size: 0.78rem;
+  color: var(--kiro-text-dim);
+  cursor: pointer;
+  text-align: center;
+  padding: 0.3rem;
+  transition: color 0.2s;
+}
+
+.ask-kiro-details summary:hover {
+  color: var(--kiro-text-muted);
+}
+
+.ask-kiro-details code {
+  display: block;
+  margin-top: 0.5rem;
   background: #0d0d14;
   border: 1px solid var(--kiro-border);
   border-radius: 6px;
   padding: 0.8rem;
-  position: relative;
-}
-
-.ask-kiro-prompt code {
-  display: block;
-  color: var(--kiro-text);
+  color: var(--kiro-text-muted);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   white-space: pre-wrap;
   line-height: 1.5;
-  max-height: 180px;
+  max-height: 200px;
   overflow-y: auto;
-  padding-right: 0.5rem;
 }
 
-.ask-kiro-prompt code::-webkit-scrollbar {
-  width: 4px;
-}
-
-.ask-kiro-prompt code::-webkit-scrollbar-thumb {
+.ask-kiro-details code::-webkit-scrollbar { width: 4px; }
+.ask-kiro-details code::-webkit-scrollbar-thumb {
   background: var(--kiro-border);
   border-radius: 4px;
-}
-
-.ask-kiro-copy {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  font-size: 0.78rem;
-  padding: 0.3rem 0.8rem;
 }
 
 body.mode-presenter .ask-kiro-card { display: none; }

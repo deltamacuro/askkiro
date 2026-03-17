@@ -101,14 +101,18 @@
 
     <!-- ASK KIRO -->
     <article class="ask-kiro-card" id="ask-kiro-card">
-      <div class="ask-kiro-header">
-        <h2 id="ask-kiro-title">Pega esto en Kiro y deja que te guie</h2>
-        <p id="ask-kiro-desc">Copia este prompt, pegalo en el chat de Kiro. El se convierte en tu instructor y te lleva sesion por sesion.</p>
+      <div class="ask-kiro-main">
+        <p class="ask-kiro-label" id="ask-kiro-title">Empieza el workshop</p>
+        <button class="ask-kiro-btn" id="ask-kiro-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Abrir en Kiro
+        </button>
+        <p class="ask-kiro-status" id="ask-kiro-status"></p>
       </div>
-      <div class="ask-kiro-prompt">
+      <details class="ask-kiro-details">
+        <summary>Ver prompt</summary>
         <code id="ask-kiro-text"></code>
-        <button class="copy-btn ask-kiro-copy" data-target="ask-kiro-text">Copiar prompt</button>
-      </div>
+      </details>
     </article>
 
     <!-- SESIÓN 1 -->
