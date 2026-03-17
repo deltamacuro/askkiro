@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kiro Demo — De vibe coding a software real</title>
+  <meta name="description" content="Workshop interactivo de 9 sesiones para aprender Kiro, el IDE con IA para desarrollo spec-driven. Construye un conversor de temperaturas paso a paso.">
+  <meta property="og:title" content="Kiro Demo — De vibe coding a software real">
+  <meta property="og:description" content="Workshop interactivo de 9 sesiones. Aprende Steering, Specs, Hooks, Agents, Skills, MCP y Powers construyendo un conversor de temperaturas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://deltamacuro.github.io/kiro-paso-a-paso/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,55 +18,88 @@
 
   <header class="hero">
     <div class="hero-content">
-      <h1>Kiro Demo</h1>
-      <p class="tagline">De vibe coding a software real</p>
-      <p class="subtitle">Proyecto: Conversor de Temperaturas. Mismo proyecto, cada sesión lo hace más robusto. Cada paso resuelve un problema real.</p>
+      <p class="hero-context">Workshop interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a>, el IDE con IA para desarrollo spec-driven.</p>
+      <h1>De vibe coding a software real</h1>
+      <p class="subtitle">Mismo proyecto, cada sesión lo hace más robusto. Cada paso resuelve un problema real.</p>
       <div class="mode-selector">
-        <button class="mode-btn active" data-mode="self-service">Self-Service</button>
-        <button class="mode-btn" data-mode="presenter">Presentador</button>
-        <button class="mode-btn" data-mode="remix">Remix</button>
+        <button class="mode-btn active" data-mode="self-service">
+          Self-Service
+          <span class="mode-hint">A tu ritmo</span>
+        </button>
+        <button class="mode-btn" data-mode="presenter">
+          Presentador
+          <span class="mode-hint">Para dictar una clase</span>
+        </button>
+        <button class="mode-btn" data-mode="remix">
+          Remix
+          <span class="mode-hint">Adapta a tu dominio</span>
+        </button>
       </div>
     </div>
   </header>
+
+  <div class="sticky-bar" id="sticky-bar">
+    <div class="sticky-inner">
+      <span class="sticky-mode" id="sticky-mode">Self-Service</span>
+      <div class="sticky-progress">
+        <div class="sticky-progress-fill" id="sticky-progress-fill"></div>
+      </div>
+      <span class="sticky-count" id="sticky-count">0/10</span>
+      <button class="sticky-reset" id="reset-btn" title="Reiniciar progreso">Reiniciar</button>
+    </div>
+  </div>
 
   <main class="container">
 
     <section class="mode-description" id="desc-self-service">
       <p>Sigue los pasos a tu ritmo. Clona el repo, abre Kiro en Autopilot, y construye todo desde cero.</p>
-      <div class="code-block"><code>git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code></div>
+      <div class="clone-block">
+        <code id="clone-self-service">git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-self-service" aria-label="Copiar comando">Copiar</button>
+      </div>
     </section>
     <section class="mode-description hidden" id="desc-presenter">
-      <p>Guión para dictar como clase. Cada sesión incluye qué decir, qué demostrar y cuándo pausar.</p>
-      <div class="code-block"><code>git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git</code></div>
+      <p>Guion para dictar como clase. Cada sesion incluye que decir, que demostrar y cuando pausar.</p>
+      <div class="clone-block">
+        <code id="clone-presenter">git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-presenter" aria-label="Copiar comando">Copiar</button>
+      </div>
     </section>
     <section class="mode-description hidden" id="desc-remix">
-      <p>Usa la estructura como base y pídele a Kiro que lo adapte a otro dominio: monedas, peso, distancias.</p>
-      <div class="code-block"><code>git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git</code></div>
+      <p>Usa la estructura como base y pidele a Kiro que lo adapte a otro dominio: monedas, peso, distancias.</p>
+      <div class="clone-block">
+        <code id="clone-remix">git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git</code>
+        <button class="copy-btn" data-target="clone-remix" aria-label="Copiar comando">Copiar</button>
+      </div>
     </section>
 
     <div class="progress-bar">
       <div class="progress-fill" id="progress-fill"></div>
     </div>
-    <p class="progress-text" id="progress-text">Paso 0 de 9</p>
+    <p class="progress-text" id="progress-text">0 de 10 completados</p>
 
     <!-- SESIÓN 1 -->
-    <article class="step" data-step="1">
-      <div class="step-header" role="button" tabindex="0" aria-expanded="false">
+    <article class="step open" data-step="1">
+      <div class="step-header" role="button" tabindex="0" aria-expanded="true">
         <span class="step-number">1</span>
         <h2>El punto de partida</h2>
         <span class="step-tag">Vibe Coding</span>
         <span class="step-toggle">&#9656;</span>
       </div>
       <div class="step-body">
-        <p class="step-problem">Así empieza todo el mundo.</p>
+        <p class="step-problem">Asi empieza todo el mundo.</p>
         <div class="step-content all-modes">
           <p>Abre Kiro. Modo Autopilot. Escribe esto en el chat:</p>
-          <div class="code-block"><code>Crea una web app de conversor de temperaturas</code></div>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Crea una web app de conversor de temperaturas</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
           <p>Abre el resultado en el browser. Funciona. Se ve bien.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿qué pasa cuando otro dev del equipo toca este código? ¿Sabe qué convenciones usar? ¿La IA las conoce?"</p>
+          <p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev del equipo toca este codigo? ¿Sabe que convenciones usar? ¿La IA las conoce?"</p>
         </div>
         <div class="check">
           <label><input type="checkbox" class="step-check"> La app funciona en el browser</label>
@@ -80,31 +118,37 @@
       <div class="step-body">
         <p class="step-problem">La IA no sabe nada de tu equipo. Hasta que le dices.</p>
         <div class="step-content all-modes">
-          <p>El problema: cada dev le pide cosas distintas a la IA. El código es inconsistente. Nombres en inglés, errores en inglés, sin documentación.</p>
-          <p>Escribe en el chat:</p>
-          <div class="code-block"><code>Crea un steering file con las convenciones de nuestro proyecto:
-- Los mensajes de error deben estar en español
+          <p>El problema: cada dev le pide cosas distintas a la IA. El codigo es inconsistente.</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Crea un steering file con las convenciones de nuestro proyecto:
+- Los mensajes de error deben estar en espanol
 - Usar camelCase para variables y funciones
 - Todas las funciones deben tener comentarios JSDoc
 - Siempre manejar errores con try/catch
 - Separa el codigo en html, css, y js
 - El color principal de la app es #FF9900 y #000000
-- La tipografia debe ser Roboto como primera opcion</code></div>
-          <p>Kiro crea <code>.kiro/steering/convenciones.md</code>. Ábrelo y muéstralo.</p>
-          <p>Ahora pruébalo:</p>
-          <div class="code-block"><code>Refactoriza el conversor de temperaturas siguiendo las convenciones del proyecto.</code></div>
-          <p>Señala en el diff: JSDoc en cada función, errores en español, try/catch donde antes no había nada.</p>
+- La tipografia debe ser Roboto como primera opcion</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Kiro crea <code>.kiro/steering/convenciones.md</code>. Abrelo y muestralo. Ahora pruebalo:</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Refactoriza el conversor de temperaturas siguiendo las convenciones del proyecto.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Senala en el diff: JSDoc en cada funcion, errores en espanol, try/catch donde antes no habia nada.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No le repetí las reglas. Las leyó solas. Esto aplica en cada prompt, para siempre, para todo el equipo."</p>
+          <p>"No le repeti las reglas. Las leyo solas. Esto aplica en cada prompt, para siempre, para todo el equipo."</p>
         </div>
         <div class="remix-note">
           <span class="note-label">Remix</span>
           <p>Cambia las convenciones a las de tu equipo: otro idioma, otro estilo, otros colores.</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> El código refactorizado sigue las convenciones</label>
+          <label><input type="checkbox" class="step-check"> El codigo refactorizado sigue las convenciones</label>
         </div>
       </div>
     </article>
@@ -118,25 +162,26 @@
         <span class="step-toggle">&#9656;</span>
       </div>
       <div class="step-body">
-        <p class="step-problem">El cliente quiere historial de conversiones. Hagámoslo bien.</p>
+        <p class="step-problem">El cliente quiere historial de conversiones. Hagamoslo bien.</p>
         <div class="step-content all-modes">
           <p>Un prompt largo para una feature compleja suele salir mal. La IA adivina lo que quieres.</p>
-          <p>Panel lateral &rarr; Specs &rarr; botón "+" &rarr; Nombre: <code>historial-conversiones</code></p>
-          <div class="code-block"><code>Agregar historial de conversiones al conversor.
-El usuario ve sus últimas 10 conversiones,
+          <div class="action-block">
+            <span class="action-label">En Kiro</span>
+            <p>Panel lateral &rarr; Specs &rarr; boton "+" &rarr; Nombre: <code>historial-conversiones</code></p>
+          </div>
+          <div class="prompt-block">
+            <span class="prompt-label">Descripcion</span>
+            <code>Agregar historial de conversiones al conversor.
+El usuario ve sus ultimas 10 conversiones,
 puede limpiar el historial y hacer clic en una entrada para reutilizarla.
-Los datos persisten con localStorage.</code></div>
-          <p>Kiro genera 3 documentos:</p>
-          <ul>
-            <li>Requerimientos — qué debe hacer</li>
-            <li>Diseño — cómo lo va a implementar</li>
-            <li>Tareas — pasos concretos de código</li>
-          </ul>
-          <p>Aprueba cada sección. Que se vea que tú decides.</p>
+Los datos persisten con localStorage.</code>
+            <button class="copy-btn" aria-label="Copiar descripcion">Copiar</button>
+          </div>
+          <p>Kiro genera 3 documentos: requerimientos, diseno y tareas. Aprueba cada seccion.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No es un prompt que espero que funcione. Es un plan que yo revisé y aprobé. Kiro lo ejecuta paso a paso."</p>
+          <p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe. Kiro lo ejecuta paso a paso."</p>
         </div>
         <div class="check">
           <label><input type="checkbox" class="step-check"> La spec tiene requirements, design y tasks</label>
@@ -153,13 +198,20 @@ Los datos persisten con localStorage.</code></div>
         <span class="step-toggle">&#9656;</span>
       </div>
       <div class="step-body">
-        <p class="step-problem">¿Y si el IDE pudiera vigilar el código por ti?</p>
+        <p class="step-problem">¿Y si el IDE pudiera vigilar el codigo por ti?</p>
         <div class="step-content all-modes">
-          <p>Panel lateral &rarr; Agent Hooks &rarr; "+" &rarr; escribe:</p>
-          <div class="code-block"><code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones
-sin documentación JSDoc y avísame en el chat.</code></div>
-          <p>Demo 1: Abre <code>app.js</code>, borra un paréntesis, guarda con Cmd+S. Mira el chat.</p>
-          <p>Demo 2: Crea <code>utils.js</code> con una función sin documentar:</p>
+          <div class="action-block">
+            <span class="action-label">En Kiro</span>
+            <p>Panel lateral &rarr; Agent Hooks &rarr; "+"</p>
+          </div>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones
+sin documentacion JSDoc y avisame en el chat.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Demo 1: Abre <code>app.js</code>, borra un parentesis, guarda con Cmd+S. Mira el chat.</p>
+          <p>Demo 2: Crea <code>utils.js</code> con una funcion sin documentar:</p>
           <div class="code-block"><code>function sumar(a, b) {
   return a + b;
 }</code></div>
@@ -167,10 +219,10 @@ sin documentación JSDoc y avísame en el chat.</code></div>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No corrí ningún comando. No instalé ningún linter. El IDE reaccionó solo al guardar. Un solo hook. Detecta errores y documenta funciones."</p>
+          <p>"No corri ningun comando. No instale ningun linter. El IDE reacciono solo al guardar."</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> El hook detectó el problema al guardar</label>
+          <label><input type="checkbox" class="step-check"> El hook detecto el problema al guardar</label>
         </div>
       </div>
     </article>
@@ -186,16 +238,24 @@ sin documentación JSDoc y avísame en el chat.</code></div>
       <div class="step-body">
         <p class="step-problem">¿Y si pudieras tener un senior dev disponible 24/7?</p>
         <div class="step-content all-modes">
-          <p>La IA genérica aprueba cualquier cosa. No tiene criterio de tu equipo.</p>
-          <div class="code-block"><code>Crea un agente llamado "revisor" que actúe como un senior developer
-estricto con la calidad. Solo aprueba código que tenga manejo de errores
-explícito y funciones documentadas con JSDoc.</code></div>
-          <p>Luego invócalo:</p>
-          <div class="code-block"><code>@revisor revisa app.js y dime si lo aprobarías para producción.</code></div>
+          <p>La IA generica aprueba cualquier cosa. No tiene criterio de tu equipo.</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Crea un agente llamado "revisor" que actue como un senior developer
+estricto con la calidad. Solo aprueba codigo que tenga manejo de errores
+explicito y funciones documentadas con JSDoc.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Luego invocalo:</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>@revisor revisa app.js y dime si lo aprobarias para produccion.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No es un asistente genérico. Tiene el criterio de tu equipo. Puedes tener uno para seguridad, otro para accesibilidad, otro para performance."</p>
+          <p>"No es un asistente generico. Tiene el criterio de tu equipo. Puedes tener uno para seguridad, otro para accesibilidad, otro para performance."</p>
         </div>
         <div class="check">
           <label><input type="checkbox" class="step-check"> El revisor dio su veredicto</label>
@@ -212,22 +272,30 @@ explícito y funciones documentadas con JSDoc.</code></div>
         <span class="step-toggle">&#9656;</span>
       </div>
       <div class="step-body">
-        <p class="step-problem">Steering siempre está activo. Skills se activan cuando las necesitas.</p>
+        <p class="step-problem">Steering siempre esta activo. Skills se activan cuando las necesitas.</p>
         <div class="step-content all-modes">
           <p>No quieres cargar conocimiento especializado en cada prompt. Contexto irrelevante es contexto desperdiciado.</p>
-          <div class="code-block"><code>Crea una skill llamada "fisica-temperaturas" que sepa sobre
-escalas de temperatura, sus rangos físicos válidos,
-y casos extremos como el cero absoluto.</code></div>
-          <p>Kiro crea <code>.kiro/skills/fisica-temperaturas/SKILL.md</code>. Ahora pruébalo:</p>
-          <div class="code-block"><code>¿Qué pasa si el usuario intenta convertir -300°C?</code></div>
-          <p>Kiro activa la skill automáticamente y responde: el cero absoluto es -273.15°C, ese valor es físicamente imposible.</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>Crea una skill llamada "fisica-temperaturas" que sepa sobre
+escalas de temperatura, sus rangos fisicos validos,
+y casos extremos como el cero absoluto.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Kiro crea <code>.kiro/skills/fisica-temperaturas/SKILL.md</code>. Ahora pruebalo:</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>¿Que pasa si el usuario intenta convertir -300°C?</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Kiro activa la skill automaticamente y responde: el cero absoluto es -273.15°C, ese valor es fisicamente imposible.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No cargué nada manualmente. Kiro supo cuándo necesitaba ese conocimiento. Steering son las reglas. Skills es la expertise. Cada una carga cuando corresponde."</p>
+          <p>"No cargue nada manualmente. Kiro supo cuando necesitaba ese conocimiento. Steering son las reglas. Skills es la expertise."</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> Kiro detectó el cero absoluto</label>
+          <label><input type="checkbox" class="step-check"> Kiro detecto el cero absoluto</label>
         </div>
       </div>
     </article>
@@ -241,20 +309,27 @@ y casos extremos como el cero absoluto.</code></div>
         <span class="step-toggle">&#9656;</span>
       </div>
       <div class="step-body">
-        <p class="step-problem">¿Para qué cambiar de pestaña si Kiro puede buscar por ti?</p>
+        <p class="step-problem">¿Para que cambiar de pestana si Kiro puede buscar por ti?</p>
         <div class="step-content all-modes">
-          <p>Estás en el IDE y necesitas un dato puntual. Sales al browser, buscas, vuelves. Rompe el flow.</p>
-          <div class="code-block"><code>¿Cuál fue la temperatura más baja registrada en la Tierra y dónde?</code></div>
+          <p>Estas en el IDE y necesitas un dato puntual. Sales al browser, buscas, vuelves. Rompe el flow.</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>¿Cual fue la temperatura mas baja registrada en la Tierra y donde?</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
           <p>Kiro busca en internet en tiempo real y responde con el dato y la fuente.</p>
-          <p>Segundo ejemplo:</p>
-          <div class="code-block"><code>¿Cuál es el estándar ISO para representar temperaturas en interfaces de usuario?</code></div>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>¿Cual es el estandar ISO para representar temperaturas en interfaces de usuario?</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No abrí ninguna pestaña. No copié nada. La información llegó al contexto donde la necesitaba."</p>
+          <p>"No abri ninguna pestana. No copie nada. La informacion llego al contexto donde la necesitaba."</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> Kiro respondió con datos de internet</label>
+          <label><input type="checkbox" class="step-check"> Kiro respondio con datos de internet</label>
         </div>
       </div>
     </article>
@@ -270,8 +345,11 @@ y casos extremos como el cero absoluto.</code></div>
       <div class="step-body">
         <p class="step-problem">Kiro no vive en una burbuja. Se conecta a tus herramientas.</p>
         <div class="step-content all-modes">
-          <p>La IA genérica da respuestas genéricas. No sabe qué servicios de AWS existen hoy.</p>
-          <p>Abre <code>.kiro/settings/mcp.json</code> y agrega:</p>
+          <p>La IA generica da respuestas genericas. No sabe que servicios de AWS existen hoy.</p>
+          <div class="action-block">
+            <span class="action-label">En Kiro</span>
+            <p>Abre <code>.kiro/settings/mcp.json</code> y agrega:</p>
+          </div>
           <div class="code-block"><code>{
   "mcpServers": {
     "awslabs.aws-documentation-mcp-server": {
@@ -283,18 +361,19 @@ y casos extremos como el cero absoluto.</code></div>
     }
   }
 }</code></div>
-          <p>Ahora pregunta:</p>
-          <div class="code-block"><code>¿Cuál es la mejor forma de hacer deploy de esta app
-a un servicio de hosting estático en AWS?
-Busca en la documentación oficial.</code></div>
-          <p>Kiro consulta la documentación real de AWS en tiempo real.</p>
+          <div class="prompt-block">
+            <span class="prompt-label">Prompt</span>
+            <code>¿Cual es la mejor forma de hacer deploy de esta app a un servicio de hosting estatico en AWS? Busca en la documentacion oficial.</code>
+            <button class="copy-btn" aria-label="Copiar prompt">Copiar</button>
+          </div>
+          <p>Kiro consulta la documentacion real de AWS en tiempo real.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"No es una respuesta genérica. Es la documentación oficial de AWS, leída en tiempo real, aplicada a tu proyecto. Eso es MCP: conecta la IA con tus herramientas reales."</p>
+          <p>"No es una respuesta generica. Es la documentacion oficial de AWS, leida en tiempo real, aplicada a tu proyecto."</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> Kiro consultó docs de AWS en tiempo real</label>
+          <label><input type="checkbox" class="step-check"> Kiro consulto docs de AWS en tiempo real</label>
         </div>
       </div>
     </article>
@@ -313,14 +392,14 @@ Busca en la documentación oficial.</code></div>
           <p>Todo lo que construimos funciona, pero vive disperso en <code>.kiro/</code>. Si otro dev empieza de cero, tiene que configurar todo a mano.</p>
           <p>Un Power empaqueta MCP servers + steering + hooks + instrucciones de onboarding en una sola unidad instalable.</p>
           <p>Ejemplo: Usa el Power "Build a Power" para crear tu propio Power que empaqueta todo lo que hicimos en esta demo.</p>
-          <p>Los Powers del catálogo oficial están curados por partners (AWS, Stripe, Figma, etc.) y la comunidad.</p>
+          <p>Los Powers del catalogo oficial estan curados por partners (AWS, Stripe, Figma, etc.) y la comunidad.</p>
         </div>
         <div class="presenter-note">
           <span class="note-label">Nota para el presentador</span>
-          <p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual de cómo usarla. Un clic. Sin configuración. Listo para el equipo."</p>
+          <p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual de como usarla. Un clic. Sin configuracion. Listo para el equipo."</p>
         </div>
         <div class="check">
-          <label><input type="checkbox" class="step-check"> Entiendo cómo Powers empaqueta todo</label>
+          <label><input type="checkbox" class="step-check"> Entiendo como Powers empaqueta todo</label>
         </div>
       </div>
     </article>
@@ -335,13 +414,13 @@ Busca en la documentación oficial.</code></div>
       <div class="step-body">
         <div class="step-content all-modes">
           <blockquote class="closing-quote">
-            Empezamos con un prompt de una línea. Agregamos las reglas del equipo, una feature con plan aprobado, automatización que corre sola, un agente con criterio propio, expertise que se activa cuando la necesitás, búsqueda en internet sin salir del IDE, conexión directa con la documentación oficial de AWS, y un ecosistema de herramientas listo con un clic. Eso no es vibe coding. Eso es software.
+            Empezamos con un prompt de una linea. Agregamos las reglas del equipo, una feature con plan aprobado, automatizacion que corre sola, un agente con criterio propio, expertise que se activa cuando la necesitas, busqueda en internet sin salir del IDE, conexion directa con la documentacion oficial de AWS, y un ecosistema de herramientas listo con un clic. Eso no es vibe coding. Eso es software.
           </blockquote>
           <div class="cheat-sheet">
-            <h3>Referencia rápida</h3>
+            <h3>Referencia rapida</h3>
             <table>
               <thead>
-                <tr><th>Sesión</th><th>Problema que resuelve</th><th>Feature</th></tr>
+                <tr><th>Sesion</th><th>Problema que resuelve</th><th>Feature</th></tr>
               </thead>
               <tbody>
                 <tr><td>1</td><td>Velocidad inicial</td><td>Vibe Coding</td></tr>
@@ -352,7 +431,7 @@ Busca en la documentación oficial.</code></div>
                 <tr><td>6</td><td>Contexto especializado bajo demanda</td><td>Skills</td></tr>
                 <tr><td>7</td><td>Salir del IDE a buscar info</td><td>Web Search</td></tr>
                 <tr><td>8</td><td>IA desconectada del stack real</td><td>MCP</td></tr>
-                <tr><td>9</td><td>Todo disperso, difícil de compartir</td><td>Powers</td></tr>
+                <tr><td>9</td><td>Todo disperso, dificil de compartir</td><td>Powers</td></tr>
               </tbody>
             </table>
           </div>
@@ -366,7 +445,7 @@ Busca en la documentación oficial.</code></div>
   </main>
 
   <footer>
-    <p>kiro.dev</p>
+    <a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a>
   </footer>
 
   <script src="workshop.js"></script>
