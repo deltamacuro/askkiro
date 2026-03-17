@@ -21,7 +21,14 @@ body {
 .hero h1 {
   font-size: 2.4rem;
   color: #000;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.tagline {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.3rem;
 }
 
 .subtitle {
@@ -152,6 +159,23 @@ body {
   flex: 1;
   font-size: 1.05rem;
   color: #eee;
+}
+
+.step-tag {
+  background: rgba(255, 153, 0, 0.15);
+  color: #FF9900;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.step-problem {
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
 .step-toggle {
@@ -299,6 +323,53 @@ footer {
   padding: 2rem;
   color: #555;
   font-size: 0.85rem;
+}
+
+/* Closing quote */
+.closing-quote {
+  border-left: 4px solid #FF9900;
+  padding: 1.2rem 1.5rem;
+  margin: 1rem 0;
+  color: #ccc;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.7;
+  background: rgba(255, 153, 0, 0.05);
+  border-radius: 0 8px 8px 0;
+}
+
+/* Cheat sheet */
+.cheat-sheet {
+  margin-top: 1.5rem;
+}
+
+.cheat-sheet h3 {
+  color: #FF9900;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.cheat-sheet table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.cheat-sheet th {
+  text-align: left;
+  color: #FF9900;
+  padding: 0.5rem 0.4rem;
+  border-bottom: 2px solid #333;
+}
+
+.cheat-sheet td {
+  padding: 0.4rem;
+  border-bottom: 1px solid #222;
+  color: #bbb;
+}
+
+.cheat-sheet tr:hover td {
+  background: rgba(255, 153, 0, 0.05);
 }
 
 /* Responsive */

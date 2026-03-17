@@ -1,45 +1,48 @@
-# 🌡️ Kiro Paso a Paso
+# 🌡️ Kiro Demo — De vibe coding a software real
 
-Workshop interactivo para aprender las features de Kiro construyendo un conversor de temperaturas.
+Proyecto: Conversor de Temperaturas. Mismo proyecto, cada sesión lo hace más robusto. Cada paso resuelve un problema real.
 
-## ¿Qué vas a aprender?
+## Las 9 sesiones
 
-| Feature | Qué hace |
-|---------|----------|
-| 📐 Steering | Reglas que Kiro sigue siempre |
-| 🧠 Skills | Conocimiento de dominio inyectado |
-| ⚡ Hooks | Automatización basada en eventos |
-| 🤖 Agents | Roles especializados reutilizables |
-| 📋 Specs | Desarrollo guiado por requisitos |
-| 📦 Powers | Todo empaquetado y distribuible |
+| # | Problema que resuelve | Feature |
+|---|----------------------|---------|
+| 1 | Velocidad inicial | Vibe Coding |
+| 2 | Inconsistencia de equipo | Steering |
+| 3 | Features complejas sin plan | Specs |
+| 4 | Errores que se cuelan | Hooks |
+| 5 | Falta de criterio de equipo | Agents |
+| 6 | Contexto especializado bajo demanda | Skills |
+| 7 | Salir del IDE a buscar info | Web Search |
+| 8 | IA desconectada del stack real | MCP |
+| 9 | Todo disperso, difícil de compartir | Powers |
 
 ## Elige tu modo
 
-### 🧑‍💻 Self-Service (autoguiado)
+### 🧑‍💻 Self-Service
 
 ```bash
 git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git
 ```
 
-Abre la carpeta en Kiro, escribe `#workshop-guide` en el chat y luego "empezar workshop". Kiro te guía paso a paso.
+Abre en Kiro (Autopilot), escribe `#workshop-guide` y "empezar workshop".
 
-### 🎤 Presentador (clase guiada)
+### 🎤 Presentador
 
 ```bash
 git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git
 ```
 
-Incluye notas para el presentador y un guión paso a paso. Abre la [guía web](https://deltamacuro.github.io/kiro-paso-a-paso/) en modo Presentador como apoyo visual.
+Guión de clase con tiempos y notas. Usa la [guía web](https://deltamacuro.github.io/kiro-paso-a-paso/) como apoyo visual.
 
-### 🎨 Remix (versión personalizada)
+### 🎨 Remix
 
 ```bash
 git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git
 ```
 
-Abre en Kiro y pídele adaptar el proyecto a otro dominio (monedas, peso, distancias). Kiro usa la estructura como patrón.
+Adapta el proyecto a otro dominio (monedas, peso, distancias).
 
-### 📖 Ver la solución completa
+### 📖 Solución completa
 
 ```bash
 git clone -b solucion https://github.com/deltamacuro/kiro-paso-a-paso.git
@@ -48,5 +51,3 @@ git clone -b solucion https://github.com/deltamacuro/kiro-paso-a-paso.git
 ## Guía web interactiva
 
 👉 [deltamacuro.github.io/kiro-paso-a-paso](https://deltamacuro.github.io/kiro-paso-a-paso/)
-
-Soporta los tres modos con pasos interactivos, barra de progreso y notas contextuales.
