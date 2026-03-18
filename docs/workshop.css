@@ -261,23 +261,59 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .kiro-chat {
   background: #08080c;
   border: 1px solid rgba(117,64,176,0.25);
-  border-radius: 8px; margin: 0.4rem 0; overflow: hidden;
+  border-radius: 8px; margin: 0.4rem 0;
   box-shadow: 0 2px 12px rgba(117,64,176,0.08);
 }
-.kiro-bar { padding: 0.25rem 0.7rem; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.62rem; color: var(--dim); font-weight: 500; }
+.kiro-bar { padding: 0.25rem 0.7rem; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.62rem; color: var(--dim); font-weight: 500; border-radius: 8px 8px 0 0; }
 .kiro-chat code { display: block; padding: 0.5rem 0.7rem; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--text); white-space: pre-wrap; line-height: 1.5; }
 .kiro-chat pre { margin: 0; }
 .kiro-chat pre code { padding: 0.5rem 0.7rem; }
 .ask-btn {
+  position: relative;
   display: flex; align-items: center; gap: 0.3rem;
   margin: 0 0.7rem 0.4rem auto;
-  background: var(--accent); color: var(--bg); border: none; border-radius: 6px;
-  padding: 0.28rem 0.65rem;
+  background: var(--surface); color: var(--text);
+  border: 1px solid rgba(117,64,176,0.35);
+  border-radius: 8px;
+  padding: 0.32rem 0.7rem 0.32rem 1.6rem;
   font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
-  cursor: pointer; transition: all 0.15s;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+  box-shadow: 0 0 8px rgba(117,64,176,0.1);
+  overflow: visible;
 }
-.ask-btn:hover { background: var(--accent-bright); }
-.ask-btn.copied { background: var(--accent-bright); }
+.ask-btn::before {
+  content: '';
+  position: absolute;
+  left: -0.55rem; top: 50%;
+  width: 1.5rem; height: 1.5rem;
+  transform: translateY(-50%);
+  background: url('kiro.svg') center/contain no-repeat;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 4px rgba(117,64,176,0.4));
+  animation: ghostPeek 3s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s;
+}
+.ask-btn:hover {
+  border-color: rgba(194,169,223,0.5);
+  box-shadow: 0 0 14px rgba(117,64,176,0.25), 0 0 4px rgba(117,64,176,0.15) inset;
+  color: var(--accent-bright);
+}
+.ask-btn:hover::before {
+  transform: translateY(-50%) translateX(0.1rem) scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(117,64,176,0.6));
+}
+.ask-btn.copied {
+  border-color: var(--accent-bright);
+  color: var(--accent-bright);
+  box-shadow: 0 0 12px rgba(117,64,176,0.3);
+}
+
+@keyframes ghostPeek {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  30% { transform: translateY(-50%) translateX(0.08rem); }
+  60% { transform: translateY(-52%) translateX(-0.03rem); }
+}
 
 .mission-action { font-size: 0.85rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.7rem; margin: 0.4rem 0; }
 .action-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--border); color: var(--muted); padding: 0.1rem 0.3rem; border-radius: 3px; margin-right: 0.3rem; }
