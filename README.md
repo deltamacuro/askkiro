@@ -1,4 +1,4 @@
-# 🌡️ Kiro Paso a Paso — De vibe coding a software real
+# 🌡️ Ask Kiro — De vibe coding a software real
 
 Proyecto: Conversor de Temperaturas. Mismo proyecto, cada sesión lo hace más robusto. Cada paso resuelve un problema real.
 
