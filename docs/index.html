@@ -55,7 +55,7 @@
             <span class="hero-flow-label">Pega en el chat</span>
           </div>
         </div>
-        <a href="https://kiro.dev" target="_blank" rel="noopener" class="hero-get-kiro">No tienes Kiro? Descargalo gratis</a>
+        <a href="#help" class="hero-get-kiro">Necesitas ayuda para empezar?</a>
         <details class="chat-preview" id="chat-preview">
           <summary class="chat-preview-toggle">Ver que se envia a Kiro</summary>
           <div class="chat-preview-window">
@@ -490,6 +490,32 @@ Busca en la documentacion oficial.</code>
         <span class="other-mode-title">Remix</span>
         <span class="other-mode-desc">Crea tu propia version del workshop para otro dominio</span>
       </a>
+    </div>
+  </section>
+
+  <section class="help-section" id="help">
+    <p class="help-title">Necesitas ayuda para empezar?</p>
+    <div class="help-grid">
+      <details class="help-item">
+        <summary>Como instalar Kiro</summary>
+        <p>Descargalo gratis desde <a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a>. Disponible para macOS, Windows y Linux. Instalalo como cualquier app y abrilo.</p>
+      </details>
+      <details class="help-item">
+        <summary>Como ver la app en el browser</summary>
+        <p>Opcion 1: Instala la extension <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener">Live Server</a> en Kiro. Click derecho en <code>index.html</code> &rarr; "Open with Live Server".</p>
+        <p>Opcion 2: Abre el archivo <code>index.html</code> directamente en tu browser (doble clic en el archivo o arrastralo al browser).</p>
+      </details>
+      <details class="help-item">
+        <summary>Como descargar el proyecto manualmente</summary>
+        <p>Si Kiro no puede clonar el repo automaticamente:</p>
+        <p>Terminal: <code>git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git</code></p>
+        <p>Sin git: <a href="https://github.com/deltamacuro/kiro-paso-a-paso/archive/refs/heads/modo-self-service.zip">Descargar ZIP</a></p>
+        <p>Desde Kiro: Cmd+Shift+P &rarr; <code>Git: Clone</code> &rarr; pega la URL del repo.</p>
+      </details>
+      <details class="help-item">
+        <summary>Que es modo Autopilot</summary>
+        <p>Es el modo en el que Kiro puede ejecutar acciones automaticamente (crear archivos, correr comandos, etc). Lo ves abajo a la derecha en la barra de estado de Kiro. Si dice "Supervised", cambialo a "Autopilot".</p>
+      </details>
     </div>
   </section>
 
