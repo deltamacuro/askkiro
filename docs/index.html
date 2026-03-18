@@ -80,14 +80,14 @@
           <p>Un prompt. Treinta segundos. App funcionando. Asi arranca el vibe coding: le dices que quieres y aparece.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Crea una web app de conversor de temperaturas</code>
+            <code>Crea un juego tipo Dino Runner: un personaje que corre, salta obstaculos con la barra espaciadora y tiene puntaje. HTML, CSS y JS.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: una app funcional en el browser. Puede crear un solo archivo o tres separados, ambas opciones son validas.</p>
+          <p class="mission-result">Resultado: un juego funcional en el browser. Puede crear un solo archivo o tres separados, ambas opciones son validas.</p>
           <p class="mission-tip">Instala la extension Live Server para ver la app en tiempo real. Click derecho en index.html &rarr; "Open with Live Server".</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
-            <p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev toca este codigo?"</p>
+            <p>"Un prompt. Treinta segundos. Tenemos un juego. Pero... ¿que pasa cuando otro dev toca este codigo?"</p>
             <p class="pnote-ask">Pregunta a la audiencia: "¿Quienes ya conocen Kiro? ¿Quienes usan otra herramienta tipo Cursor?"</p>
             <p class="pnote-time">~3 min</p>
           </div>
@@ -115,7 +115,7 @@
           <p class="mission-then">Ahora pruebalo:</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Refactoriza el conversor siguiendo las convenciones del proyecto.</code>
+            <code>Refactoriza el juego siguiendo las convenciones del proyecto.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol, archivos separados. Sin repetir las reglas.</p>
@@ -136,10 +136,10 @@
           <span class="mission-tag">Fase 1 &middot; Specs</span>
           <h2>Planifica antes de codear</h2>
           <p>El vibe coding es rapido pero impredecible. El spec-driven development invierte tiempo al principio para que despues la ejecucion salga bien: requirements &rarr; design &rarr; tasks.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; <code>historial-conversiones</code></div>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; <code>sistema-de-vidas</code></div>
           <div class="kiro-chat">
             <div class="kiro-bar">Descripcion</div>
-            <pre><code>Agregar historial de conversiones al conversor. El usuario ve sus ultimas 10 conversiones, puede limpiar el historial y hacer clic en una entrada para reutilizarla. Los datos persisten con localStorage.</code></pre>
+            <pre><code>Agregar sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: requirements, design y tasks generados. Kiro te pide aprobar cada paso antes de avanzar al siguiente.</p>
@@ -193,7 +193,7 @@
           <p class="mission-then">Invocalo:</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>@revisor revisa app.js y dime si lo aprobarias para produccion.</code>
+            <code>@revisor revisa game.js y dime si lo aprobarias para produccion.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles. El agente aplica su criterio, no solo ejecuta.</p>
@@ -216,22 +216,22 @@
           <p>El steering dice "que quiero". La skill dice "como se hace algo especifico": conocimiento de dominio que Kiro activa cuando lo necesita.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Crea una skill llamada "fisica-temperaturas" que sepa sobre escalas de temperatura, rangos fisicos validos y el cero absoluto.</code>
+            <code>Crea una skill llamada "game-physics" que sepa sobre gravedad en juegos 2D, curvas de dificultad, hitboxes y game feel.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-then">Pruebalo:</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>¿Que pasa si el usuario intenta convertir -300°C?</code>
+            <code>El salto del personaje se siente flotante. ¿Como hago que se sienta mas responsivo y satisfactorio?</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: Kiro activa la skill y sabe que -300°C esta por debajo del cero absoluto (-273.15°C).</p>
+          <p class="mission-result">Resultado: Kiro activa la skill y recomienda gravedad variable (mas fuerte al caer), coyote time y input buffering.</p>
           <p class="mission-tip">Si la skill no aparece en el panel, dile a Kiro: "revisa que la skill cumpla con la documentacion oficial de Kiro, investiga en internet".</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"Kiro supo cuando necesitaba ese conocimiento. No se lo tuve que decir."</p>
             <p>Mostrar que la skill aparece en .kiro/skills/. Explicar la diferencia: steering = convenciones (el que), skills = conocimiento de dominio (el como), agents = personalidad (el quien).</p>
-            <p>Probar -1 Kelvin en la app para mostrar que ahora valida fisicamente.</p>
+            <p>Probar un salto en el juego para mostrar que ahora se siente mejor fisicamente.</p>
             <p class="pnote-ask">Pregunta: "¿Que conocimiento de dominio tiene su negocio que podria ser una skill? ¿KPIs? ¿Modelos de datos? ¿APIs internas?"</p>
             <p class="pnote-time">~5 min</p>
           </div>
@@ -246,7 +246,7 @@
           <p>Necesitas un dato, sales al browser, abres 5 pestanas, pierdes el flow. Kiro busca en internet directo desde el chat.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>¿Cual fue la temperatura mas baja registrada en la Tierra y donde?</code>
+            <code>¿Cual es el record mundial del juego del dinosaurio de Chrome y como se logra?</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: dato real con fuente, directo en el chat. Sin abrir ninguna pestana.</p>
@@ -310,7 +310,7 @@
           <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Powers &rarr; busca "Build a Power" &rarr; instalar</div>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de fisica de temperaturas, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
+            <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de game physics, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: un paquete instalable. Otro dev lo instala desde una URL o carpeta y tiene todo el contexto listo.</p>
