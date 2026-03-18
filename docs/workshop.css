@@ -744,45 +744,60 @@ body.mode-remix .setup-card { display: none; }
   font-style: italic;
 }
 
-/* Prompt blocks (what to type in Kiro chat) */
+/* Prompt blocks (Kiro chat style) */
 .prompt-block {
-  background: #0d0d14;
-  border: 1px solid var(--kiro-accent);
-  border-radius: 6px;
-  padding: 0.6rem 0.8rem;
+  background: #0a0a0f;
+  border: 1px solid var(--kiro-border);
+  border-radius: 10px;
   margin: 0.5rem 0 0.8rem;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.prompt-block::before {
+  content: 'Kiro Chat';
+  display: block;
+  padding: 0.35rem 0.7rem;
+  background: var(--kiro-surface);
+  border-bottom: 1px solid var(--kiro-border);
+  font-size: 0.65rem;
+  color: var(--kiro-text-dim);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .prompt-block code {
-  flex: 1;
+  display: block;
+  padding: 0.6rem 0.7rem;
   color: var(--kiro-text);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   white-space: pre-wrap;
-  min-width: 0;
+  line-height: 1.5;
 }
 
-.prompt-label, .action-label {
+.prompt-block .copy-btn {
+  margin: 0 0.7rem 0.5rem auto;
+  display: block;
+}
+
+.prompt-label {
+  display: none;
+}
+
+/* Action blocks (what to do in Kiro UI) */
+.action-label {
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0.1rem 0.4rem;
   border-radius: 3px;
-  flex-shrink: 0;
+  background: var(--kiro-border);
+  color: var(--kiro-text-muted);
+  display: inline-block;
+  margin-bottom: 0.3rem;
 }
 
-.prompt-label {
-  background: var(--kiro-accent);
-  color: var(--kiro-bg);
-}
-
-/* Action blocks (what to do in Kiro UI) */
 .action-block {
   background: var(--kiro-surface);
   border: 1px solid var(--kiro-border);
@@ -794,13 +809,6 @@ body.mode-remix .setup-card { display: none; }
 .action-block p {
   margin: 0;
   font-size: 0.88rem;
-}
-
-.action-label {
-  background: var(--kiro-border);
-  color: var(--kiro-text-muted);
-  display: inline-block;
-  margin-bottom: 0.3rem;
 }
 
 /* Code blocks (reference code, not prompts) */
