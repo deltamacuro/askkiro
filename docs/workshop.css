@@ -62,6 +62,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   content: '';
   position: fixed;
   inset: 0;
+  will-change: transform;
   background-image:
     radial-gradient(1px 1px at 10% 20%, rgba(117,64,176,0.6) 50%, transparent 50%),
     radial-gradient(1px 1px at 80% 15%, rgba(194,169,223,0.5) 50%, transparent 50%),
@@ -144,31 +145,62 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .start-actions {
   display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
 }
+/* Continuar: CTA primario cuando hay progreso (mismo peso visual que Empezar) */
 .start-btn-secondary {
   position: relative; z-index: 2;
-  background: transparent;
-  color: var(--accent-bright); border: 1.5px solid rgba(117,64,176,0.4);
-  padding: 0.85rem 2.5rem; border-radius: 14px;
-  font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600;
+  background: linear-gradient(135deg, var(--accent) 0%, #5b2d8e 100%);
+  color: #fff; border: none;
+  padding: 0.85rem 3.5rem; border-radius: 14px;
+  font-family: 'Inter', sans-serif; font-size: 1.15rem; font-weight: 700;
   cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 25px rgba(117,64,176,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
   text-transform: uppercase; letter-spacing: 0.08em;
-  animation: staggerIn 0.5s ease forwards 0.5s;
+  animation: staggerIn 0.5s ease forwards 0.4s, btnPulse 2.5s ease-in-out 0.9s infinite;
 }
 .start-btn-secondary:hover {
-  background: rgba(117,64,176,0.12);
-  border-color: rgba(194,169,223,0.5);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 40px rgba(117,64,176,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  animation: staggerIn 0.5s ease forwards, btnPulse 2.5s ease-in-out 0.9s infinite;
 }
+/* Reiniciar: accion destructiva, baja jerarquia visual */
 .start-btn-reset {
   background: none; border: none;
   color: var(--dim); font-family: 'Inter', sans-serif;
   font-size: 0.75rem; font-weight: 500;
-  cursor: pointer; transition: color 0.2s;
+  cursor: pointer; transition: color 0.25s, text-decoration-color 0.25s;
   padding: 0.3rem 0; text-decoration: underline;
   text-decoration-color: transparent;
   animation: staggerIn 0.5s ease forwards 0.6s;
 }
-.start-btn-reset:hover { color: var(--accent-bright); text-decoration-color: var(--accent-bright); }
+.start-btn-reset:hover { color: var(--muted); text-decoration-color: var(--muted); }
+
+/* Reset confirmation modal */
+.reset-panel { max-width: 360px; text-align: center; }
+.reset-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--accent-dim); color: var(--accent-bright); font-size: 1rem;
+}
+.reset-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
+.reset-actions { display: flex; gap: 0.6rem; }
+.reset-cancel {
+  flex: 1; padding: 0.6rem; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, #5b2d8e 100%);
+  border: none; color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(117,64,176,0.3);
+}
+.reset-cancel:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(117,64,176,0.4); }
+.reset-confirm {
+  flex: 1; padding: 0.6rem; border-radius: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--muted); font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; font-weight: 500; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.reset-confirm:hover { border-color: var(--accent); color: var(--accent-bright); }
 .start-modes { margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .start-mode:hover { color: var(--accent); }
@@ -182,6 +214,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   width: clamp(280px, 30vw, 400px); height: auto;
   transform: scaleX(-1) rotate(-3deg);
   animation: ghostFloat 4s ease-in-out infinite;
+  will-change: transform;
   filter:
     drop-shadow(0 0 60px rgba(117,64,176,0.5))
     drop-shadow(0 0 120px rgba(117,64,176,0.2))
@@ -367,6 +400,48 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   color: var(--accent); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem;
 }
 
+/* MCP PICKER */
+.mcp-pick {
+  list-style: none; padding: 0; margin: 0.5rem 0;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.mcp-pick-item {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.55rem 0.75rem;
+  font-size: 0.85rem; color: var(--text); line-height: 1.4;
+}
+.mcp-pick-item strong { font-weight: 600; }
+.mcp-pick-desc {
+  width: 100%; font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem;
+}
+.mcp-recommended {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.mcp-pick-badge {
+  font-size: 0.62rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--accent-bright);
+  background: rgba(117,64,176,0.18); border-radius: 4px;
+  padding: 0.12rem 0.4rem;
+}
+
+/* MCP MANUAL (details/summary) */
+.mcp-manual { margin: 0.5rem 0; font-size: 0.82rem; }
+.mcp-manual summary {
+  color: var(--muted); cursor: pointer; padding: 0.3rem 0;
+  list-style: none;
+}
+.mcp-manual summary::before {
+  content: '▸ '; color: var(--dim); transition: transform 0.2s;
+}
+.mcp-manual[open] summary::before { content: '▾ '; }
+.mcp-manual summary:hover { color: var(--accent-bright); }
+.mcp-manual summary code {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+  background: var(--accent-dim); padding: 0.1rem 0.35rem; border-radius: 4px;
+}
+
 /* PRESENTER */
 .pnote { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 0.55rem 0.85rem; border-radius: 0 6px 6px 0; margin: 0.7rem 0; font-size: 0.82rem; display: none; line-height: 1.5; }
 .pnote p { margin: 0 0 0.3rem; }
@@ -496,6 +571,7 @@ body.mode-presenter .pnote { display: block; }
 }
 .end-ghost {
   width: clamp(180px, 25vw, 260px); height: auto;
+  will-change: transform, filter;
   animation:
     endGhostIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards,
     endGhostPower 4s ease-in-out 1.4s infinite,

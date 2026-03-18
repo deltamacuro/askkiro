@@ -39,7 +39,7 @@
         <img src="kiro.svg" alt="Fantasma de Kiro, mascota del tutorial" class="start-ghost-img">
       </div>
       <div class="start-left anim-stagger">
-        <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a></p>
+        <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a></p>
         <h1>De vibe coding<br>a software real</h1>
         <p class="start-sub">3 fases &middot; 9 misiones &middot; 30 minutos</p>
         <div class="start-actions" id="start-actions">
@@ -270,20 +270,51 @@
           <span class="mission-tag">Fase 3 &middot; MCP</span>
           <h2>Conecta con AWS en tiempo real</h2>
           <p>La IA generica no sabe que servicios existen hoy. Los MCP (Model Context Protocol) son conectores que le dan a Kiro acceso a fuentes de informacion externas en tiempo real.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Abre <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener">github.com/awslabs/mcp</a> &rarr; haz clic en "Install in Kiro" en el MCP que quieras</div>
-          <p>El repo de <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener">awslabs/mcp</a> tiene todos los MCP oficiales de AWS con boton de instalacion directa. Un clic y queda configurado.</p>
-          <p class="mission-then">Ahora pregunta:</p>
+          <p class="mission-then">Elige un MCP para instalar:</p>
+          <ul class="mcp-pick">
+            <li class="mcp-pick-item mcp-recommended">
+              <strong>AWS Documentation</strong> <span class="mcp-pick-badge">recomendado</span>
+              <span class="mcp-pick-desc">Busca y lee docs oficiales de AWS. Ideal para empezar.</span>
+            </li>
+            <li class="mcp-pick-item">
+              <strong>AWS Core</strong>
+              <span class="mcp-pick-desc">Todo-en-uno: docs + knowledge base + mas herramientas.</span>
+            </li>
+            <li class="mcp-pick-item">
+              <strong>CDK</strong>
+              <span class="mcp-pick-desc">Infraestructura como codigo con AWS CDK.</span>
+            </li>
+          </ul>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Abre <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener noreferrer">awslabs/mcp</a> &rarr; busca el que elegiste &rarr; clic en "Install in Kiro"</div>
+          <details class="mcp-manual">
+            <summary>¿Prefieres instalar manual? Copia este JSON en <code>.kiro/settings/mcp.json</code></summary>
+            <div class="kiro-chat">
+              <div class="kiro-bar">mcp.json</div>
+              <pre><code>{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": { "FASTMCP_LOG_LEVEL": "ERROR" },
+      "autoApprove": []
+    }
+  }
+}</code></pre>
+              <button class="ask-btn">Copiar</button>
+            </div>
+          </details>
+          <p class="mission-then">Ahora pruebalo:</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>¿Cual es la mejor forma de hacer deploy de esta app a hosting estatico en AWS? Busca en la documentacion oficial.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS, con fuentes y opciones comparadas.</p>
-          <p class="mission-tip">Recomendado: empieza con el Core MCP Server (awslabs-core-mcp-server), que incluye documentacion, knowledge base y mas. Si prefieres instalar manual, copia el bloque de mcp.json desde el repo.</p>
+          <p class="mission-tip">Todos los MCP oficiales de AWS estan en <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener noreferrer">awslabs/mcp</a>. Tambien hay MCPs de Atlassian, GitHub, bases de datos y mas &mdash; son conectores universales.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"Un clic en GitHub. Documentacion oficial, leida en tiempo real, aplicada a tu proyecto."</p>
-            <p>Abrir <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener">github.com/awslabs/mcp</a> y mostrar el boton "Install in Kiro". Explicar que hay MCPs oficiales de AWS, Atlassian, y muchos mas. Recomendar el Core MCP Server como punto de partida.</p>
+            <p>Abrir <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener noreferrer">github.com/awslabs/mcp</a> y mostrar el boton "Install in Kiro". Recomendar AWS Documentation como primer MCP. Mostrar la alternativa manual con el JSON para quienes prefieran copiar.</p>
             <p>Si alguien tiene error 3000: falta uvx. Solucion rapida: pedirle a Kiro que lo instale.</p>
             <p class="pnote-ask">Pregunta: "¿Los MCP son solo de AWS? No. Hay de Atlassian, GitHub, bases de datos... Son conectores universales."</p>
             <p class="pnote-time">~5 min</p>
@@ -320,7 +351,7 @@
     <!-- BOTTOM NAV -->
     <nav class="bottombar">
       <button class="nav-btn" id="btn-prev" disabled aria-label="Mision anterior">Anterior</button>
-      <div class="nav-dots" id="nav-dots" aria-label="Navegacion de misiones"></div>
+      <div class="nav-dots" id="nav-dots" role="group" aria-label="Navegacion de misiones"></div>
       <button class="nav-btn nav-btn-next" id="btn-next" aria-label="Siguiente mision">Siguiente</button>
     </nav>
   </div>
@@ -381,19 +412,19 @@
       </div>
       <div class="end-share">
         <span class="end-share-label">Compartir:</span>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Faskkiro.info" target="_blank" rel="noopener" class="end-share-btn" aria-label="Compartir en LinkedIn" title="Compartir en LinkedIn">
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Faskkiro.info" target="_blank" rel="noopener noreferrer" class="end-share-btn" aria-label="Compartir en LinkedIn" title="Compartir en LinkedIn">
           <i class="fa-brands fa-linkedin-in"></i>
         </a>
-        <a href="https://twitter.com/intent/tweet?text=Acabo%20de%20completar%20las%209%20misiones%20de%20Ask%20Kiro%20%F0%9F%91%BB%20De%20vibe%20coding%20a%20software%20real.&url=https%3A%2F%2Faskkiro.info" target="_blank" rel="noopener" class="end-share-btn" aria-label="Compartir en X" title="Compartir en X">
+        <a href="https://twitter.com/intent/tweet?text=Acabo%20de%20completar%20las%209%20misiones%20de%20Ask%20Kiro%20%F0%9F%91%BB%20De%20vibe%20coding%20a%20software%20real.&url=https%3A%2F%2Faskkiro.info" target="_blank" rel="noopener noreferrer" class="end-share-btn" aria-label="Compartir en X" title="Compartir en X">
           <i class="fa-brands fa-x-twitter"></i>
         </a>
       </div>
       <div class="end-links">
-        <a href="https://www.linkedin.com/newsletters/7440020320763420673/" target="_blank" rel="noopener" class="end-footer-link">
+        <a href="https://www.linkedin.com/newsletters/7440020320763420673/" target="_blank" rel="noopener noreferrer" class="end-footer-link">
           <i class="fa-brands fa-linkedin-in"></i> Newsletter
         </a>
         <span class="end-link-sep">&middot;</span>
-        <a href="https://github.com/deltamacuro/kiro-paso-a-paso" target="_blank" rel="noopener" class="end-footer-link">
+        <a href="https://github.com/deltamacuro/kiro-paso-a-paso" target="_blank" rel="noopener noreferrer" class="end-footer-link">
           <i class="fa-brands fa-github"></i> GitHub
         </a>
       </div>
@@ -408,7 +439,7 @@
       <div class="help-items">
         <details class="help-item">
           <summary>Como instalar Kiro</summary>
-          <p>Descargalo gratis desde <a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a>.</p>
+          <p>Descargalo gratis desde <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">kiro.dev</a>.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>Ayudame a instalar Kiro en mi computadora</code>
@@ -471,7 +502,7 @@
           </div>
         </div>
       </div>
-      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a> abierto con un proyecto vacio. Busca "Live Server" en extensiones (Cmd+Shift+X) para ver la app en el browser.</span></p>
+      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a> abierto con un proyecto vacio. Busca "Live Server" en extensiones (Cmd+Shift+X) para ver la app en el browser.</span></p>
       <button class="onboard-go" id="btn-onboard-go">Entendido, vamos</button>
     </div>
   </div>
@@ -508,6 +539,21 @@
       </div>
       <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Prepara un proyecto vacio en Kiro con Autopilot activado antes de empezar. Haz las misiones en vivo.</span></p>
       <button class="onboard-go" id="btn-presenter-go">Listo, a presentar</button>
+    </div>
+  </div>
+
+  <!-- RESET CONFIRMATION MODAL -->
+  <div class="onboard-overlay" id="reset-overlay">
+    <div class="onboard-panel reset-panel">
+      <div class="onboard-header">
+        <span class="reset-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <h3>¿Reiniciar progreso?</h3>
+      </div>
+      <p class="reset-desc">Tu avance en las 9 misiones se borrara. Vas a empezar desde cero.</p>
+      <div class="reset-actions">
+        <button class="reset-cancel" id="btn-reset-cancel">Cancelar</button>
+        <button class="reset-confirm" id="btn-reset-confirm">Borrar todo</button>
+      </div>
     </div>
   </div>
 

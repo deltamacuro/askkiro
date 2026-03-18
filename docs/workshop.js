@@ -9,6 +9,8 @@
   let visited = {};
   /** @type {boolean} Indica si hay una transicion de pantalla en curso */
   let transitioning = false;
+  /** @type {string|null} Pantalla guardada en localStorage */
+  let savedScreen = null;
   /** @type {number} Duracion del fade-out en ms (debe coincidir con CSS transition) */
   const FADE_MS = 350;
 
@@ -47,9 +49,9 @@
   function restoreMode() {
     const hash = location.hash.replace('#', '');
     if (hash === 'presenter') {
-      document.body.className = 'mode-presenter';
+      document.body.classList.add('mode-presenter');
     } else if (hash === 'remix') {
-      document.body.className = 'mode-remix';
+      document.body.classList.add('mode-remix');
     }
   }
 
@@ -121,6 +123,16 @@
     trackEvent('mission_view', { mission: n, phase: phase, title: missionTitles[n] || '' });
     updateUI();
     saveState();
+  }
+
+  /**
+   * Finaliza el tutorial: marca la ultima mision, trackea el evento y navega a screen-end.
+   */
+  function finishTutorial() {
+    visited[current] = true;
+    trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' });
+    switchScreen('screen-end');
+    setTimeout(saveState, FADE_MS + 50);
   }
 
   /**
@@ -215,7 +227,7 @@
       else { goTo(current - 1); }
     });
     if (next) next.addEventListener('click', function () {
-      if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); setTimeout(saveState, FADE_MS + 50); }
+      if (current >= total) { finishTutorial(); }
       else { goTo(current + 1); }
     });
 
@@ -237,10 +249,12 @@
 
       const play = document.getElementById('screen-play');
       if (!play || !play.classList.contains('active')) return;
+      if (e.repeat) return;
+      if (['BUTTON', 'A', 'SUMMARY'].includes(e.target.tagName)) return;
       if (e.key === 'ArrowRight' || e.key === 'Enter') {
         e.preventDefault();
         if (current < total) goTo(current + 1);
-        else if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); setTimeout(saveState, FADE_MS + 50); }
+        else if (current >= total) { finishTutorial(); }
       }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
@@ -370,12 +384,23 @@
    * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
    */
   /**
-   * Actualiza visibilidad de botones Continuar/Reiniciar en screen-start.
+   * Actualiza visibilidad de botones en screen-start segun progreso.
+   * Sin progreso: solo "Empezar". Con progreso: "Continuar" (primario) + "Reiniciar" (destructivo).
    */
   function updateStartButtons() {
+    const btnPlay = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
     const btnReset = document.getElementById('btn-reset');
-    const hasProgress = current > 1;
+    const hasProgress = current > 1 || Object.keys(visited).length > 0 || savedScreen === 'screen-end';
+    if (btnPlay) {
+      const wasHidden = btnPlay.hidden;
+      btnPlay.hidden = hasProgress;
+      if (wasHidden && !hasProgress) {
+        btnPlay.style.animation = 'none';
+        btnPlay.offsetHeight; /* forzar reflow */
+        btnPlay.style.animation = '';
+      }
+    }
     if (btnContinue) btnContinue.hidden = !hasProgress;
     if (btnReset) btnReset.hidden = !hasProgress;
   }
@@ -410,6 +435,24 @@
     });
 
     if (btnReset) btnReset.addEventListener('click', function () {
+      const overlay = document.getElementById('reset-overlay');
+      if (overlay) {
+        overlay.classList.add('open');
+        const cancelBtn = document.getElementById('btn-reset-cancel');
+        if (cancelBtn) cancelBtn.focus();
+      }
+    });
+
+    const resetCancel = document.getElementById('btn-reset-cancel');
+    const resetConfirm = document.getElementById('btn-reset-confirm');
+    const resetOverlay = document.getElementById('reset-overlay');
+
+    if (resetCancel && resetOverlay) resetCancel.addEventListener('click', function () {
+      resetOverlay.classList.remove('open');
+    });
+
+    if (resetConfirm && resetOverlay) resetConfirm.addEventListener('click', function () {
+      resetOverlay.classList.remove('open');
       current = 1;
       visited = {};
       savedScreen = null;
@@ -417,6 +460,15 @@
       updateUI();
       updateStartButtons();
     });
+
+    if (resetOverlay) {
+      resetOverlay.addEventListener('click', function (e) {
+        if (e.target === resetOverlay) resetOverlay.classList.remove('open');
+      });
+      resetOverlay.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') resetOverlay.classList.remove('open');
+      });
+    }
 
     const onboardGo = document.getElementById('btn-onboard-go');
     if (onboardGo) onboardGo.addEventListener('click', function () {
@@ -433,7 +485,8 @@
 
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
-      document.body.className = 'mode-presenter';
+      document.body.classList.remove('mode-presenter', 'mode-remix');
+      document.body.classList.add('mode-presenter');
       setModeHash('presenter');
       trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
       switchScreen('screen-start');
@@ -452,7 +505,8 @@
         e.preventDefault();
         if (link.getAttribute('aria-disabled') === 'true') return;
         const mode = link.getAttribute('data-mode');
-        document.body.className = 'mode-' + mode;
+        document.body.classList.remove('mode-presenter', 'mode-remix');
+        document.body.classList.add('mode-' + mode);
         setModeHash(mode);
         trackEvent('mode_select', { mode: mode });
         switchScreen('screen-play');
@@ -520,9 +574,6 @@
   /**
    * Restaura el estado desde localStorage.
    */
-  /** @type {string|null} Pantalla guardada en localStorage */
-  let savedScreen = null;
-
   function loadState() {
     try {
       const data = localStorage.getItem('kiroWS');
