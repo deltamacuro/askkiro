@@ -179,6 +179,71 @@ body {
   color: var(--kiro-accent);
 }
 
+/* Hero flow steps */
+.hero-flow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.hero-flow-step {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  opacity: 0.35;
+  transition: all 0.3s;
+}
+
+.hero-flow-step.active {
+  opacity: 1;
+}
+
+.hero-flow-step.done {
+  opacity: 0.5;
+}
+
+.hero-flow-step.done .hero-flow-num {
+  background: var(--kiro-accent);
+  color: var(--kiro-bg);
+}
+
+.hero-flow-step.active .hero-flow-num {
+  background: var(--kiro-accent);
+  color: var(--kiro-bg);
+  animation: flowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes flowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.3); }
+}
+
+.hero-flow-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--kiro-border);
+  color: var(--kiro-text-dim);
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.hero-flow-label {
+  font-size: 0.75rem;
+  color: var(--kiro-text-muted);
+}
+
+.hero-flow-arrow {
+  color: var(--kiro-text-dim);
+  font-size: 0.75rem;
+  opacity: 0.4;
+}
+
 .hero-details {
   margin-top: 0.2rem;
 }

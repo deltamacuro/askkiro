@@ -385,6 +385,16 @@ function configurarAskKiroBtn() {
             status.classList.add('active');
           }
 
+          // Animate flow steps
+          var steps = document.querySelectorAll('.hero-flow-step');
+          steps.forEach(function(s) { s.classList.remove('active', 'done'); });
+          if (steps[0]) steps[0].classList.add('done');
+          if (steps[1]) steps[1].classList.add('active');
+          setTimeout(function() {
+            if (steps[1]) { steps[1].classList.remove('active'); steps[1].classList.add('done'); }
+            if (steps[2]) steps[2].classList.add('active');
+          }, 1500);
+
           setTimeout(function() {
             btn.classList.remove('copied');
             var mode = getCurrentMode();
@@ -394,7 +404,8 @@ function configurarAskKiroBtn() {
               status.textContent = '';
               status.classList.remove('active');
             }
-          }, 4000);
+            steps.forEach(function(s) { s.classList.remove('active', 'done'); });
+          }, 5000);
         });
       } catch (error) {
         console.error('Error: no se pudo copiar el prompt', error);
