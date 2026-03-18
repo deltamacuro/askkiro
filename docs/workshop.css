@@ -230,7 +230,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 
 /* MISSION AREA */
 .mission-area { flex: 1; display: flex; align-items: safe center; justify-content: center; overflow-y: auto; padding: 1.5rem; position: relative; z-index: 1; }
-.mission { display: none; max-width: 560px; width: 100%; }
+.mission { display: none; max-width: 640px; width: 100%; }
 .mission.active { display: block; animation: missionIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes missionIn {
   from { opacity: 0; transform: translateX(20px) scale(0.98); }
@@ -246,32 +246,32 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   border: 1px solid rgba(117,64,176,0.2);
 }
 .mission h2 {
-  font-size: 1.25rem; font-weight: 700; margin: 0.2rem 0 0.4rem;
+  font-size: 1.4rem; font-weight: 700; margin: 0.35rem 0 0.6rem;
   background: linear-gradient(135deg, #fff 0%, var(--accent-bright) 70%, var(--accent) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 1px 6px rgba(117,64,176,0.2));
 }
-.mission-inner > p { font-size: 0.88rem; color: #9a9a9f; margin-bottom: 0.5rem; }
-.mission-result { font-size: 0.82rem; color: var(--accent-bright); font-weight: 500; margin: 0.5rem 0; }
+.mission-inner > p { font-size: 0.92rem; color: #9a9a9f; margin-bottom: 0.7rem; line-height: 1.5; }
+.mission-result { font-size: 0.85rem; color: var(--accent-bright); font-weight: 500; margin: 0.7rem 0; }
 .mission-result::before { content: '✦ '; opacity: 0.7; }
-.mission-then { font-size: 0.85rem; color: var(--muted); margin: 0.5rem 0 0.15rem; }
+.mission-then { font-size: 0.88rem; color: var(--muted); margin: 0.7rem 0 0.2rem; }
 
 /* KIRO CHAT */
 .kiro-chat {
   background: #08080c;
   border: 1px solid rgba(117,64,176,0.25);
-  border-radius: 8px; margin: 0.4rem 0;
+  border-radius: 10px; margin: 0.6rem 0;
   box-shadow: 0 2px 12px rgba(117,64,176,0.08);
 }
-.kiro-bar { padding: 0.25rem 0.7rem; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.62rem; color: var(--dim); font-weight: 500; border-radius: 8px 8px 0 0; }
-.kiro-chat code { display: block; padding: 0.5rem 0.7rem; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--text); white-space: pre-wrap; line-height: 1.5; }
+.kiro-bar { padding: 0.35rem 0.85rem; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.65rem; color: var(--dim); font-weight: 500; border-radius: 10px 10px 0 0; }
+.kiro-chat code { display: block; padding: 0.7rem 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text); white-space: pre-wrap; line-height: 1.6; }
 .kiro-chat pre { margin: 0; }
-.kiro-chat pre code { padding: 0.5rem 0.7rem; }
+.kiro-chat pre code { padding: 0.7rem 0.85rem; }
 .ask-btn {
   position: relative;
   display: flex; align-items: center; gap: 0.3rem;
-  margin: 0 0.7rem 0.4rem auto;
+  margin: 0.15rem 0.85rem 0.5rem auto;
   background: var(--surface); color: var(--text);
   border: 1px solid rgba(117,64,176,0.35);
   border-radius: 8px;
@@ -323,7 +323,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   80% { transform: translateY(-50%) scaleX(-1) rotate(2deg); }
 }
 
-.mission-action { font-size: 0.85rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.7rem; margin: 0.4rem 0; }
+.mission-action { font-size: 0.88rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.85rem; margin: 0.6rem 0; }
 .action-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--border); color: var(--muted); padding: 0.1rem 0.3rem; border-radius: 3px; margin-right: 0.3rem; }
 
 /* PRESENTER */
@@ -685,7 +685,7 @@ body.mode-presenter .pnote { display: block; }
 @media (max-width: 600px) {
   .start-left h1 { font-size: 1.8rem; }
   .topbar-phase { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
-  .mission h2 { font-size: 1.1rem; }
+  .mission h2 { font-size: 1.2rem; }
   .nav-sep { display: none; }
 }
 
