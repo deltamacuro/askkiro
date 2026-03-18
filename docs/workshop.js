@@ -22,6 +22,17 @@
   const missionTitles = [];
 
   /**
+   * Envia un evento a Google Analytics 4 si gtag esta disponible.
+   * @param {string} eventName - Nombre del evento
+   * @param {Object} [params] - Parametros adicionales
+   */
+  function trackEvent(eventName, params) {
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, params || {});
+    }
+  }
+
+  /**
    * Actualiza el hash de la URL segun el modo activo.
    * Permite trackear en analytics si el usuario juega, ensena o hace remix.
    * @param {string} mode - 'play', 'presenter' o 'remix'
@@ -106,6 +117,8 @@
     if (n < 1 || n > total) return;
     visited[current] = true;
     current = n;
+    const phase = n <= 3 ? 1 : n <= 6 ? 2 : 3;
+    trackEvent('mission_view', { mission: n, phase: phase, title: missionTitles[n] || '' });
     updateUI();
     saveState();
   }
@@ -202,7 +215,7 @@
       else { goTo(current - 1); }
     });
     if (next) next.addEventListener('click', function () {
-      if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
+      if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); saveState(); }
       else { goTo(current + 1); }
     });
 
@@ -227,7 +240,7 @@
       if (e.key === 'ArrowRight' || e.key === 'Enter') {
         e.preventDefault();
         if (current < total) goTo(current + 1);
-        else if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
+        else if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); saveState(); }
       }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
@@ -253,6 +266,7 @@
         const text = code.textContent.trim();
         const orig = btn.textContent;
         copyToClipboard(text).then(function () {
+          trackEvent('prompt_copy', { mission: current, text: text.substring(0, 80) });
           btn.classList.add('copied');
           btn.textContent = 'Copiado';
           setTimeout(function () { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
@@ -298,6 +312,7 @@
     const currentScreen = document.querySelector('.screen.active');
     const nextScreen = document.getElementById(id);
     if (!nextScreen || currentScreen === nextScreen) return;
+    trackEvent('screen_view', { screen: id });
 
     if (currentScreen) {
       transitioning = true;
@@ -358,6 +373,7 @@
     const play = document.getElementById('btn-play');
     if (play) play.addEventListener('click', function () {
       if (!location.hash || location.hash === '#') setModeHash('play');
+      trackEvent('mode_select', { mode: 'play' });
       switchScreen('screen-play');
       let seen = false;
       try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
@@ -386,6 +402,7 @@
     if (btnTeach) btnTeach.addEventListener('click', function () {
       document.body.className = 'mode-presenter';
       setModeHash('presenter');
+      trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
       switchScreen('screen-start');
       showPresenterOnboard();
     });
@@ -403,6 +420,7 @@
         const mode = link.getAttribute('data-mode');
         document.body.className = 'mode-' + mode;
         setModeHash(mode);
+        trackEvent('mode_select', { mode: mode });
         switchScreen('screen-play');
         if (mode === 'presenter') showPresenterOnboard();
       });
