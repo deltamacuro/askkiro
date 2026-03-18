@@ -189,7 +189,6 @@
       if (e.key === 'Escape' && onboard && onboard.classList.contains('open')) {
         onboard.classList.remove('open');
         try { localStorage.setItem('kiroOnboard', '1'); } catch (err) {}
-        switchScreen('screen-play');
         return;
       }
 
@@ -296,13 +295,14 @@
   function setupScreens() {
     const play = document.getElementById('btn-play');
     if (play) play.addEventListener('click', function () {
+      switchScreen('screen-play');
       let seen = false;
       try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
-      if (seen) {
-        switchScreen('screen-play');
-      } else {
-        const overlay = document.getElementById('onboard-overlay');
-        if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+      if (!seen) {
+        setTimeout(function () {
+          const overlay = document.getElementById('onboard-overlay');
+          if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+        }, FADE_MS + 50);
       }
     });
 
@@ -311,7 +311,6 @@
       const overlay = document.getElementById('onboard-overlay');
       if (overlay) overlay.classList.remove('open');
       try { localStorage.setItem('kiroOnboard', '1'); } catch (e) {}
-      switchScreen('screen-play');
     });
 
     const home = document.getElementById('btn-home');
@@ -363,14 +362,28 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
-    /* Boton "¿Como funciona?" abre el onboarding */
+    /* Boton "¿Como funciona?" abre el onboarding sobre screen-play */
     const btnHow = document.getElementById('btn-how');
     const onboardOverlay = document.getElementById('onboard-overlay');
     if (btnHow && onboardOverlay) btnHow.addEventListener('click', function (e) {
       e.preventDefault();
-      onboardOverlay.classList.add('open');
+      const playScreen = document.getElementById('screen-play');
+      if (playScreen && !playScreen.classList.contains('active')) {
+        switchScreen('screen-play');
+        setTimeout(function () { onboardOverlay.classList.add('open'); }, FADE_MS + 50);
+      } else {
+        onboardOverlay.classList.add('open');
+      }
       const goBtn = document.getElementById('btn-onboard-go');
       if (goBtn) goBtn.focus();
+    });
+
+    /* Boton "?" en topbar abre el onboarding */
+    const btnTopbarHelp = document.getElementById('btn-topbar-help');
+    if (btnTopbarHelp && onboardOverlay) btnTopbarHelp.addEventListener('click', function () {
+      onboardOverlay.classList.add('open');
+      const go = document.getElementById('btn-onboard-go');
+      if (go) go.focus();
     });
   }
 
