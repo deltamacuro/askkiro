@@ -327,6 +327,7 @@
 
     const btnRemix = document.getElementById('btn-remix');
     if (btnRemix) btnRemix.addEventListener('click', function () {
+      if (btnRemix.getAttribute('aria-disabled') === 'true') return;
       switchScreen('screen-start');
     });
 

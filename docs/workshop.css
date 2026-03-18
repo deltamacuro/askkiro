@@ -603,6 +603,7 @@ body.mode-presenter .pnote { display: block; }
   box-shadow: 0 4px 20px rgba(117,64,176,0.25);
 }
 .end-btn-secondary:nth-child(3) { animation-delay: 1.7s; }
+.end-btn-disabled { opacity: 0.35; cursor: default; pointer-events: none; }
 .end-github-link {
   display: inline-flex; align-items: center; gap: 0.35rem;
   margin-top: 1.2rem;
