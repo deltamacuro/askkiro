@@ -301,6 +301,8 @@ body.mode-presenter .pnote { display: block; }
 }
 .nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 .nav-btn:disabled { opacity: 0.35; cursor: default; }
+.nav-btn-home { color: var(--muted); border-color: transparent; background: transparent; }
+.nav-btn-home:hover { color: var(--accent); border-color: var(--border); background: var(--accent-dim); }
 .nav-btn-next {
   background: linear-gradient(135deg, var(--accent) 0%, #5b2d8e 100%);
   color: #fff; border-color: transparent;

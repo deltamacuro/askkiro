@@ -125,7 +125,17 @@
 
     const prev = document.getElementById('btn-prev');
     const next = document.getElementById('btn-next');
-    if (prev) prev.disabled = (current <= 1);
+    if (prev) {
+      if (current <= 1) {
+        prev.textContent = 'Volver al inicio';
+        prev.disabled = false;
+        prev.classList.add('nav-btn-home');
+      } else {
+        prev.textContent = 'Anterior';
+        prev.disabled = false;
+        prev.classList.remove('nav-btn-home');
+      }
+    }
     if (next) {
       if (current >= total) { next.textContent = 'Finalizar'; next.classList.add('finish'); }
       else { next.textContent = 'Siguiente'; next.classList.remove('finish'); }
@@ -164,7 +174,10 @@
   function setupNav() {
     const prev = document.getElementById('btn-prev');
     const next = document.getElementById('btn-next');
-    if (prev) prev.addEventListener('click', function () { goTo(current - 1); });
+    if (prev) prev.addEventListener('click', function () {
+      if (current <= 1) { switchScreen('screen-start'); }
+      else { goTo(current - 1); }
+    });
     if (next) next.addEventListener('click', function () {
       if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
       else { goTo(current + 1); }
