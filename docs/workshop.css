@@ -19,6 +19,8 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 @keyframes screenIn { from { opacity: 0; } to { opacity: 1; } }
 
 .start-content { text-align: center; padding: 2rem; }
+.start-logo { border-radius: 24px; margin-bottom: 1.5rem; animation: ghostFloat 3s ease-in-out infinite; }
+@keyframes ghostFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .start-eyebrow { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
 .start-eyebrow a { color: var(--accent); text-decoration: none; }
 .start-content h1 { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.6rem; }
