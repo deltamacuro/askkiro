@@ -179,6 +179,34 @@ body {
   color: var(--kiro-accent);
 }
 
+/* Hero post-click area (hidden until click) */
+.hero-post-click {
+  display: none;
+  animation: fadeSlideIn 0.4s ease;
+}
+
+.hero-post-click.visible {
+  display: block;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ghost bounce on copy */
+@keyframes ghostBounce {
+  0% { transform: translateX(-50%) translateY(0); }
+  30% { transform: translateX(-50%) translateY(-10px); }
+  50% { transform: translateX(-50%) translateY(-2px); }
+  70% { transform: translateX(-50%) translateY(-6px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+.hero-btn.copied .hero-btn-ghost svg {
+  animation: ghostBounce 0.6s ease;
+}
+
 /* Hero flow steps */
 .hero-flow {
   display: flex;

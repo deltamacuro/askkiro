@@ -377,35 +377,32 @@ function configurarAskKiroBtn() {
           var status = document.getElementById('ask-kiro-status');
           var btnText = document.getElementById('hero-btn-text');
           var btnSub = btn.querySelector('.hero-btn-sub');
+          var postClick = document.getElementById('hero-post-click');
           btn.classList.add('copied');
           if (btnText) btnText.textContent = 'Prompt copiado';
-          if (btnSub) btnSub.textContent = 'Pega con Cmd+V en el chat de Kiro';
-          if (status) {
-            status.textContent = '';
-            status.classList.add('active');
-          }
+          if (btnSub) btnSub.textContent = 'Ahora pega en Kiro';
 
-          // Animate flow steps
-          var steps = document.querySelectorAll('.hero-flow-step');
-          steps.forEach(function(s) { s.classList.remove('active', 'done'); });
-          if (steps[0]) steps[0].classList.add('done');
-          if (steps[1]) steps[1].classList.add('active');
-          setTimeout(function() {
-            if (steps[1]) { steps[1].classList.remove('active'); steps[1].classList.add('done'); }
-            if (steps[2]) steps[2].classList.add('active');
-          }, 1500);
+          // Show and animate flow steps
+          if (postClick) {
+            postClick.classList.add('visible');
+            var steps = postClick.querySelectorAll('.hero-flow-step');
+            steps.forEach(function(s) { s.classList.remove('active', 'done'); });
+            if (steps[0]) steps[0].classList.add('done');
+            setTimeout(function() {
+              if (steps[1]) steps[1].classList.add('active');
+            }, 400);
+            setTimeout(function() {
+              if (steps[1]) { steps[1].classList.remove('active'); steps[1].classList.add('done'); }
+              if (steps[2]) steps[2].classList.add('active');
+            }, 1800);
+          }
 
           setTimeout(function() {
             btn.classList.remove('copied');
             var mode = getCurrentMode();
             if (btnText) btnText.textContent = askKiroContent[mode].btn;
             if (btnSub) btnSub.textContent = 'Copia el prompt para el chat';
-            if (status) {
-              status.textContent = '';
-              status.classList.remove('active');
-            }
-            steps.forEach(function(s) { s.classList.remove('active', 'done'); });
-          }, 5000);
+          }, 6000);
         });
       } catch (error) {
         console.error('Error: no se pudo copiar el prompt', error);
