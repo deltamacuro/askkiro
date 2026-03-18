@@ -377,7 +377,7 @@ body.mode-presenter .pnote { display: block; }
     transparent 336deg, rgba(194,169,223,0.04) 344deg,
     transparent 360deg
   );
-  animation: raysSpin 50s linear infinite;
+  animation: raysSpin 35s linear infinite;
   pointer-events: none;
 }
 .screen-end::after {
@@ -404,7 +404,10 @@ body.mode-presenter .pnote { display: block; }
 }
 .end-ghost {
   width: clamp(180px, 25vw, 260px); height: auto;
-  animation: endGhostIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, ghostFloat 3s ease-in-out 1.2s infinite;
+  animation:
+    endGhostIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    endGhostPower 4s ease-in-out 1.4s infinite,
+    endGhostGlow 3s ease-in-out 1.4s infinite;
   filter:
     drop-shadow(0 0 40px rgba(117,64,176,0.6))
     drop-shadow(0 0 80px rgba(117,64,176,0.3))
@@ -420,8 +423,34 @@ body.mode-presenter .pnote { display: block; }
       drop-shadow(0 0 120px rgba(117,64,176,0.15));
   }
 }
+/* Power-up idle: float + squash-stretch + micro-wiggle */
+@keyframes endGhostPower {
+  0%   { transform: translateY(0)    scaleX(1)    scaleY(1)    rotate(0deg); }
+  15%  { transform: translateY(-14px) scaleX(0.97) scaleY(1.04) rotate(-1.5deg); }
+  30%  { transform: translateY(-20px) scaleX(0.95) scaleY(1.06) rotate(0.5deg); }
+  50%  { transform: translateY(-16px) scaleX(1.03) scaleY(0.97) rotate(1.5deg); }
+  70%  { transform: translateY(-22px) scaleX(0.96) scaleY(1.05) rotate(-0.8deg); }
+  85%  { transform: translateY(-10px) scaleX(1.02) scaleY(0.98) rotate(0.3deg); }
+  100% { transform: translateY(0)    scaleX(1)    scaleY(1)    rotate(0deg); }
+}
+/* Glow intensity cycling — aura de poder */
+@keyframes endGhostGlow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 40px rgba(117,64,176,0.6))
+      drop-shadow(0 0 80px rgba(117,64,176,0.3))
+      drop-shadow(0 0 120px rgba(117,64,176,0.15));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 60px rgba(117,64,176,0.8))
+      drop-shadow(0 0 100px rgba(117,64,176,0.5))
+      drop-shadow(0 0 160px rgba(117,64,176,0.25))
+      drop-shadow(0 0 200px rgba(194,169,223,0.1));
+  }
+}
 
-/* Aura pulse behind ghost */
+/* Aura pulse behind ghost — inner ring */
 .end-ghost-wrap::before {
   content: '';
   position: absolute;
@@ -429,13 +458,29 @@ body.mode-presenter .pnote { display: block; }
   transform: translate(-50%, -50%);
   width: 200%; height: 200%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(117,64,176,0.2) 0%, rgba(117,64,176,0.05) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(117,64,176,0.25) 0%, rgba(117,64,176,0.08) 35%, transparent 65%);
   animation: auraPulse 2.5s ease-in-out infinite;
   z-index: -1;
 }
+/* Outer energy ring */
+.end-ghost-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280%; height: 280%;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 30%, rgba(117,64,176,0.06) 50%, rgba(194,169,223,0.04) 60%, transparent 75%);
+  animation: auraOuter 3.5s ease-in-out infinite;
+  z-index: -1;
+}
 @keyframes auraPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+@keyframes auraOuter {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
 }
 
 /* Stagger entrance for end content */

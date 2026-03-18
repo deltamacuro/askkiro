@@ -1,5 +1,14 @@
 # Changelog — Kiro Paso a Paso
 
+## v1.2.1 — 2026-03-18 — Epic Ghost Animation
+
+| ID | Descripcion |
+|----|-------------|
+| ANIM-001 | Ghost del end-screen con animacion power-up: float asimetrico + squash-stretch + micro-wiggle (endGhostPower 4s) |
+| ANIM-002 | Glow pulsante ciclico en el ghost: intensidad de drop-shadow sube y baja (endGhostGlow 3s) |
+| ANIM-003 | Doble anillo de aura: inner pulse (auraPulse 2.5s) + outer energy ring (auraOuter 3.5s) |
+| ANIM-004 | Rayos de luz del end-screen mas rapidos (50s → 35s) para mayor energia visual |
+
 ## v1.2.0 — 2026-03-18 — UX Polish
 
 | ID | Descripcion |
