@@ -471,11 +471,6 @@ a:hover { text-decoration-color: var(--accent-bright); }
 .spec-vs-check { border-color: rgba(117,64,176,0.3); color: var(--text); }
 .spec-vs-ok { color: var(--accent-bright); border-color: var(--accent); }
 .spec-vs-risk { border: none; background: none; font-size: 0.85rem; padding: 0; }
-.spec-wizard {
-  padding: 0.2rem 0 0.2rem 1.4rem; font-size: 0.8rem; color: var(--muted);
-  line-height: 1.7;
-}
-.spec-wizard strong { color: var(--text); font-weight: 600; }
 
 /* SPEC TREE — wizard timeline compacta */
 .spec-tree {
