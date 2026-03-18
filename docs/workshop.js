@@ -171,6 +171,14 @@
     });
 
     document.addEventListener('keydown', function (e) {
+      /* Cerrar onboarding con Escape */
+      const onboard = document.getElementById('onboard-overlay');
+      if (e.key === 'Escape' && onboard && onboard.classList.contains('open')) {
+        onboard.classList.remove('open');
+        switchScreen('screen-play');
+        return;
+      }
+
       /* Cerrar help con Escape */
       const overlay = document.getElementById('help-overlay');
       if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
@@ -273,7 +281,17 @@
    */
   function setupScreens() {
     const play = document.getElementById('btn-play');
-    if (play) play.addEventListener('click', function () { switchScreen('screen-play'); });
+    if (play) play.addEventListener('click', function () {
+      const overlay = document.getElementById('onboard-overlay');
+      if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+    });
+
+    const onboardGo = document.getElementById('btn-onboard-go');
+    if (onboardGo) onboardGo.addEventListener('click', function () {
+      const overlay = document.getElementById('onboard-overlay');
+      if (overlay) overlay.classList.remove('open');
+      switchScreen('screen-play');
+    });
 
     const home = document.getElementById('btn-home');
     if (home) home.addEventListener('click', function () { switchScreen('screen-start'); });

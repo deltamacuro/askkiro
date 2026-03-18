@@ -267,6 +267,37 @@
       <h2>Mision cumplida</h2>
       <p class="end-stats">9 features desbloqueadas &middot; 3 fases completadas</p>
       <blockquote class="end-quote">&ldquo;Eso no es vibe coding. Eso es software.&rdquo;</blockquote>
+      <div class="recap">
+        <p class="recap-title"><i class="fa-solid fa-map"></i> Lo que aprendiste</p>
+        <div class="recap-map">
+          <div class="recap-phase">
+            <span class="recap-phase-label">Construye</span>
+            <div class="recap-nodes">
+              <span class="recap-node"><i class="fa-solid fa-message"></i> Vibe Coding</span>
+              <span class="recap-node"><i class="fa-solid fa-compass"></i> Steering</span>
+              <span class="recap-node"><i class="fa-solid fa-list-check"></i> Specs</span>
+            </div>
+          </div>
+          <span class="recap-arrow"><i class="fa-solid fa-angles-right"></i></span>
+          <div class="recap-phase">
+            <span class="recap-phase-label">Automatiza</span>
+            <div class="recap-nodes">
+              <span class="recap-node"><i class="fa-solid fa-bolt"></i> Hooks</span>
+              <span class="recap-node"><i class="fa-solid fa-robot"></i> Agents</span>
+              <span class="recap-node"><i class="fa-solid fa-brain"></i> Skills</span>
+            </div>
+          </div>
+          <span class="recap-arrow"><i class="fa-solid fa-angles-right"></i></span>
+          <div class="recap-phase">
+            <span class="recap-phase-label">Conecta</span>
+            <div class="recap-nodes">
+              <span class="recap-node"><i class="fa-solid fa-globe"></i> Web Search</span>
+              <span class="recap-node"><i class="fa-solid fa-plug"></i> MCP</span>
+              <span class="recap-node"><i class="fa-solid fa-cube"></i> Powers</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="end-actions">
         <button class="end-btn end-btn-primary" id="btn-back-start">
           <i class="fa-solid fa-house"></i>
@@ -298,6 +329,41 @@
         <details class="help-item"><summary>Como descargar el proyecto</summary><p><code>git clone https://github.com/deltamacuro/kiro-paso-a-paso.git</code> o <a href="https://github.com/deltamacuro/kiro-paso-a-paso/archive/refs/heads/main.zip">descarga ZIP</a>.</p></details>
         <details class="help-item"><summary>Que es modo Autopilot</summary><p>Kiro ejecuta acciones automaticamente. Abajo a la derecha en la barra de estado.</p></details>
       </div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING MODAL -->
+  <div class="onboard-overlay" id="onboard-overlay">
+    <div class="onboard-panel">
+      <div class="onboard-header">
+        <img src="kiro.svg" alt="" class="onboard-ghost">
+        <h3>Como funciona</h3>
+      </div>
+      <div class="onboard-steps">
+        <div class="onboard-step">
+          <span class="onboard-icon"><i class="fa-solid fa-book-open"></i></span>
+          <div>
+            <p class="onboard-step-title">Lee la mision</p>
+            <p class="onboard-step-desc">Cada mision tiene un contexto y un prompt listo para copiar.</p>
+          </div>
+        </div>
+        <div class="onboard-step">
+          <span class="onboard-icon"><i class="fa-solid fa-paste"></i></span>
+          <div>
+            <p class="onboard-step-title">Copia y pega en Kiro</p>
+            <p class="onboard-step-desc">Haz clic en "Ask Kiro" para copiar el prompt al clipboard. Pegalo en el chat de Kiro.</p>
+          </div>
+        </div>
+        <div class="onboard-step">
+          <span class="onboard-icon"><i class="fa-solid fa-arrow-right"></i></span>
+          <div>
+            <p class="onboard-step-title">Avanza con las flechas</p>
+            <p class="onboard-step-desc">Usa los botones o las teclas &larr; &rarr; para navegar entre misiones.</p>
+          </div>
+        </div>
+      </div>
+      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a> abierto con un proyecto para seguir las misiones.</p>
+      <button class="onboard-go" id="btn-onboard-go">Entendido, vamos</button>
     </div>
   </div>
 

@@ -1,5 +1,14 @@
 # Changelog — Kiro Paso a Paso
 
+## v1.3.0 — 2026-03-18 — Onboarding + Recap
+
+| ID | Descripcion |
+|----|-------------|
+| UX-008 | Modal de onboarding al hacer clic en "Empezar": explica como funciona el tutorial en 3 pasos con iconos |
+| UX-009 | Recap visual en end screen: mapa de conceptos con las 3 fases y 9 features organizadas como flowchart CSS |
+| UX-010 | End screen usa align-items:safe center para scroll cuando el contenido excede la pantalla |
+| UX-011 | Escape cierra el onboarding modal y navega a misiones |
+
 ## v1.2.1 — 2026-03-18 — Epic Ghost Animation
 
 | ID | Descripcion |
