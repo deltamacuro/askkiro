@@ -70,6 +70,7 @@
       setupPresenterOnboard();
       loadState();
       updateUI();
+      updateModeLinks();
       restoreScreen();
     } catch (e) { console.error('Error al inicializar:', e); }
   }
@@ -223,7 +224,7 @@
     const prev = document.getElementById('btn-prev');
     const next = document.getElementById('btn-next');
     if (prev) prev.addEventListener('click', function () {
-      if (current <= 1) { switchScreen('screen-start'); }
+      if (current <= 1) { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); }
       else { goTo(current - 1); }
     });
     if (next) next.addEventListener('click', function () {
@@ -405,6 +406,18 @@
     if (btnReset) btnReset.hidden = !hasProgress;
   }
 
+  /**
+   * Actualiza el estado visual del toggle de modo presentador.
+   * Sincroniza aria-checked con el estado real del body.
+   */
+  function updateModeLinks() {
+    const toggle = document.getElementById('toggle-presenter');
+    if (toggle) {
+      const isActive = document.body.classList.contains('mode-presenter');
+      toggle.setAttribute('aria-checked', isActive ? 'true' : 'false');
+    }
+  }
+
   function setupScreens() {
     const play = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
@@ -478,10 +491,10 @@
     });
 
     const home = document.getElementById('btn-home');
-    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(updateStartButtons, FADE_MS + 50); });
+    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
 
     const btnBackStart = document.getElementById('btn-back-start');
-    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(updateStartButtons, FADE_MS + 50); });
+    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
 
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
@@ -490,7 +503,7 @@
       setModeHash('presenter');
       trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
       switchScreen('screen-start');
-      setTimeout(updateStartButtons, FADE_MS + 50);
+      setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50);
       showPresenterOnboard();
     });
 
@@ -504,14 +517,25 @@
       link.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.getAttribute('aria-disabled') === 'true') return;
-        const mode = link.getAttribute('data-mode');
-        document.body.classList.remove('mode-presenter', 'mode-remix');
-        document.body.classList.add('mode-' + mode);
-        setModeHash(mode);
-        trackEvent('mode_select', { mode: mode });
-        switchScreen('screen-play');
-        if (mode === 'presenter') showPresenterOnboard();
       });
+    });
+
+    const togglePresenter = document.getElementById('toggle-presenter');
+    if (togglePresenter) togglePresenter.addEventListener('click', function () {
+      const isActive = document.body.classList.contains('mode-presenter');
+      document.body.classList.remove('mode-presenter', 'mode-remix');
+      if (isActive) {
+        setModeHash('play');
+        trackEvent('mode_select', { mode: 'play', source: 'toggle_off' });
+        updateModeLinks();
+        return;
+      }
+      document.body.classList.add('mode-presenter');
+      setModeHash('presenter');
+      trackEvent('mode_select', { mode: 'presenter' });
+      updateModeLinks();
+      switchScreen('screen-play');
+      showPresenterOnboard();
     });
   }
 

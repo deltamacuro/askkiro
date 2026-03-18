@@ -48,7 +48,12 @@
           <button class="start-btn-reset" id="btn-reset" hidden>Reiniciar progreso</button>
         </div>
         <div class="start-modes">
-          <a href="#" class="start-mode" data-mode="presenter">Modo presentador</a>
+          <button class="mode-toggle" id="toggle-presenter" role="switch" aria-checked="false" aria-label="Modo presentador">
+            <span class="mode-toggle-track">
+              <span class="mode-toggle-knob"></span>
+            </span>
+            <span class="mode-toggle-label">Presentador</span>
+          </button>
           <span class="start-sep">&middot;</span>
           <a href="#" class="start-mode start-mode-disabled" data-mode="remix" title="Proximamente" aria-disabled="true">Modo remix</a>
         </div>

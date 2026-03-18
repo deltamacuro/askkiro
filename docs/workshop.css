@@ -204,6 +204,32 @@ a:hover { text-decoration-color: var(--accent-bright); }
 }
 .reset-confirm:hover { border-color: var(--accent); color: var(--accent-bright); }
 .start-modes { margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+.mode-toggle {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: none; border: none; cursor: pointer; padding: 0;
+  font-family: inherit;
+}
+.mode-toggle-track {
+  position: relative; width: 36px; height: 20px;
+  background: var(--dim); border-radius: 10px;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+.mode-toggle-knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--text); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mode-toggle[aria-checked="true"] .mode-toggle-track {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(117,64,176,0.4);
+}
+.mode-toggle[aria-checked="true"] .mode-toggle-knob {
+  transform: translateX(16px);
+}
+.mode-toggle-label { font-size: 0.8rem; color: var(--muted); transition: color 0.2s; }
+.mode-toggle[aria-checked="true"] .mode-toggle-label { color: var(--accent-bright); }
+.mode-toggle:hover .mode-toggle-label { color: var(--accent-bright); }
+.mode-toggle:focus-visible .mode-toggle-track { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .start-mode:hover { color: var(--accent); }
 .start-mode-disabled { opacity: 0.4; cursor: default; pointer-events: none; }
