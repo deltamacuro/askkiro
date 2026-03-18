@@ -20,13 +20,12 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
     radial-gradient(ellipse at 70% 30%, rgba(99,66,199,0.1) 0%, transparent 40%),
     radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.08) 0%, transparent 50%),
     var(--bg);
-  overflow: hidden;
 }
 
 /* Light rays behind character */
 .screen-start::before {
   content: '';
-  position: absolute;
+  position: fixed;
   width: 140vh; height: 140vh;
   left: -20vh; top: 50%;
   transform: translateY(-50%);
@@ -61,7 +60,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 /* Floating particles */
 .screen-start::after {
   content: '';
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image:
     radial-gradient(1px 1px at 10% 20%, rgba(167,139,250,0.6) 50%, transparent 50%),
@@ -82,8 +81,8 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 }
 
 .start-content {
-  display: flex; align-items: center; gap: 2rem;
-  max-width: 1100px; padding: 2rem;
+  display: flex; align-items: center; gap: 3rem;
+  max-width: 1100px; padding: 1.5rem 2rem;
   position: relative; z-index: 1;
 }
 .start-ghost-wrap { flex-shrink: 0; position: relative; }
@@ -105,14 +104,14 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.start-eyebrow { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.15em; }
+.start-eyebrow { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; }
 .start-eyebrow a { color: var(--accent); text-decoration: none; }
 
 /* Epic title */
 .start-left h1 {
-  font-size: 3.2rem; font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
   letter-spacing: -0.03em; line-height: 1.05;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
   background: linear-gradient(135deg, #fff 0%, var(--accent-bright) 50%, var(--accent) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -120,12 +119,13 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   filter: drop-shadow(0 2px 10px rgba(167,139,250,0.3));
 }
 
-.start-sub { font-size: 1.05rem; color: var(--accent-bright); margin-bottom: 2.2rem; letter-spacing: 0.05em; }
+.start-sub { font-size: 1rem; color: var(--accent-bright); margin-bottom: 1.2rem; letter-spacing: 0.05em; }
 
 .start-btn {
+  position: relative; z-index: 2;
   background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
   color: #fff; border: none;
-  padding: 1rem 4rem; border-radius: 14px;
+  padding: 0.85rem 3.5rem; border-radius: 14px;
   font-family: 'Inter', sans-serif; font-size: 1.15rem; font-weight: 700;
   cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 25px rgba(167,139,250,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
@@ -141,23 +141,23 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   box-shadow: 0 8px 40px rgba(167,139,250,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
   animation: none;
 }
-.start-modes { margin-top: 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
+.start-modes { margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .start-mode:hover { color: var(--accent); }
 .start-sep { color: var(--border); }
-.start-help { display: block; margin-top: 1rem; font-size: 0.72rem; color: var(--dim); text-decoration: none; }
+.start-help { display: block; margin-top: 0.6rem; font-size: 0.72rem; color: var(--dim); text-decoration: none; }
 .start-help:hover { color: var(--accent); }
 
 /* Ghost — the hero character */
 .start-ghost-img {
-  width: 480px; height: auto;
+  width: clamp(280px, 30vw, 400px); height: auto;
   transform: scaleX(-1) rotate(-3deg);
   animation: ghostFloat 4s ease-in-out infinite;
   filter:
     drop-shadow(0 0 60px rgba(167,139,250,0.5))
     drop-shadow(0 0 120px rgba(167,139,250,0.2))
     drop-shadow(0 20px 40px rgba(0,0,0,0.4));
-  transition: transform 0.3s ease;
+  transition: filter 0.3s ease;
 }
 .start-ghost-img:hover {
   filter:
@@ -176,7 +176,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   .start-left h1 { font-size: 2.2rem; text-align: center; }
   .start-sub { text-align: center; }
   .start-modes { justify-content: center; }
-  .start-ghost-img { width: 260px; height: auto; transform: scaleX(-1) rotate(-2deg); }
+  .start-ghost-img { width: 220px; height: auto; max-width: none; transform: scaleX(-1) rotate(-2deg); }
   @keyframes ghostFloat {
     0%,100% { transform: scaleX(-1) rotate(-2deg) translateY(0); }
     50% { transform: scaleX(-1) rotate(-2deg) translateY(-12px); }
@@ -272,7 +272,7 @@ body.mode-presenter .pnote { display: block; }
 
 /* END SCREEN */
 .screen-end {
-  align-items: center; justify-content: center; overflow: hidden;
+  align-items: center; justify-content: center;
   background:
     radial-gradient(ellipse at 50% 40%, rgba(167,139,250,0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 100%, rgba(99,66,199,0.08) 0%, transparent 40%),
@@ -280,7 +280,7 @@ body.mode-presenter .pnote { display: block; }
 }
 .screen-end::before {
   content: '';
-  position: absolute;
+  position: fixed;
   width: 100vh; height: 100vh;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
