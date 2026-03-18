@@ -21,7 +21,7 @@ Proyecto: Kiro Runner. Mismo proyecto, cada sesion lo hace mas robusto. Cada pas
 ### 🧑‍💻 Self-Service
 
 ```bash
-git clone -b modo-self-service https://github.com/deltamacuro/kiro-paso-a-paso.git
+git clone -b modo-self-service https://github.com/deltamacuro/askkiro.git
 ```
 
 Abre en Kiro (Autopilot), escribe `#workshop-guide` y "empezar workshop".
@@ -29,7 +29,7 @@ Abre en Kiro (Autopilot), escribe `#workshop-guide` y "empezar workshop".
 ### 🎤 Presentador
 
 ```bash
-git clone -b modo-presentador https://github.com/deltamacuro/kiro-paso-a-paso.git
+git clone -b modo-presentador https://github.com/deltamacuro/askkiro.git
 ```
 
 Guión de clase con tiempos y notas. Usa la [guía web](https://askkiro.info/) como apoyo visual.
@@ -37,7 +37,7 @@ Guión de clase con tiempos y notas. Usa la [guía web](https://askkiro.info/) c
 ### 🎨 Remix
 
 ```bash
-git clone -b modo-remix https://github.com/deltamacuro/kiro-paso-a-paso.git
+git clone -b modo-remix https://github.com/deltamacuro/askkiro.git
 ```
 
 Adapta el proyecto a otro dominio (plataformas, puzzles, arcade).
@@ -45,7 +45,7 @@ Adapta el proyecto a otro dominio (plataformas, puzzles, arcade).
 ### 📖 Solución completa
 
 ```bash
-git clone -b solucion https://github.com/deltamacuro/kiro-paso-a-paso.git
+git clone -b solucion https://github.com/deltamacuro/askkiro.git
 ```
 
 ## Guía web interactiva
