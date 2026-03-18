@@ -69,14 +69,20 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 1 &middot; Vibe Coding</span>
           <h2>Crea la app con un solo prompt</h2>
-          <p>Un prompt. Treinta segundos. App funcionando.</p>
+          <p>Un prompt. Treinta segundos. App funcionando. Asi arranca el vibe coding: le dices que quieres y aparece.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>Crea una web app de conversor de temperaturas</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: una app funcional en el browser.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev toca este codigo?"</p></div>
+          <p class="mission-result">Resultado: una app funcional en el browser. Puede crear un solo archivo o tres separados, ambas opciones son validas.</p>
+          <p class="mission-tip">Instala la extension Live Server para ver la app en tiempo real. Click derecho en index.html &rarr; "Open with Live Server".</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev toca este codigo?"</p>
+            <p class="pnote-ask">Pregunta a la audiencia: "¿Quienes ya conocen Kiro? ¿Quienes usan otra herramienta tipo Cursor?"</p>
+            <p class="pnote-time">~3 min</p>
+          </div>
         </div>
       </article>
 
@@ -85,7 +91,7 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 1 &middot; Steering</span>
           <h2>Haz que Kiro siga TUS reglas</h2>
-          <p>Cada dev le pide cosas distintas. El codigo es un caos.</p>
+          <p>Sin convenciones, cada prompt produce codigo distinto. El steering es el "que quiero": reglas que Kiro lee automaticamente en cada interaccion.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <pre><code>Crea un steering file con las convenciones de nuestro proyecto:
@@ -104,8 +110,15 @@
             <code>Refactoriza el conversor siguiendo las convenciones del proyecto.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol. Sin repetir las reglas.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No le repeti las reglas. Las leyo solas. Para siempre, para todo el equipo."</p></div>
+          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol, archivos separados. Sin repetir las reglas.</p>
+          <p class="mission-tip">El steering se activa con "always" (por defecto), "fileMatch" (por tipo de archivo) o "manual". Para convenciones generales, usa always.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"No le repeti las reglas. Las leyo solo. Para siempre, para todo el equipo."</p>
+            <p>Mostrar que el steering aparece en .kiro/steering/ y en el panel lateral. Destacar que Kiro puede refactorizar proactivamente al detectar que el codigo no cumple las convenciones.</p>
+            <p class="pnote-ask">Pregunta: "¿Que convenciones pondrian ustedes? ¿Arquitectura? ¿Seguridad? ¿Patrones de diseno?"</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
 
@@ -114,15 +127,23 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 1 &middot; Specs</span>
           <h2>Planifica antes de codear</h2>
-          <p>El cliente quiere historial. Un prompt largo sale mal.</p>
+          <p>El vibe coding es rapido pero impredecible. El spec-driven development invierte tiempo al principio para que despues la ejecucion salga bien: requirements &rarr; design &rarr; tasks.</p>
           <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; <code>historial-conversiones</code></div>
           <div class="kiro-chat">
             <div class="kiro-bar">Descripcion</div>
             <pre><code>Agregar historial de conversiones al conversor. El usuario ve sus ultimas 10 conversiones, puede limpiar el historial y hacer clic en una entrada para reutilizarla. Los datos persisten con localStorage.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: requirements, design y tasks. Tu apruebas cada paso.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p></div>
+          <p class="mission-result">Resultado: requirements, design y tasks generados. Kiro te pide aprobar cada paso antes de avanzar al siguiente.</p>
+          <p class="mission-tip">Arranca solo con las tareas obligatorias. Las opcionales (como tests) pueden esperar. Tip: dile "inicia las tareas obligatorias y usa agentes en paralelo".</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p>
+            <p>Explicar el flujo de 3 pasos: requirements &rarr; design &rarr; tasks. Mostrar que el design valida contra los requirements. Destacar que no se ha escrito codigo todavia — estamos refinando.</p>
+            <p>Recomendar no editar los archivos .md directamente sino por el chat, para mantener coherencia entre las 3 piezas.</p>
+            <p class="pnote-ask">Pregunta: "¿Cuantas lineas de codigo nueva hemos escrito? Cero. Estamos refinando."</p>
+            <p class="pnote-time">~15-20 min (la mas larga)</p>
+          </div>
         </div>
       </article>
 
@@ -131,16 +152,22 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 2 &middot; Hooks</span>
           <h2>El IDE que vigila por ti</h2>
-          <p>Guardas un archivo con error. Te enteras en produccion.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Agent Hooks &rarr; "+"</div>
+          <p>Guardas un archivo con error y te enteras en produccion. Los hooks son acciones automaticas que se disparan ante eventos del IDE: al guardar, al crear, al hacer commit.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones sin documentacion JSDoc y avisame en el chat.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-then">Pruebalo: borra un parentesis en app.js, guarda con Cmd+S.</p>
-          <p class="mission-result">Resultado: Kiro detecta el error automaticamente.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No corri ningun comando. El IDE reacciono solo."</p></div>
+          <p class="mission-then">Pruebalo: crea un archivo ejemplo.js, escribe una funcion simple y guarda con Cmd+S.</p>
+          <p class="mission-result">Resultado: Kiro detecta el error automaticamente y sugiere correcciones.</p>
+          <p class="mission-tip">Si el hook no se activa, deshabilitalo y vuelvelo a habilitar desde el panel de Agent Hooks. A veces tarda unos segundos en dispararse.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"No corri ningun comando. El IDE reacciono solo."</p>
+            <p>Crear un archivo ejemplo.js en vivo. Usar Cmd+I / Ctrl+I para generar una funcion basica. Guardar y mostrar como se activa el hook. Explicar los tipos de eventos: fileEdited, fileCreated, promptSubmit, etc.</p>
+            <p class="pnote-ask">Pregunta: "¿Que hooks les serian utiles? ¿Validar permisos antes de un commit? ¿Revisar que el README este actualizado?"</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
 
@@ -149,7 +176,7 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 2 &middot; Agents</span>
           <h2>Tu senior dev personal</h2>
-          <p>La IA generica aprueba cualquier cosa. Dale criterio.</p>
+          <p>La IA generica aprueba cualquier cosa. Un agente es un "quien": una personalidad con criterio propio que actua segun las reglas que le definas.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>Crea un agente llamado "revisor" que actue como un senior developer estricto. Solo aprueba codigo con manejo de errores explicito y funciones documentadas con JSDoc.</code>
@@ -161,8 +188,15 @@
             <code>@revisor revisa app.js y dime si lo aprobarias para produccion.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Tiene el criterio de tu equipo."</p></div>
+          <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles. El agente aplica su criterio, no solo ejecuta.</p>
+          <p class="mission-tip">Puedes tener multiples agentes (seguridad, UI, arquitectura) y ejecutarlos en paralelo con una sola instruccion.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"Tiene el criterio de tu equipo. No es una IA generica, es TU senior dev."</p>
+            <p>Mostrar el archivo .kiro/agents/revisor.md. Explicar que es lenguaje natural pero hay que cuidar coherencia (no decir "solo revisa" y despues "aplica cambios").</p>
+            <p class="pnote-ask">Pregunta: "¿Que agentes crearian? ¿Seguridad? ¿Arquitectura? ¿Un agente que revise contra la documentacion de una API interna?"</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
 
@@ -171,7 +205,7 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 2 &middot; Skills</span>
           <h2>Dale expertise a Kiro</h2>
-          <p>Steering son las reglas. Skills es el conocimiento.</p>
+          <p>El steering dice "que quiero". La skill dice "como se hace algo especifico": conocimiento de dominio que Kiro activa cuando lo necesita.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>Crea una skill llamada "fisica-temperaturas" que sepa sobre escalas de temperatura, rangos fisicos validos y el cero absoluto.</code>
@@ -183,8 +217,16 @@
             <code>¿Que pasa si el usuario intenta convertir -300°C?</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: Kiro sabe que -300°C esta por debajo del cero absoluto.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Kiro supo cuando necesitaba ese conocimiento."</p></div>
+          <p class="mission-result">Resultado: Kiro activa la skill y sabe que -300°C esta por debajo del cero absoluto (-273.15°C).</p>
+          <p class="mission-tip">Si la skill no aparece en el panel, dile a Kiro: "revisa que la skill cumpla con la documentacion oficial de Kiro, investiga en internet".</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"Kiro supo cuando necesitaba ese conocimiento. No se lo tuve que decir."</p>
+            <p>Mostrar que la skill aparece en .kiro/skills/. Explicar la diferencia: steering = convenciones (el que), skills = conocimiento de dominio (el como), agents = personalidad (el quien).</p>
+            <p>Probar -1 Kelvin en la app para mostrar que ahora valida fisicamente.</p>
+            <p class="pnote-ask">Pregunta: "¿Que conocimiento de dominio tiene su negocio que podria ser una skill? ¿KPIs? ¿Modelos de datos? ¿APIs internas?"</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
 
@@ -193,14 +235,20 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 3 &middot; Web Search</span>
           <h2>Busca sin salir del IDE</h2>
-          <p>Necesitas un dato. Sales al browser. Rompe el flow.</p>
+          <p>Necesitas un dato, sales al browser, abres 5 pestanas, pierdes el flow. Kiro busca en internet directo desde el chat.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <code>¿Cual fue la temperatura mas baja registrada en la Tierra y donde?</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: dato real con fuente, directo en el chat.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No abri ninguna pestana."</p></div>
+          <p class="mission-result">Resultado: dato real con fuente, directo en el chat. Sin abrir ninguna pestana.</p>
+          <p class="mission-tip">Puedes ser intencional: "busca en internet" o "investiga en la documentacion oficial". Util para validar buenas practicas o datos actualizados.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"No abri ninguna pestana. El dato llego al chat."</p>
+            <p>Mostrar que en Tools aparece "web_search". Esto es util para documentacion, buenas practicas, datos actualizados que el modelo no tiene en su entrenamiento.</p>
+            <p class="pnote-time">~2 min</p>
+          </div>
         </div>
       </article>
 
@@ -209,8 +257,8 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 3 &middot; MCP</span>
           <h2>Conecta con AWS en tiempo real</h2>
-          <p>La IA generica no sabe que servicios de AWS existen hoy.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Abre <code>.kiro/settings/mcp.json</code> y agrega:</div>
+          <p>La IA generica no sabe que servicios existen hoy. Los MCP (Model Context Protocol) son conectores que le dan a Kiro acceso a fuentes de informacion externas en tiempo real.</p>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; MCP Servers &rarr; busca "AWS" &rarr; instala el de documentacion</div>
           <div class="kiro-chat">
             <div class="kiro-bar">mcp.json</div>
             <pre><code>{
@@ -232,8 +280,16 @@
             <code>¿Cual es la mejor forma de hacer deploy de esta app a hosting estatico en AWS? Busca en la documentacion oficial.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS, con fuentes.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Documentacion oficial, leida en tiempo real, aplicada a tu proyecto."</p></div>
+          <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS, con fuentes y opciones comparadas.</p>
+          <p class="mission-tip">Si te da error 3000, necesitas instalar uvx. Dile a Kiro: "ayudame a instalar uvx" y te guia. Despues de instalar, deshabilita y vuelve a habilitar el MCP.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"Documentacion oficial, leida en tiempo real, aplicada a tu proyecto."</p>
+            <p>Mostrar que en Tools aparece la busqueda del MCP. Explicar que hay MCPs oficiales de AWS, Atlassian, y muchos mas. Recomendar instalar minimo el de documentacion AWS y el de knowledge base.</p>
+            <p>Si alguien tiene error 3000: falta uvx. Solucion rapida: pedirle a Kiro que lo instale.</p>
+            <p class="pnote-ask">Pregunta: "¿Los MCP son solo de AWS? No. Hay de Atlassian, GitHub, bases de datos... Son conectores universales."</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
 
@@ -242,14 +298,23 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 3 &middot; Powers</span>
           <h2>Empaqueta todo en un clic</h2>
-          <p>Todo funciona pero vive disperso en <code>.kiro/</code>. Empaquetalo.</p>
+          <p>Todo funciona pero vive disperso en <code>.kiro/</code>. Un Power empaqueta steerings, skills, agents, hooks y MCPs en un paquete instalable que cualquier dev puede usar.</p>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Powers &rarr; busca "Build a Power" &rarr; instalar</div>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de fisica de temperaturas, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: un paquete instalable que cualquier dev usa con un clic.</p>
-          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual."</p></div>
+          <p class="mission-result">Resultado: un paquete instalable. Otro dev lo instala desde una URL o carpeta y tiene todo el contexto listo.</p>
+          <p class="mission-tip">El Power se puede compartir via repositorio Git. Otro dev lo instala con "Add custom Power" &rarr; URL del repo. Actualizaciones con un clic.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual completo."</p>
+            <p>Instalar el Power "Build a Power" primero. Mostrar que crea una carpeta con la estructura del power. Explicar que esto se sube a un repo y cualquiera lo instala.</p>
+            <p>Si hay tiempo: crear una carpeta nueva, instalar el power desde URL y mostrar como la experiencia cambia completamente.</p>
+            <p class="pnote-ask">Pregunta: "¿Que powers crearian para su equipo? ¿Uno de seguridad? ¿De arquitectura? ¿De onboarding para devs nuevos?"</p>
+            <p class="pnote-time">~5 min</p>
+          </div>
         </div>
       </article>
     </div>
@@ -345,10 +410,10 @@
       </div>
       <div class="onboard-steps">
         <div class="onboard-step">
-          <span class="onboard-icon"><i class="fa-solid fa-book-open"></i></span>
+          <span class="onboard-icon"><i class="fa-solid fa-folder-open"></i></span>
           <div>
-            <p class="onboard-step-title">Lee la mision</p>
-            <p class="onboard-step-desc">Cada mision tiene un contexto y un prompt listo para copiar.</p>
+            <p class="onboard-step-title">Abre un proyecto vacio</p>
+            <p class="onboard-step-desc">Crea una carpeta vacia y abrela en Kiro. Activa Autopilot (barra inferior) para una experiencia fluida.</p>
           </div>
         </div>
         <div class="onboard-step">
@@ -366,7 +431,7 @@
           </div>
         </div>
       </div>
-      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a> abierto con un proyecto para seguir las misiones.</span></p>
+      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a> abierto con un proyecto vacio. Instala <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener">Live Server</a> para ver la app en el browser.</span></p>
       <button class="onboard-go" id="btn-onboard-go">Entendido, vamos</button>
     </div>
   </div>

@@ -326,10 +326,26 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .mission-action { font-size: 0.88rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.85rem; margin: 0.6rem 0; }
 .action-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--border); color: var(--muted); padding: 0.1rem 0.3rem; border-radius: 3px; margin-right: 0.3rem; }
 
+/* TIPS */
+.mission-tip {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+  background: rgba(117,64,176,0.05);
+  border: 1px solid rgba(117,64,176,0.12);
+  border-radius: 8px; padding: 0.55rem 0.75rem; margin: 0.6rem 0;
+}
+.mission-tip::before {
+  content: '\f0eb'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+  color: var(--accent); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem;
+}
+
 /* PRESENTER */
-.pnote { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 0.45rem 0.7rem; border-radius: 0 6px 6px 0; margin: 0.4rem 0; font-size: 0.78rem; display: none; }
-.pnote p { margin: 0; }
-.pnote-lbl { display: block; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.1rem; }
+.pnote { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 0.55rem 0.85rem; border-radius: 0 6px 6px 0; margin: 0.7rem 0; font-size: 0.82rem; display: none; line-height: 1.5; }
+.pnote p { margin: 0 0 0.3rem; }
+.pnote p:last-child { margin-bottom: 0; }
+.pnote-lbl { display: block; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.2rem; }
+.pnote-ask { font-style: italic; color: var(--accent-bright); }
+.pnote-time { font-size: 0.7rem; color: var(--dim); margin-top: 0.3rem; }
 body.mode-presenter .pnote { display: block; }
 
 /* BOTTOM NAV */
