@@ -7,9 +7,10 @@
 body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; }
 
 /* SCREENS */
-.screen { display: none; position: fixed; inset: 0; overflow-y: auto; opacity: 0; transition: opacity 0.3s ease; }
-.screen.active { display: flex; opacity: 1; }
+.screen { display: none; position: fixed; inset: 0; overflow-y: auto; opacity: 0; transition: opacity 0.4s ease; }
+.screen.active { display: flex; opacity: 1; animation: screenIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .screen.fading { opacity: 0; }
+@keyframes screenIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
 /* START — Epic Game Cover Style */
 .screen-start {
@@ -129,10 +130,16 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 25px rgba(167,139,250,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
   text-transform: uppercase; letter-spacing: 0.08em;
+  animation: btnPulse 2.5s ease-in-out infinite;
+}
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 4px 25px rgba(167,139,250,0.35), inset 0 1px 0 rgba(255,255,255,0.15); }
+  50% { box-shadow: 0 4px 40px rgba(167,139,250,0.55), 0 0 60px rgba(167,139,250,0.15), inset 0 1px 0 rgba(255,255,255,0.15); }
 }
 .start-btn:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 40px rgba(167,139,250,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+  animation: none;
 }
 .start-modes { margin-top: 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
@@ -264,10 +271,51 @@ body.mode-presenter .pnote { display: block; }
 .nav-sep { width: 1px; height: 12px; background: var(--border); margin: 0 0.15rem; }
 
 /* END SCREEN */
-.screen-end { align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a1530 0%, var(--bg) 65%); }
-.end-content { text-align: center; padding: 2rem; }
-.end-ghost { width: 120px; height: auto; margin-bottom: 1.5rem; animation: ghostFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(167,139,250,0.5)) drop-shadow(0 0 50px rgba(167,139,250,0.25)); opacity: 0.92; }
-.end-content h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.3rem; }
+.screen-end {
+  align-items: center; justify-content: center; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(167,139,250,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(99,66,199,0.08) 0%, transparent 40%),
+    var(--bg);
+}
+.screen-end::before {
+  content: '';
+  position: absolute;
+  width: 100vh; height: 100vh;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg, rgba(167,139,250,0.04) 15deg,
+    transparent 30deg, rgba(167,139,250,0.03) 45deg,
+    transparent 60deg, rgba(167,139,250,0.04) 75deg,
+    transparent 90deg, rgba(167,139,250,0.03) 105deg,
+    transparent 120deg, rgba(167,139,250,0.04) 135deg,
+    transparent 150deg, rgba(167,139,250,0.03) 165deg,
+    transparent 180deg, rgba(167,139,250,0.04) 195deg,
+    transparent 210deg, rgba(167,139,250,0.03) 225deg,
+    transparent 240deg, rgba(167,139,250,0.04) 255deg,
+    transparent 270deg, rgba(167,139,250,0.03) 285deg,
+    transparent 300deg, rgba(167,139,250,0.04) 315deg,
+    transparent 330deg, rgba(167,139,250,0.03) 345deg,
+    transparent 360deg
+  );
+  animation: raysSpin 80s linear infinite;
+  pointer-events: none;
+}
+.end-content { text-align: center; padding: 2rem; position: relative; z-index: 1; }
+.end-ghost {
+  width: 140px; height: auto; margin-bottom: 1.5rem;
+  animation: ghostFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(167,139,250,0.5)) drop-shadow(0 0 60px rgba(167,139,250,0.2));
+}
+.end-content h2 {
+  font-size: 2.2rem; font-weight: 800; margin-bottom: 0.4rem;
+  background: linear-gradient(135deg, #fff 0%, var(--accent-bright) 60%, var(--accent) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(167,139,250,0.3));
+}
 .end-stats { font-size: 0.92rem; color: var(--accent); margin-bottom: 1.5rem; }
 .end-quote { border: none; font-style: italic; font-size: 1.15rem; color: var(--muted); max-width: 460px; margin: 0 auto 2rem; line-height: 1.6; }
 .end-actions { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
@@ -294,4 +342,14 @@ body.mode-presenter .pnote { display: block; }
   .topbar-phase { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
   .mission h2 { font-size: 1.1rem; }
   .nav-sep { display: none; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

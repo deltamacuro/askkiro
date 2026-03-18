@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c0c0f">
   <title>Kiro Demo — De vibe coding a software real</title>
   <meta name="description" content="Aprende 9 features de Kiro en 30 minutos. 3 fases, 9 misiones, una app real.">
+  <link rel="canonical" href="https://deltamacuro.github.io/kiro-paso-a-paso/">
   <meta property="og:title" content="Kiro Demo — De vibe coding a software real">
   <meta property="og:description" content="3 fases. 9 misiones. 30 minutos. Tutorial interactivo de Kiro.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://deltamacuro.github.io/kiro-paso-a-paso/">
+  <meta property="og:image" content="https://deltamacuro.github.io/kiro-paso-a-paso/kiro.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kiro Demo — De vibe coding a software real">
+  <meta name="twitter:description" content="3 fases. 9 misiones. 30 minutos. Tutorial interactivo de Kiro.">
   <link rel="icon" href="kiro.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="workshop.css">
 </head>
 <body>
 
   <!-- SCREEN: INICIO -->
-  <div class="screen screen-start active" id="screen-start">
+  <div class="screen screen-start active" id="screen-start" role="region" aria-label="Pantalla de inicio">
     <div class="start-content">
       <div class="start-ghost-wrap anim-ghost">
         <img src="kiro.svg" alt="Kiro" class="start-ghost-img">
@@ -38,7 +45,7 @@
   </div>
 
   <!-- SCREEN: MISIONES -->
-  <div class="screen screen-play" id="screen-play">
+  <div class="screen screen-play" id="screen-play" role="region" aria-label="Misiones">
     <nav class="topbar">
       <button class="topbar-home" id="btn-home" title="Volver al inicio">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
@@ -244,14 +251,14 @@
 
     <!-- BOTTOM NAV -->
     <nav class="bottombar">
-      <button class="nav-btn" id="btn-prev" disabled>Anterior</button>
-      <div class="nav-dots" id="nav-dots"></div>
-      <button class="nav-btn nav-btn-next" id="btn-next">Siguiente</button>
+      <button class="nav-btn" id="btn-prev" disabled aria-label="Mision anterior">Anterior</button>
+      <div class="nav-dots" id="nav-dots" role="tablist" aria-label="Navegacion de misiones"></div>
+      <button class="nav-btn nav-btn-next" id="btn-next" aria-label="Siguiente mision">Siguiente</button>
     </nav>
   </div>
 
   <!-- SCREEN: FINAL -->
-  <div class="screen screen-end" id="screen-end">
+  <div class="screen screen-end" id="screen-end" role="region" aria-label="Pantalla final">
     <div class="end-content">
       <img src="kiro.svg" alt="Kiro" class="end-ghost">
       <h2>Mision cumplida</h2>
