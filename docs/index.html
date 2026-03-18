@@ -211,12 +211,34 @@
       <!-- M6 -->
       <article class="mission" data-mission="6" data-phase="2">
         <div class="mission-inner">
-          <span class="mission-tag">Fase 2 &middot; Skills</span>
+          <span class="mission-tag">Fase 2 &middot; Web Search</span>
+          <h2>Busca sin salir del IDE</h2>
+          <p>Necesitas un dato, sales al browser, abres 5 pestanas, pierdes el flow. Kiro busca en internet directo desde el chat.</p>
+          <div class="kiro-chat">
+            <div class="kiro-bar">Kiro Chat</div>
+            <code>¿Cuales son las mejores practicas para hacer un juego runner en el browser con buen game feel? Busca en internet.</code>
+            <button class="ask-btn">Ask Kiro</button>
+          </div>
+          <p class="mission-result">Resultado: dato real con fuente, directo en el chat. Sin abrir ninguna pestana.</p>
+          <p class="mission-tip">Puedes ser intencional: "busca en internet" o "investiga en la documentacion oficial". Util para validar buenas practicas o datos actualizados.</p>
+          <div class="pnote">
+            <span class="pnote-lbl">Guia del presentador</span>
+            <p>"No abri ninguna pestana. El dato llego al chat."</p>
+            <p>Mostrar que en Tools aparece "web_search". Esto es util para documentacion, buenas practicas, datos actualizados que el modelo no tiene en su entrenamiento.</p>
+            <p class="pnote-time">~2 min</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- M7 -->
+      <article class="mission" data-mission="7" data-phase="3">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 3 &middot; Skills</span>
           <h2>Dale expertise a Kiro</h2>
           <p>El steering dice "que quiero". La skill dice "como se hace algo especifico": conocimiento de dominio que Kiro activa cuando lo necesita.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Crea una skill llamada "game-physics" que sepa sobre gravedad en juegos 2D, curvas de dificultad, hitboxes y game feel.</code>
+            <code>Investiga en internet como se crean skills en Kiro. Luego crea una skill llamada "game-physics" que sepa sobre gravedad en juegos 2D, curvas de dificultad, hitboxes y game feel.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-then">Pruebalo:</p>
@@ -234,28 +256,6 @@
             <p>Probar un salto en el juego para mostrar que ahora se siente mejor fisicamente.</p>
             <p class="pnote-ask">Pregunta: "¿Que conocimiento de dominio tiene su negocio que podria ser una skill? ¿KPIs? ¿Modelos de datos? ¿APIs internas?"</p>
             <p class="pnote-time">~5 min</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- M7 -->
-      <article class="mission" data-mission="7" data-phase="3">
-        <div class="mission-inner">
-          <span class="mission-tag">Fase 3 &middot; Web Search</span>
-          <h2>Busca sin salir del IDE</h2>
-          <p>Necesitas un dato, sales al browser, abres 5 pestanas, pierdes el flow. Kiro busca en internet directo desde el chat.</p>
-          <div class="kiro-chat">
-            <div class="kiro-bar">Kiro Chat</div>
-            <code>¿Cuales son las mejores practicas para hacer un juego runner en el browser con buen game feel? Busca en internet.</code>
-            <button class="ask-btn">Ask Kiro</button>
-          </div>
-          <p class="mission-result">Resultado: dato real con fuente, directo en el chat. Sin abrir ninguna pestana.</p>
-          <p class="mission-tip">Puedes ser intencional: "busca en internet" o "investiga en la documentacion oficial". Util para validar buenas practicas o datos actualizados.</p>
-          <div class="pnote">
-            <span class="pnote-lbl">Guia del presentador</span>
-            <p>"No abri ninguna pestana. El dato llego al chat."</p>
-            <p>Mostrar que en Tools aparece "web_search". Esto es util para documentacion, buenas practicas, datos actualizados que el modelo no tiene en su entrenamiento.</p>
-            <p class="pnote-time">~2 min</p>
           </div>
         </div>
       </article>
@@ -361,14 +361,14 @@
             <div class="recap-nodes">
               <span class="recap-node"><i class="fa-solid fa-bolt"></i> Hooks</span>
               <span class="recap-node"><i class="fa-solid fa-robot"></i> Agents</span>
-              <span class="recap-node"><i class="fa-solid fa-brain"></i> Skills</span>
+              <span class="recap-node"><i class="fa-solid fa-globe"></i> Web Search</span>
             </div>
           </div>
           <span class="recap-arrow"><i class="fa-solid fa-angles-right"></i></span>
           <div class="recap-phase">
             <span class="recap-phase-label">Conecta</span>
             <div class="recap-nodes">
-              <span class="recap-node"><i class="fa-solid fa-globe"></i> Web Search</span>
+              <span class="recap-node"><i class="fa-solid fa-brain"></i> Skills</span>
               <span class="recap-node"><i class="fa-solid fa-plug"></i> MCP</span>
               <span class="recap-node"><i class="fa-solid fa-cube"></i> Powers</span>
             </div>
