@@ -66,7 +66,11 @@
       d.className = 'nav-dot';
       d.setAttribute('data-m', i);
       d.setAttribute('aria-label', 'Mision ' + i + ': ' + (missionTitles[i] || ''));
-      d.addEventListener('click', function () { goTo(i); });
+      d.addEventListener('click', function () {
+        const phase = i <= 3 ? 1 : i <= 6 ? 2 : 3;
+        if (!isPhaseUnlocked(phase)) return;
+        goTo(i);
+      });
       c.appendChild(d);
     }
   }
@@ -105,10 +109,18 @@
 
     document.querySelectorAll('.nav-dot').forEach(function (d) {
       const n = parseInt(d.getAttribute('data-m'));
-      d.classList.remove('active', 'visited');
-      if (n === current) d.classList.add('active');
-      else if (visited[n]) d.classList.add('visited');
+      const dotPhase = n <= 3 ? 1 : n <= 6 ? 2 : 3;
+      const locked = !isPhaseUnlocked(dotPhase);
+      d.classList.remove('active', 'visited', 'dot-locked');
+      if (locked) {
+        d.classList.add('dot-locked');
+      } else if (n === current) {
+        d.classList.add('active');
+      } else if (visited[n]) {
+        d.classList.add('visited');
+      }
       d.setAttribute('aria-current', n === current ? 'step' : 'false');
+      d.setAttribute('aria-disabled', locked ? 'true' : 'false');
     });
 
     const prev = document.getElementById('btn-prev');
@@ -159,9 +171,20 @@
     });
 
     document.addEventListener('keydown', function (e) {
+      /* Cerrar help con Escape */
+      const overlay = document.getElementById('help-overlay');
+      if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
+        overlay.classList.remove('open');
+        return;
+      }
+
       const play = document.getElementById('screen-play');
       if (!play || !play.classList.contains('active')) return;
-      if (e.key === 'ArrowRight') { e.preventDefault(); if (current < total) goTo(current + 1); }
+      if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        e.preventDefault();
+        if (current < total) goTo(current + 1);
+        else if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
+      }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
 
@@ -277,15 +300,26 @@
   }
 
   /**
-   * Configura el overlay de ayuda: abrir, cerrar, clic fuera.
+   * Configura el overlay de ayuda: abrir, cerrar, clic fuera, focus trap.
    */
   function setupHelp() {
     const overlay = document.getElementById('help-overlay');
     const btnHelp = document.getElementById('btn-help');
     const btnClose = document.getElementById('help-close');
-    if (btnHelp && overlay) btnHelp.addEventListener('click', function (e) { e.preventDefault(); overlay.classList.add('open'); });
-    if (btnClose && overlay) btnClose.addEventListener('click', function () { overlay.classList.remove('open'); });
-    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.classList.remove('open'); });
+    if (btnHelp && overlay) btnHelp.addEventListener('click', function (e) { e.preventDefault(); overlay.classList.add('open'); if (btnClose) btnClose.focus(); });
+    if (btnClose && overlay) btnClose.addEventListener('click', function () { overlay.classList.remove('open'); if (btnHelp) btnHelp.focus(); });
+    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) { overlay.classList.remove('open'); if (btnHelp) btnHelp.focus(); } });
+
+    /* Focus trap dentro del help panel */
+    if (overlay) overlay.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      const focusable = overlay.querySelectorAll('button, a, summary, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
 
   /**

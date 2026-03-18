@@ -1,5 +1,17 @@
 # Changelog — Kiro Paso a Paso
 
+## v1.2.0 — 2026-03-18 — UX Polish
+
+| ID | Descripcion |
+|----|-------------|
+| UX-001 | Dots de fases locked no permiten click ni navegacion (validacion de fase en click handler) |
+| UX-002 | Dots locked con visual atenuado (.dot-locked) y cursor default |
+| UX-003 | Dots visitados con micro-recompensa: pulse animation al completar mision |
+| UX-004 | Keyboard: Escape cierra help overlay, ArrowRight/Enter finaliza en ultima mision |
+| UX-005 | Help overlay: focus trap con Tab/Shift+Tab, devuelve foco al cerrar |
+| UX-006 | mission-area: align-items safe center para evitar corte de contenido en scroll |
+| UX-007 | screen-end: particulas flotantes sutiles (consistencia con las demas screens) |
+
 ## v1.1.1 — 2026-03-18 — Bugfix round 2
 
 | ID | Estado | Descripcion |
