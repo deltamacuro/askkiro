@@ -696,6 +696,8 @@ body.mode-presenter .pnote { display: block; }
 .help-item { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; }
 .help-item summary { padding: 0.45rem 0.7rem; font-size: 0.8rem; color: var(--muted); cursor: pointer; }
 .help-item p { padding: 0 0.7rem 0.4rem; font-size: 0.76rem; color: var(--dim); }
+.help-item .kiro-chat { margin: 0.3rem 0.7rem 0.5rem; }
+.help-item .kiro-chat code { font-size: 0.72rem; padding: 0.5rem 0.7rem; }
 .help-item a { color: var(--accent); text-decoration: none; }
 .help-item code { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; background: var(--accent-dim); padding: 0.1rem 0.2rem; border-radius: 3px; }
 
