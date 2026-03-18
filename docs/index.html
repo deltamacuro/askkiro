@@ -90,11 +90,13 @@
             <code>Crea un juego tipo runner: el fantasma de Kiro corre, esquiva obstaculos saltando con la barra espaciadora y acumula puntaje. HTML, CSS y JS.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: un juego funcional en el browser. Puede crear un solo archivo o tres separados, ambas opciones son validas.</p>
-          <p class="mission-tip">Instala la extension Live Server para ver la app en tiempo real. Click derecho en index.html &rarr; "Open with Live Server".</p>
+          <p class="mission-result">Resultado: un juego funcional en el browser. Puede crear un solo archivo o varios — ambas opciones son validas.</p>
+          <p class="mission-tip"><span>Para ver la app: instala la extension Live Server (Cmd+Shift+X &rarr; buscar "Live Server"). Click derecho en index.html &rarr; "Open with Live Server". Alternativa: abre el archivo directo en el browser (Cmd+O).</span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"Un prompt. Treinta segundos. Tenemos un juego. Pero... ¿que pasa cuando otro dev toca este codigo?"</p>
+            <p>Es probable que Kiro cree carpetas, tests, package.json, etc. Dejalo — eso es justamente el problema que M2 (steering) viene a resolver. Si alguien pregunta, decir: "Exacto, eso es vibe coding sin reglas."</p>
+            <p>Para ver la app: Live Server (extension) o abrir index.html directo en el browser (Cmd+O / Ctrl+O).</p>
             <p class="pnote-ask">Pregunta a la audiencia: "¿Quienes ya conocen Kiro? ¿Quienes usan otra herramienta tipo Cursor?"</p>
             <p class="pnote-time">~3 min</p>
           </div>
@@ -110,11 +112,13 @@
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <pre><code>Crea un steering file con las convenciones de nuestro proyecto:
+- Proyecto simple: maximo 3 archivos (html, css, js). No crear carpetas src/, tests/, ni package.json
+- No crear unit tests ni archivos de configuracion
 - Mensajes de error en espanol
 - camelCase para variables y funciones
 - Comentarios JSDoc en todas las funciones
 - try/catch en todo
-- Separar html, css y js
+- Separar html, css y js en archivos distintos
 - Color principal #7540b0 y #c2a9df
 - Tipografia Roboto</code></pre>
             <button class="ask-btn">Ask Kiro</button>
@@ -125,12 +129,12 @@
             <code>Si no lo hiciste automaticamente, refactoriza el juego siguiendo las convenciones. Hazme un resumen de los cambios.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol, archivos separados. Sin repetir las reglas.</p>
+          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol, 3 archivos (html, css, js). Sin carpetas extra, sin tests, sin repetir las reglas.</p>
           <p class="mission-tip">El steering se activa con "always" (por defecto), "fileMatch" (por tipo de archivo) o "manual". Para convenciones generales, usa always.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"No le repeti las reglas. Las leyo solo. Para siempre, para todo el equipo."</p>
-            <p>Mostrar que el steering aparece en .kiro/steering/ y en el panel lateral. Destacar que Kiro puede refactorizar proactivamente al detectar que el codigo no cumple las convenciones.</p>
+            <p>Mostrar que el steering aparece en .kiro/steering/ y en el panel lateral. Destacar el contraste con M1: "¿Recuerdan las carpetas, los tests, el package.json? Ahora el steering dice 'maximo 3 archivos, sin tests'. Kiro lo reorganiza solo."</p>
             <p class="pnote-ask">Pregunta: "¿Que convenciones pondrian ustedes? ¿Arquitectura? ¿Seguridad? ¿Patrones de diseno?"</p>
             <p class="pnote-time">~5 min</p>
           </div>
@@ -151,7 +155,7 @@
                 <span class="spec-vs-arrow">&rarr;</span>
                 <span class="spec-vs-step">Codigo</span>
                 <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step spec-vs-risk">&#x1F91E;</span>
+                <span class="spec-vs-step spec-vs-risk">?</span>
               </div>
             </div>
             <div class="spec-vs-col spec-vs-spec">
@@ -172,16 +176,51 @@
             <pre><code>Crea un Spec para agregar sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar. Solo ejecuta las tareas obligatorias.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-then">Kiro te guia por un wizard:</p>
-          <ol class="spec-wizard">
-            <li>Elige <strong>Feature</strong> (no Bugfix)</li>
-            <li>Elige <strong>Requirements-First</strong> (empieza por el que, no el como)</li>
-            <li>Revisa los requirements &rarr; dale <strong>yes</strong> si te convencen</li>
-            <li>Revisa el design &rarr; <strong>yes</strong></li>
-            <li>Arranca las tasks</li>
-          </ol>
-          <p class="mission-result">Resultado: requirements, design y tasks generados. Kiro te pide aprobar cada paso antes de avanzar al siguiente.</p>
-          <p class="mission-tip">Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+") o en <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">modo Spec</a>. Existe un workflow <a href="https://kiro.dev/docs/specs/feature-specs/" target="_blank" rel="noopener noreferrer">Design-First</a> para cuando ya tienes la arquitectura en mente.</p>
+          <p class="mission-then">Kiro te guia por un wizard. Algunos pasos son botones en la UI, otros se escriben en el chat:</p>
+          <div class="spec-tree">
+            <div class="spec-tree-node spec-tree-kiro">
+              <span class="spec-tree-badge">Kiro</span> ¿Que tipo de spec?
+              <div class="spec-tree-opts">
+                <span class="spec-tree-opt spec-tree-pick">Feature &check;</span>
+                <span class="spec-tree-opt">Bugfix</span>
+              </div>
+            </div>
+            <div class="spec-tree-node spec-tree-kiro">
+              <span class="spec-tree-badge">Kiro</span> ¿Como empezar?
+              <div class="spec-tree-opts">
+                <span class="spec-tree-opt spec-tree-pick">Requirements-First &check;</span>
+                <span class="spec-tree-opt">Design-First</span>
+              </div>
+            </div>
+            <div class="spec-tree-node spec-tree-kiro">
+              <span class="spec-tree-badge">Kiro</span> Genera requirements
+            </div>
+            <div class="spec-tree-node spec-tree-tu">
+              <span class="spec-tree-badge">Escribe en el chat</span> Revisa &rarr; <strong>yes</strong>
+            </div>
+            <div class="spec-tree-node spec-tree-kiro">
+              <span class="spec-tree-badge">Kiro</span> Genera design
+            </div>
+            <div class="spec-tree-node spec-tree-tu">
+              <span class="spec-tree-badge">Escribe en el chat</span> Revisa &rarr; <strong>yes</strong>
+            </div>
+            <div class="spec-tree-node spec-tree-kiro">
+              <span class="spec-tree-badge">Kiro</span> Genera tasks
+            </div>
+            <div class="spec-tree-node spec-tree-tu">
+              <span class="spec-tree-badge">Escribe en el chat</span> ¿Que ejecutar?
+              <div class="spec-tree-opts">
+                <span class="spec-tree-opt spec-tree-pick">Solo requeridas &check;</span>
+                <span class="spec-tree-opt">Todas</span>
+              </div>
+            </div>
+            <div class="spec-tree-node spec-tree-kiro spec-tree-final">
+              <span class="spec-tree-badge">Kiro</span> Ejecuta las tasks
+            </div>
+          </div>
+          <p class="mission-tip">Si algo no te convence, no escribas "yes". Podes pedir cambios en el chat y Kiro regenera ese paso.</p>
+          <p class="mission-result">Resultado: Kiro crea los archivos del spec (.md) con requirements, design y tasks. Aprueba cada paso, implementa el codigo y veras las mejoras en el juego.</p>
+          <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p>
@@ -204,8 +243,13 @@
             <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones sin documentacion JSDoc y avisame en el chat.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-then">Pruebalo: crea un archivo ejemplo.js, escribe una funcion simple y guarda con Cmd+S.</p>
-          <p class="mission-result">Resultado: Kiro detecta el error automaticamente y sugiere correcciones.</p>
+          <p class="mission-then">Pruebalo:</p>
+          <div class="kiro-chat">
+            <div class="kiro-bar">Kiro Chat</div>
+            <code>Crea un archivo ejemplo.js con una funcion simple sin JSDoc y guardalo.</code>
+            <button class="ask-btn">Ask Kiro</button>
+          </div>
+          <p class="mission-result">Resultado: al guardar, Kiro detecta el error automaticamente y sugiere correcciones.</p>
           <p class="mission-tip">Si el hook no se activa, deshabilitalo y vuelvelo a habilitar desde el panel de Agent Hooks. A veces tarda unos segundos en dispararse.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -304,7 +348,25 @@
           <span class="mission-tag">Fase 3 &middot; MCP</span>
           <h2>Conecta con AWS en tiempo real</h2>
           <p>La IA generica no sabe que servicios existen hoy. Los MCP son conectores que le dan a Kiro acceso a fuentes de informacion externas en tiempo real.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Abre <a href="https://github.com/awslabs/mcp" target="_blank" rel="noopener noreferrer">awslabs/mcp</a> &rarr; busca <strong>AWS Documentation</strong> &rarr; clic en "Install in Kiro"</div>
+          <div class="kiro-chat">
+            <div class="kiro-bar">Kiro Chat</div>
+            <pre><code>Instala el MCP de AWS Documentation a nivel workspace. Crea el archivo .kiro/settings/mcp.json con esta configuracion:
+
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": { "FASTMCP_LOG_LEVEL": "ERROR" },
+      "autoApprove": []
+    }
+  }
+}
+
+Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy de esta app a hosting estatico en AWS.</code></pre>
+            <button class="ask-btn">Ask Kiro</button>
+          </div>
+          <p class="mission-tip"><span>Workspace = se guarda en el proyecto y se comparte con el equipo via Git. Global = solo en tu maquina. Mas info: <a href="https://awslabs.github.io/mcp/servers/aws-documentation-mcp-server" target="_blank" rel="noopener noreferrer">awslabs/aws-documentation-mcp-server</a></span></p>
           <details class="mcp-manual">
             <summary>¿Prefieres instalar manual? Copia este JSON en <code>.kiro/settings/mcp.json</code></summary>
             <div class="kiro-chat">
@@ -322,14 +384,8 @@
               <button class="ask-btn">Copiar</button>
             </div>
           </details>
-          <p class="mission-then">Ahora pruebalo:</p>
-          <div class="kiro-chat">
-            <div class="kiro-bar">Kiro Chat</div>
-            <code>¿Cual es la mejor forma de hacer deploy de esta app a hosting estatico en AWS? Busca en la documentacion oficial.</code>
-            <button class="ask-btn">Ask Kiro</button>
-          </div>
           <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS, con fuentes y opciones comparadas.</p>
-          <p class="mission-tip">Tambien hay MCPs de AWS Core (todo-en-uno), CDK, y muchos mas. No son solo de AWS: hay de Atlassian, GitHub, bases de datos... Son conectores universales.</p>
+          <p class="mission-tip"><span>Este es solo un ejemplo. Hay cientos de MCPs: <a href="https://awslabs.github.io/mcp/" target="_blank" rel="noopener noreferrer">AWS tiene mas de 10</a> (CDK, CloudFormation, Core...) y hay de GitHub, Atlassian, bases de datos, Figma, Slack y mas. Son conectores universales.</span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"Un clic en GitHub. Documentacion oficial, leida en tiempo real, aplicada a tu proyecto."</p>
@@ -353,8 +409,8 @@
             <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de game physics, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: un paquete instalable. Otro dev lo instala desde una URL o carpeta y tiene todo el contexto listo.</p>
-          <p class="mission-tip">Pro tip: "Build a Power" es un Power que crea Powers. Instalalo primero desde el panel de Powers. El resultado se comparte via repo Git &mdash; otro dev lo instala con "Add custom Power" &rarr; URL.</p>
+          <p class="mission-result">Resultado: un paquete instalable con POWER.md, steering/, y mcp.json. Otro dev lo instala y tiene todo el contexto listo.</p>
+          <p class="mission-tip"><span>Para compartir: sube el Power a un repo Git. Otro dev lo instala desde Powers &rarr; "Add power from GitHub" &rarr; pega la URL. Tambien se puede instalar desde una carpeta local. Documentacion: <a href="https://kiro.dev/docs/powers/installation/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/powers/installation</a></span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual completo."</p>

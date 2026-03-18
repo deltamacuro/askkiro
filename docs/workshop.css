@@ -477,6 +477,72 @@ a:hover { text-decoration-color: var(--accent-bright); }
 }
 .spec-wizard strong { color: var(--text); font-weight: 600; }
 
+/* SPEC TREE — wizard timeline compacta */
+.spec-tree {
+  display: flex; flex-direction: column;
+  gap: 0.25rem; margin: 0.5rem 0; padding: 0.3rem 0 0.3rem 1rem;
+  position: relative;
+}
+/* Linea vertical conectora */
+.spec-tree::before {
+  content: ''; position: absolute;
+  left: 0.35rem; top: 0.5rem; bottom: 0.5rem;
+  width: 2px; background: var(--border); border-radius: 1px;
+}
+.spec-tree-node {
+  padding: 0.3rem 0.55rem; border-radius: 6px;
+  font-size: 0.78rem; color: var(--muted); line-height: 1.4;
+  position: relative;
+}
+/* Dot en la linea */
+.spec-tree-node::before {
+  content: ''; position: absolute;
+  left: -0.78rem; top: 0.55rem;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--dim);
+}
+.spec-tree-node strong { color: var(--text); font-weight: 600; }
+.spec-tree-badge {
+  display: inline-block; font-size: 0.55rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  padding: 0.05rem 0.3rem; border-radius: 3px; margin-right: 0.2rem;
+  vertical-align: middle;
+}
+/* Kiro — fondo surface */
+.spec-tree-kiro {
+  background: var(--surface); border: 1px solid var(--border);
+}
+.spec-tree-kiro .spec-tree-badge {
+  background: var(--bg); color: var(--dim); border: 1px solid var(--border);
+}
+.spec-tree-kiro::before { background: var(--dim); }
+/* Tu — fondo accent, dot accent */
+.spec-tree-tu {
+  background: var(--accent-dim); border: 1px solid rgba(117,64,176,0.25);
+  color: var(--accent-bright);
+}
+.spec-tree-tu .spec-tree-badge {
+  background: var(--accent); color: #fff;
+}
+.spec-tree-tu::before { background: var(--accent-bright); }
+/* Opciones pill */
+.spec-tree-opts { display: flex; gap: 0.3rem; margin-top: 0.2rem; flex-wrap: wrap; }
+.spec-tree-opt {
+  font-size: 0.68rem; padding: 0.1rem 0.4rem; border-radius: 5px;
+  border: 1px solid var(--border); color: var(--dim); background: var(--bg);
+}
+.spec-tree-pick {
+  border-color: rgba(117,64,176,0.4); color: var(--accent-bright);
+  background: var(--accent-dim); font-weight: 600;
+}
+/* Nodo final */
+.spec-tree-final { border-color: rgba(117,64,176,0.3); }
+.spec-tree-final, .spec-tree-final .spec-tree-badge { color: var(--accent-bright); }
+.spec-tree-final::before {
+  background: var(--accent-bright);
+  box-shadow: 0 0 6px rgba(117,64,176,0.5);
+}
+
 /* PRESENTER */
 .pnote { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 0.55rem 0.85rem; border-radius: 0 6px 6px 0; margin: 0.7rem 0; font-size: 0.82rem; display: none; line-height: 1.5; }
 .pnote p { margin: 0 0 0.3rem; }
