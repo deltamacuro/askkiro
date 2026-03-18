@@ -1,6 +1,6 @@
-# 🦖 Ask Kiro — De vibe coding a software real
+# 👻 Ask Kiro — De vibe coding a software real
 
-Proyecto: Dino Runner Game. Mismo proyecto, cada sesion lo hace mas robusto. Cada paso resuelve un problema real.
+Proyecto: Kiro Runner. Mismo proyecto, cada sesion lo hace mas robusto. Cada paso resuelve un problema real.
 
 ## Las 9 sesiones
 
