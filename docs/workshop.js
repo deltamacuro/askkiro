@@ -188,6 +188,7 @@
       const onboard = document.getElementById('onboard-overlay');
       if (e.key === 'Escape' && onboard && onboard.classList.contains('open')) {
         onboard.classList.remove('open');
+        try { localStorage.setItem('kiroOnboard', '1'); } catch (err) {}
         switchScreen('screen-play');
         return;
       }
@@ -295,14 +296,21 @@
   function setupScreens() {
     const play = document.getElementById('btn-play');
     if (play) play.addEventListener('click', function () {
-      const overlay = document.getElementById('onboard-overlay');
-      if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+      let seen = false;
+      try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
+      if (seen) {
+        switchScreen('screen-play');
+      } else {
+        const overlay = document.getElementById('onboard-overlay');
+        if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+      }
     });
 
     const onboardGo = document.getElementById('btn-onboard-go');
     if (onboardGo) onboardGo.addEventListener('click', function () {
       const overlay = document.getElementById('onboard-overlay');
       if (overlay) overlay.classList.remove('open');
+      try { localStorage.setItem('kiroOnboard', '1'); } catch (e) {}
       switchScreen('screen-play');
     });
 
@@ -353,6 +361,16 @@
       const last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* Boton "¿Como funciona?" abre el onboarding */
+    const btnHow = document.getElementById('btn-how');
+    const onboardOverlay = document.getElementById('onboard-overlay');
+    if (btnHow && onboardOverlay) btnHow.addEventListener('click', function (e) {
+      e.preventDefault();
+      onboardOverlay.classList.add('open');
+      const goBtn = document.getElementById('btn-onboard-go');
+      if (goBtn) goBtn.focus();
     });
   }
 
