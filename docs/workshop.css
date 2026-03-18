@@ -287,12 +287,12 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   position: absolute;
   left: -0.55rem; top: 50%;
   width: 1.5rem; height: 1.5rem;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scaleX(-1);
   background: url('kiro.svg') center/contain no-repeat;
   border-radius: 50%;
   filter: drop-shadow(0 0 4px rgba(117,64,176,0.4));
-  animation: ghostPeek 3s ease-in-out infinite;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s;
+  animation: ghostFloat 3s ease-in-out infinite;
+  transition: filter 0.3s;
 }
 .ask-btn:hover {
   border-color: rgba(194,169,223,0.5);
@@ -300,8 +300,8 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   color: var(--accent-bright);
 }
 .ask-btn:hover::before {
-  transform: translateY(-50%) translateX(0.1rem) scale(1.1);
   filter: drop-shadow(0 0 8px rgba(117,64,176,0.6));
+  animation: ghostWiggle 0.5s ease-in-out 2;
 }
 .ask-btn.copied {
   border-color: var(--accent-bright);
@@ -309,10 +309,18 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   box-shadow: 0 0 12px rgba(117,64,176,0.3);
 }
 
-@keyframes ghostPeek {
-  0%, 100% { transform: translateY(-50%) translateX(0); }
-  30% { transform: translateY(-50%) translateX(0.08rem); }
-  60% { transform: translateY(-52%) translateX(-0.03rem); }
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(-50%) scaleX(-1) rotate(0deg); }
+  25% { transform: translateY(-58%) scaleX(-1) rotate(-2deg); }
+  50% { transform: translateY(-45%) scaleX(-1) rotate(1.5deg); }
+  75% { transform: translateY(-55%) scaleX(-1) rotate(-1deg); }
+}
+@keyframes ghostWiggle {
+  0%, 100% { transform: translateY(-50%) scaleX(-1) rotate(0deg); }
+  20% { transform: translateY(-50%) scaleX(-1) rotate(-8deg) scale(1.1); }
+  40% { transform: translateY(-50%) scaleX(-1) rotate(6deg) scale(1.05); }
+  60% { transform: translateY(-50%) scaleX(-1) rotate(-4deg) scale(1.08); }
+  80% { transform: translateY(-50%) scaleX(-1) rotate(2deg); }
 }
 
 .mission-action { font-size: 0.85rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.7rem; margin: 0.4rem 0; }
