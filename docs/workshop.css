@@ -604,13 +604,42 @@ body.mode-presenter .pnote { display: block; }
 }
 .end-btn-secondary:nth-child(3) { animation-delay: 1.7s; }
 .end-btn-disabled { opacity: 0.35; cursor: default; pointer-events: none; }
-.end-github-link {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  margin-top: 1.2rem;
+.end-share {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-top: 1.4rem;
+  opacity: 0; animation: staggerIn 0.5s ease forwards 2s;
+}
+.end-share-label {
+  font-size: 0.72rem; color: var(--dim); font-weight: 500;
+}
+.end-share-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: rgba(117,64,176,0.12);
+  border: 1px solid rgba(117,64,176,0.25);
+  color: var(--accent-bright);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.end-share-btn:hover {
+  background: rgba(117,64,176,0.25);
+  border-color: rgba(194,169,223,0.5);
+  transform: scale(1.1);
+}
+.end-links {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.8rem;
+  opacity: 0; animation: staggerIn 0.5s ease forwards 2.2s;
+}
+.end-footer-link {
+  display: inline-flex; align-items: center; gap: 0.3rem;
   font-size: 0.78rem; color: var(--dim); text-decoration: none;
   transition: color 0.2s;
 }
-.end-github-link:hover { color: var(--accent-bright); }
+.end-footer-link:hover { color: var(--accent-bright); }
+.end-link-sep { color: var(--dim); font-size: 0.7rem; }
 
 /* ONBOARDING MODAL */
 .onboard-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
