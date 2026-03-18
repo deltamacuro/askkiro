@@ -45,9 +45,8 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .start-right { flex-shrink: 0; }
 .start-ghost-img {
   width: 280px; height: 280px;
-  border-radius: 32px;
   animation: ghostFloat 4s ease-in-out infinite;
-  filter: drop-shadow(0 20px 60px rgba(167,139,250,0.2));
+  filter: drop-shadow(0 20px 60px rgba(167,139,250,0.25));
 }
 @keyframes ghostFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
