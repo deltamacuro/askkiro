@@ -24,16 +24,21 @@
       <div class="hero-cta" id="hero-cta">
         <button class="hero-btn" id="ask-kiro-btn">
           <span class="hero-btn-glow"></span>
-          <svg class="hero-btn-icon" width="26" height="26" viewBox="0 0 2000 2000" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(0,2000) scale(1,-1)">
-              <path fill="currentColor" d="M1169 1665 c179 -43 317 -190 368 -393 13 -50 17 -110 17 -237 -1 -151 -4 -181 -27 -270 -52 -195 -146 -343 -264 -412 -37 -21 -60 -27 -106 -28 -53 0 -61 3 -87 31 -15 17 -29 37 -31 43 -3 8 -24 0 -61 -22 -98 -59 -219 -71 -289 -30 -63 37 -87 140 -54 232 8 23 10 39 5 36 -22 -14 -105 -22 -136 -13 -38 10 -64 49 -64 95 0 16 17 65 39 108 47 98 56 136 76 306 26 227 74 349 175 443 120 110 275 149 439 111z"/>
-              <path fill="var(--kiro-bg)" d="M1034 1292 c-34 -22 -46 -123 -21 -172 23 -45 87 -39 107 10 17 40 8 125 -15 150 -18 20 -51 26 -71 12z"/>
-              <path fill="var(--kiro-bg)" d="M1264 1292 c-34 -22 -46 -123 -21 -172 19 -38 68 -39 97 -3 18 23 21 37 18 85 -3 37 -11 64 -23 78 -18 20 -51 26 -71 12z"/>
-            </g>
-          </svg>
-          <span class="hero-btn-text" id="hero-btn-text">Ask Kiro</span>
+          <span class="hero-btn-ghost">
+            <svg width="80" height="80" viewBox="0 0 2000 2000" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(0,2000) scale(1,-1)">
+                <path fill="white" d="M1169 1665 c179 -43 317 -190 368 -393 13 -50 17 -110 17 -237 -1 -151 -4 -181 -27 -270 -52 -195 -146 -343 -264 -412 -37 -21 -60 -27 -106 -28 -53 0 -61 3 -87 31 -15 17 -29 37 -31 43 -3 8 -24 0 -61 -22 -98 -59 -219 -71 -289 -30 -63 37 -87 140 -54 232 8 23 10 39 5 36 -22 -14 -105 -22 -136 -13 -38 10 -64 49 -64 95 0 16 17 65 39 108 47 98 56 136 76 306 26 227 74 349 175 443 120 110 275 149 439 111z"/>
+                <path fill="#0c0c0f" d="M1034 1292 c-34 -22 -46 -123 -21 -172 23 -45 87 -39 107 10 17 40 8 125 -15 150 -18 20 -51 26 -71 12z"/>
+                <path fill="#0c0c0f" d="M1264 1292 c-34 -22 -46 -123 -21 -172 19 -38 68 -39 97 -3 18 23 21 37 18 85 -3 37 -11 64 -23 78 -18 20 -51 26 -71 12z"/>
+              </g>
+            </svg>
+          </span>
+          <span class="hero-btn-content">
+            <span class="hero-btn-text" id="hero-btn-text">Ask Kiro</span>
+            <span class="hero-btn-sub">Copia el prompt para el chat</span>
+          </span>
         </button>
-        <p class="hero-hint" id="ask-kiro-status">Copia el prompt y pegalo en el chat de Kiro</p>
+        <p class="hero-hint" id="ask-kiro-status"></p>
         <details class="hero-details">
           <summary>Ver prompt</summary>
           <code id="ask-kiro-text"></code>

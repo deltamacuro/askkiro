@@ -376,18 +376,22 @@ function configurarAskKiroBtn() {
         navigator.clipboard.writeText(text.textContent.trim()).then(function() {
           var status = document.getElementById('ask-kiro-status');
           var btnText = document.getElementById('hero-btn-text');
+          var btnSub = btn.querySelector('.hero-btn-sub');
           btn.classList.add('copied');
           if (btnText) btnText.textContent = 'Prompt copiado';
+          if (btnSub) btnSub.textContent = 'Pega con Cmd+V en el chat de Kiro';
           if (status) {
-            status.textContent = 'Pega con Cmd+V en el chat de Kiro';
+            status.textContent = '';
             status.classList.add('active');
           }
 
           setTimeout(function() {
             btn.classList.remove('copied');
-            if (btnText) btnText.textContent = askKiroContent[getCurrentMode()].btn;
+            var mode = getCurrentMode();
+            if (btnText) btnText.textContent = askKiroContent[mode].btn;
+            if (btnSub) btnSub.textContent = 'Copia el prompt para el chat';
             if (status) {
-              status.textContent = askKiroContent[getCurrentMode()].desc;
+              status.textContent = '';
               status.classList.remove('active');
             }
           }, 4000);
