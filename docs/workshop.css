@@ -141,6 +141,34 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   box-shadow: 0 8px 40px rgba(117,64,176,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
   animation: staggerIn 0.5s ease forwards, btnPulse 2.5s ease-in-out 0.9s infinite;
 }
+.start-actions {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+}
+.start-btn-secondary {
+  position: relative; z-index: 2;
+  background: transparent;
+  color: var(--accent-bright); border: 1.5px solid rgba(117,64,176,0.4);
+  padding: 0.85rem 2.5rem; border-radius: 14px;
+  font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600;
+  cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  animation: staggerIn 0.5s ease forwards 0.5s;
+}
+.start-btn-secondary:hover {
+  background: rgba(117,64,176,0.12);
+  border-color: rgba(194,169,223,0.5);
+  transform: translateY(-2px);
+}
+.start-btn-reset {
+  background: none; border: none;
+  color: var(--dim); font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; font-weight: 500;
+  cursor: pointer; transition: color 0.2s;
+  padding: 0.3rem 0; text-decoration: underline;
+  text-decoration-color: transparent;
+  animation: staggerIn 0.5s ease forwards 0.6s;
+}
+.start-btn-reset:hover { color: var(--accent-bright); text-decoration-color: var(--accent-bright); }
 .start-modes { margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .start-mode:hover { color: var(--accent); }

@@ -215,7 +215,7 @@
       else { goTo(current - 1); }
     });
     if (next) next.addEventListener('click', function () {
-      if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); saveState(); }
+      if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); setTimeout(saveState, FADE_MS + 50); }
       else { goTo(current + 1); }
     });
 
@@ -240,7 +240,7 @@
       if (e.key === 'ArrowRight' || e.key === 'Enter') {
         e.preventDefault();
         if (current < total) goTo(current + 1);
-        else if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); saveState(); }
+        else if (current >= total) { visited[current] = true; trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' }); switchScreen('screen-end'); setTimeout(saveState, FADE_MS + 50); }
       }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
@@ -371,7 +371,14 @@
    */
   function setupScreens() {
     const play = document.getElementById('btn-play');
+    const btnContinue = document.getElementById('btn-continue');
+    const btnReset = document.getElementById('btn-reset');
+
     if (play) play.addEventListener('click', function () {
+      current = 1;
+      visited = {};
+      saveState();
+      updateUI();
       if (!location.hash || location.hash === '#') setModeHash('play');
       trackEvent('mode_select', { mode: 'play' });
       switchScreen('screen-play');
@@ -383,6 +390,22 @@
           if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
         }, FADE_MS + 50);
       }
+    });
+
+    if (btnContinue) btnContinue.addEventListener('click', function () {
+      if (!location.hash || location.hash === '#') setModeHash('play');
+      trackEvent('mode_select', { mode: 'continue' });
+      switchScreen('screen-play');
+    });
+
+    if (btnReset) btnReset.addEventListener('click', function () {
+      current = 1;
+      visited = {};
+      savedScreen = null;
+      try { localStorage.removeItem('kiroWS'); } catch (e) {}
+      updateUI();
+      if (btnContinue) btnContinue.hidden = true;
+      btnReset.hidden = true;
     });
 
     const onboardGo = document.getElementById('btn-onboard-go');
@@ -502,14 +525,28 @@
 
   /**
    * Restaura la pantalla activa segun el estado guardado.
-   * Swap directo de clases sin transicion para evitar flash.
+   * Siempre arranca en screen-start. Si hay progreso guardado,
+   * muestra botones "Continuar" y "Reiniciar".
+   * Solo restaura screen-end directamente.
    */
   function restoreScreen() {
-    if (!savedScreen || savedScreen === 'screen-start') return;
-    const start = document.getElementById('screen-start');
-    const target = document.getElementById(savedScreen);
-    if (start) start.classList.remove('active');
-    if (target) target.classList.add('active');
+    const btnContinue = document.getElementById('btn-continue');
+    const btnReset = document.getElementById('btn-reset');
+    const hasProgress = current > 1 || Object.keys(visited).length > 0;
+
+    if (hasProgress && savedScreen !== 'screen-end') {
+      if (btnContinue) btnContinue.hidden = false;
+      if (btnReset) btnReset.hidden = false;
+    }
+
+    if (savedScreen === 'screen-end') {
+      if (btnContinue) btnContinue.hidden = true;
+      if (btnReset) btnReset.hidden = false;
+      const start = document.getElementById('screen-start');
+      const target = document.getElementById('screen-end');
+      if (start) start.classList.remove('active');
+      if (target) target.classList.add('active');
+    }
   }
 
   init();
