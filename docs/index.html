@@ -141,7 +141,31 @@
         <div class="mission-inner">
           <span class="mission-tag">Fase 1 &middot; Specs</span>
           <h2>Planifica antes de codear</h2>
-          <p>El vibe coding es rapido pero impredecible. El spec-driven development invierte tiempo al principio para que despues la ejecucion salga bien: requirements &rarr; design &rarr; tasks.</p>
+          <p>El vibe coding es rapido pero impredecible. El spec-driven development invierte tiempo al principio para que despues la ejecucion salga bien.</p>
+          <div class="spec-vs">
+            <div class="spec-vs-col spec-vs-vibe">
+              <span class="spec-vs-label">Vibe coding</span>
+              <div class="spec-vs-flow">
+                <span class="spec-vs-step">Prompt</span>
+                <span class="spec-vs-arrow">&rarr;</span>
+                <span class="spec-vs-step">Codigo</span>
+                <span class="spec-vs-arrow">&rarr;</span>
+                <span class="spec-vs-step spec-vs-risk">&#x1F91E;</span>
+              </div>
+            </div>
+            <div class="spec-vs-col spec-vs-spec">
+              <span class="spec-vs-label">Spec-driven</span>
+              <div class="spec-vs-flow">
+                <span class="spec-vs-step spec-vs-check">Requirements</span>
+                <span class="spec-vs-arrow">&rarr;</span>
+                <span class="spec-vs-step spec-vs-check">Design</span>
+                <span class="spec-vs-arrow">&rarr;</span>
+                <span class="spec-vs-step spec-vs-check">Tasks</span>
+                <span class="spec-vs-arrow">&rarr;</span>
+                <span class="spec-vs-step spec-vs-ok">Codigo &#x2713;</span>
+              </div>
+            </div>
+          </div>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
             <pre><code>Crea un spec llamado "sistema-de-vidas". Descripcion: Agregar sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar.</code></pre>
