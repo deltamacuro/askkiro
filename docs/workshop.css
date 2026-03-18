@@ -245,6 +245,16 @@ body {
 }
 
 /* Chat preview */
+.hero-get-kiro {
+  font-size: 0.75rem;
+  color: var(--kiro-text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-top: 0.3rem;
+}
+
+.hero-get-kiro:hover { color: var(--kiro-accent); }
+
 .chat-preview {
   margin-top: 0.5rem;
   max-width: 560px;
