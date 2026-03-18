@@ -22,10 +22,32 @@
   const missionTitles = [];
 
   /**
+   * Actualiza el hash de la URL segun el modo activo.
+   * Permite trackear en analytics si el usuario juega, ensena o hace remix.
+   * @param {string} mode - 'play', 'presenter' o 'remix'
+   */
+  function setModeHash(mode) {
+    try { history.replaceState(null, '', '#' + mode); } catch (e) {}
+  }
+
+  /**
+   * Lee el hash de la URL y activa el modo correspondiente al cargar.
+   */
+  function restoreMode() {
+    const hash = location.hash.replace('#', '');
+    if (hash === 'presenter') {
+      document.body.className = 'mode-presenter';
+    } else if (hash === 'remix') {
+      document.body.className = 'mode-remix';
+    }
+  }
+
+  /**
    * Inicializa la aplicacion.
    */
   function init() {
     try {
+      restoreMode();
       cacheMissionTitles();
       buildDots();
       setupNav();
@@ -295,6 +317,7 @@
   function setupScreens() {
     const play = document.getElementById('btn-play');
     if (play) play.addEventListener('click', function () {
+      if (!location.hash || location.hash === '#') setModeHash('play');
       switchScreen('screen-play');
       let seen = false;
       try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
@@ -322,6 +345,7 @@
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
       document.body.className = 'mode-presenter';
+      setModeHash('presenter');
       switchScreen('screen-start');
     });
 
@@ -335,7 +359,9 @@
       link.addEventListener('click', function (e) {
         e.preventDefault();
         if (link.getAttribute('aria-disabled') === 'true') return;
-        document.body.className = 'mode-' + link.getAttribute('data-mode');
+        const mode = link.getAttribute('data-mode');
+        document.body.className = 'mode-' + mode;
+        setModeHash(mode);
         switchScreen('screen-play');
       });
     });
