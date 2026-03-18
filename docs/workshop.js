@@ -375,7 +375,7 @@
   function updateStartButtons() {
     const btnContinue = document.getElementById('btn-continue');
     const btnReset = document.getElementById('btn-reset');
-    const hasProgress = current > 1 || Object.keys(visited).length > 0;
+    const hasProgress = current > 1;
     if (btnContinue) btnContinue.hidden = !hasProgress;
     if (btnReset) btnReset.hidden = !hasProgress;
   }
