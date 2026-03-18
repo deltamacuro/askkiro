@@ -126,15 +126,19 @@
       if (p === phase) {
         t.classList.add('active');
         t.removeAttribute('aria-disabled');
+        t.removeAttribute('tabindex');
       } else if (p < phase) {
         t.classList.add('done');
         t.removeAttribute('aria-disabled');
+        t.removeAttribute('tabindex');
       } else if (isPhaseUnlocked(p)) {
         t.classList.add('unlocked');
         t.removeAttribute('aria-disabled');
+        t.removeAttribute('tabindex');
       } else {
         t.classList.add('locked');
         t.setAttribute('aria-disabled', 'true');
+        t.setAttribute('tabindex', '-1');
       }
     });
 
@@ -265,6 +269,7 @@
     document.querySelectorAll('.start-mode').forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
+        if (link.getAttribute('aria-disabled') === 'true') return;
         document.body.className = 'mode-' + link.getAttribute('data-mode');
         switchScreen('screen-play');
       });
@@ -287,12 +292,17 @@
    * Guarda el estado actual en localStorage.
    */
   function saveState() {
-    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited })); } catch (e) {}
+    const activeScreen = document.querySelector('.screen.active');
+    const screen = activeScreen ? activeScreen.id : 'screen-start';
+    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited, screen: screen })); } catch (e) {}
   }
 
   /**
    * Restaura el estado desde localStorage.
    */
+  /** @type {string|null} Pantalla guardada en localStorage */
+  let savedScreen = null;
+
   function loadState() {
     try {
       const data = localStorage.getItem('kiroWS');
@@ -300,20 +310,20 @@
       const s = JSON.parse(data);
       if (s.current) current = s.current;
       if (s.visited) visited = s.visited;
+      if (s.screen) savedScreen = s.screen;
     } catch (e) {}
   }
 
   /**
    * Restaura la pantalla activa segun el estado guardado.
-   * Si habia progreso, salta directo a screen-play sin transicion.
+   * Swap directo de clases sin transicion para evitar flash.
    */
   function restoreScreen() {
-    if (current > 1) {
-      const start = document.getElementById('screen-start');
-      const play = document.getElementById('screen-play');
-      if (start) start.classList.remove('active');
-      if (play) play.classList.add('active');
-    }
+    if (!savedScreen || savedScreen === 'screen-start') return;
+    const start = document.getElementById('screen-start');
+    const target = document.getElementById(savedScreen);
+    if (start) start.classList.remove('active');
+    if (target) target.classList.add('active');
   }
 
   init();

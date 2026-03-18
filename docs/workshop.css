@@ -139,11 +139,12 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .start-btn:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 40px rgba(117,64,176,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-  animation: staggerIn 0.5s ease forwards;
+  animation: staggerIn 0.5s ease forwards, btnPulse 2.5s ease-in-out 0.9s infinite;
 }
 .start-modes { margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; }
 .start-mode { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .start-mode:hover { color: var(--accent); }
+.start-mode-disabled { opacity: 0.4; cursor: default; pointer-events: none; }
 .start-sep { color: var(--border); }
 .start-help { display: block; margin-top: 0.6rem; font-size: 0.72rem; color: var(--dim); text-decoration: none; }
 .start-help:hover { color: var(--accent); }

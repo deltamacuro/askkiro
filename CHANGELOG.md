@@ -1,5 +1,15 @@
 # Changelog — Kiro Paso a Paso
 
+## v1.1.1 — 2026-03-18 — Bugfix round 2
+
+| ID | Estado | Descripcion |
+|----|--------|-------------|
+| BUG-014 | ✅ fixed | switchScreen no persiste pantalla en localStorage — saveState guarda `screen`, restoreScreen lo restaura (incluye screen-end) |
+| BUG-015 | ✅ fixed | Fases locked alcanzables por teclado — tabindex="-1" en HTML y gestion dinamica en updateUI |
+| BUG-016 | ✅ fixed | Link "Modo remix" sin estado disabled — clase .start-mode-disabled, pointer-events:none, title="Proximamente", aria-disabled |
+| BUG-017 | ✅ fixed | meta theme-color con color viejo #0c0c0f — actualizado a #09090a |
+| BUG-018 | ✅ fixed | .start-btn:hover mata btnPulse permanentemente — redeclarar lista completa de animaciones en :hover |
+
 ## v1.1.0 — 2026-03-18 — Bugfix + A11y + Code Quality
 
 Correccion masiva de 13 bugs detectados en auditoria de codigo.

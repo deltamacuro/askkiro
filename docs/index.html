@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0c0c0f">
+  <meta name="theme-color" content="#09090a">
   <title>Kiro Demo — De vibe coding a software real</title>
   <meta name="description" content="Aprende 9 features de Kiro en 30 minutos. 3 fases, 9 misiones, una app real.">
   <link rel="canonical" href="https://deltamacuro.github.io/kiro-paso-a-paso/">
@@ -37,7 +37,7 @@
         <div class="start-modes">
           <a href="#" class="start-mode" data-mode="presenter">Modo presentador</a>
           <span class="start-sep">&middot;</span>
-          <a href="#" class="start-mode" data-mode="remix">Modo remix</a>
+          <a href="#" class="start-mode start-mode-disabled" data-mode="remix" title="Proximamente" aria-disabled="true">Modo remix</a>
         </div>
         <a href="#help" class="start-help" id="btn-help">Ayuda</a>
       </div>
@@ -52,8 +52,8 @@
       </button>
       <div class="topbar-phases">
         <button class="topbar-phase active" data-phase="1">Construye</button>
-        <button class="topbar-phase locked" data-phase="2" aria-disabled="true">Automatiza</button>
-        <button class="topbar-phase locked" data-phase="3" aria-disabled="true">Conecta</button>
+        <button class="topbar-phase locked" data-phase="2" aria-disabled="true" tabindex="-1">Automatiza</button>
+        <button class="topbar-phase locked" data-phase="3" aria-disabled="true" tabindex="-1">Conecta</button>
       </div>
       <span class="topbar-count" id="topbar-count">1/9</span>
     </nav>
