@@ -291,7 +291,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   background: url('kiro.svg') center/contain no-repeat;
   border-radius: 50%;
   filter: drop-shadow(0 0 4px rgba(117,64,176,0.4));
-  animation: ghostFloat 3s ease-in-out infinite;
+  animation: askBtnFloat 3s ease-in-out infinite;
   transition: filter 0.3s;
 }
 .ask-btn:hover {
@@ -301,7 +301,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 }
 .ask-btn:hover::before {
   filter: drop-shadow(0 0 8px rgba(117,64,176,0.6));
-  animation: ghostWiggle 0.5s ease-in-out 2;
+  animation: askBtnWiggle 0.5s ease-in-out 2;
 }
 .ask-btn.copied {
   border-color: var(--accent-bright);
@@ -309,13 +309,13 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
   box-shadow: 0 0 12px rgba(117,64,176,0.3);
 }
 
-@keyframes ghostFloat {
+@keyframes askBtnFloat {
   0%, 100% { transform: translateY(-50%) scaleX(-1) rotate(0deg); }
   25% { transform: translateY(-58%) scaleX(-1) rotate(-2deg); }
   50% { transform: translateY(-45%) scaleX(-1) rotate(1.5deg); }
   75% { transform: translateY(-55%) scaleX(-1) rotate(-1deg); }
 }
-@keyframes ghostWiggle {
+@keyframes askBtnWiggle {
   0%, 100% { transform: translateY(-50%) scaleX(-1) rotate(0deg); }
   20% { transform: translateY(-50%) scaleX(-1) rotate(-8deg) scale(1.1); }
   40% { transform: translateY(-50%) scaleX(-1) rotate(6deg) scale(1.05); }
