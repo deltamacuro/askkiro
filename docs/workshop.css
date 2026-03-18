@@ -18,6 +18,28 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .hero-help { display: block; margin-top: 0.7rem; font-size: 0.72rem; color: var(--dim); text-decoration: none; }
 .hero-help:hover { color: var(--accent); }
 
+/* Hero modes */
+.hero-modes {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.8rem; margin-top: 2rem;
+}
+.hero-mode {
+  text-decoration: none; text-align: center;
+  transition: opacity 0.2s;
+}
+.hero-mode:hover { opacity: 0.8; }
+.hero-mode-name { display: block; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+.hero-mode-desc { display: block; font-size: 0.68rem; color: var(--dim); }
+.hero-mode-sep { color: var(--border); font-size: 0.8rem; }
+
+/* Hero transition */
+.hero.exiting {
+  animation: heroExit 0.5s ease forwards;
+}
+@keyframes heroExit {
+  to { opacity: 0; transform: translateY(-30px); }
+}
+
 /* PHASE NAV */
 .phase-nav {
   display: flex; position: sticky; top: 0; z-index: 100;
@@ -155,22 +177,44 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 body.mode-presenter .presenter-note { display: block; }
 
 /* FINALE */
-.finale { max-width: 640px; margin: 0 auto; padding: 2rem 1.5rem; }
-.finale blockquote {
-  border-left: 3px solid var(--accent); padding: 1rem 1.2rem;
-  font-style: italic; font-size: 0.9rem; color: var(--muted); line-height: 1.7;
-  background: var(--accent-dim); border-radius: 0 8px 8px 0;
+.finale {
+  display: none; max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem;
+  text-align: center;
 }
+.finale.visible { display: block; animation: finaleIn 0.6s ease; }
+@keyframes finaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-/* EXTRAS */
-.extras { border-top: 1px solid var(--border); }
-.extras-inner { max-width: 640px; margin: 0 auto; padding: 2rem 1.5rem; }
-.extras-label { font-size: 0.7rem; color: var(--dim); text-align: center; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-.extras-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.extras-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; text-decoration: none; transition: all 0.2s; }
-.extras-card:hover { border-color: var(--accent); }
-.extras-title { display: block; font-size: 0.88rem; font-weight: 600; color: var(--text); }
-.extras-desc { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+.finale-ghost { margin-bottom: 1rem; }
+.finale-img {
+  border-radius: 50%;
+  animation: ghostFloat 3s ease-in-out infinite;
+}
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.finale-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.3rem; }
+.finale-stats { font-size: 0.9rem; color: var(--accent); margin-bottom: 1.5rem; }
+.finale-quote {
+  border-left: 3px solid var(--accent); padding: 1rem 1.2rem;
+  font-style: italic; font-size: 0.88rem; color: var(--muted); line-height: 1.7;
+  background: var(--accent-dim); border-radius: 0 8px 8px 0;
+  text-align: left; margin-bottom: 1.5rem;
+}
+.finale-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+.finale-btn {
+  background: var(--accent); color: var(--bg); padding: 0.6rem 1.5rem;
+  border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+  text-decoration: none; transition: all 0.2s;
+}
+.finale-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(167,139,250,0.3); }
+.finale-restart {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  padding: 0.6rem 1.5rem; border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.finale-restart:hover { border-color: var(--accent); color: var(--accent); }
 
 /* HELP */
 .help-inner { max-width: 640px; margin: 0 auto; padding: 1.5rem; }
@@ -189,10 +233,8 @@ footer a:hover { color: var(--accent); }
 
 /* IMMERSIVE MODE */
 body.immersive .hero { display: none; }
-body.immersive .extras { display: none; }
 body.immersive .help { display: none; }
 body.immersive footer { display: none; }
-body.immersive .finale { display: none; }
 body.immersive .content { min-height: calc(100vh - 58px); }
 
 @media (max-width: 600px) {

@@ -22,8 +22,20 @@
     <h1>De vibe coding<br>a software real</h1>
     <p class="hero-sub">3 fases. 9 misiones. 30 minutos.</p>
     <p class="hero-desc">Cada mision desbloquea una feature de Kiro. Copia el prompt, pegalo en el chat, y mira lo que pasa.</p>
-    <a href="#phase-1" class="hero-start">Empezar</a>
+    <a href="#phase-1" class="hero-start" id="hero-start-btn">Empezar</a>
     <a href="#help" class="hero-help">Necesitas ayuda para configurar?</a>
+
+    <div class="hero-modes">
+      <a class="hero-mode" href="#" data-mode="presenter">
+        <span class="hero-mode-name">Presentador</span>
+        <span class="hero-mode-desc">Guion de clase con notas</span>
+      </a>
+      <span class="hero-mode-sep">&middot;</span>
+      <a class="hero-mode" href="#" data-mode="remix">
+        <span class="hero-mode-name">Remix</span>
+        <span class="hero-mode-desc">Crea tu version</span>
+      </a>
+    </div>
   </header>
 
   <!-- PHASE NAV -->
@@ -269,20 +281,18 @@ Los datos persisten con localStorage.</code>
 
     <!-- FINALE -->
     <section class="finale" id="finale">
-      <blockquote>Empezamos con un prompt de una linea. Agregamos las reglas del equipo, una feature con plan aprobado, automatizacion que corre sola, un agente con criterio propio, expertise que se activa cuando la necesitas, busqueda en internet sin salir del IDE, conexion directa con la documentacion oficial de AWS, y un ecosistema de herramientas listo con un clic. Eso no es vibe coding. Eso es software.</blockquote>
+      <div class="finale-ghost">
+        <img src="kiro-ghost.jpeg" alt="Kiro" width="80" height="80" class="finale-img">
+      </div>
+      <h2 class="finale-title">Mision cumplida</h2>
+      <p class="finale-stats"><span id="finale-count">9</span> features desbloqueadas. <span id="finale-phases">3</span> fases completadas.</p>
+      <blockquote class="finale-quote">Empezamos con un prompt de una linea. Agregamos las reglas del equipo, una feature con plan aprobado, automatizacion que corre sola, un agente con criterio propio, expertise que se activa cuando la necesitas, busqueda en internet sin salir del IDE, conexion directa con la documentacion oficial de AWS, y un ecosistema de herramientas listo con un clic. Eso no es vibe coding. Eso es software.</blockquote>
+      <div class="finale-actions">
+        <a href="https://kiro.dev" target="_blank" rel="noopener" class="finale-btn">Seguir construyendo con Kiro</a>
+        <button class="finale-restart" id="finale-restart">Reiniciar workshop</button>
+      </div>
     </section>
   </main>
-
-  <!-- OTROS MODOS -->
-  <section class="extras">
-    <div class="extras-inner">
-      <p class="extras-label">Otros modos</p>
-      <div class="extras-grid">
-        <a class="extras-card" href="#" data-mode="presenter"><span class="extras-title">Presentador</span><span class="extras-desc">Guion de clase con notas y tiempos</span></a>
-        <a class="extras-card" href="#" data-mode="remix"><span class="extras-title">Remix</span><span class="extras-desc">Crea tu version para otro dominio</span></a>
-      </div>
-    </div>
-  </section>
 
   <!-- AYUDA -->
   <section class="help" id="help">

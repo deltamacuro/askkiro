@@ -123,7 +123,10 @@ function setupCheckboxes() {
               if (totalDone === totalSteps) {
                 setTimeout(function() {
                   document.body.classList.remove('immersive');
-                  document.getElementById('finale').scrollIntoView({ behavior: 'smooth' });
+                  document.querySelectorAll('.phase').forEach(function(p) { p.classList.remove('active'); });
+                  var finale = document.getElementById('finale');
+                  if (finale) finale.classList.add('visible');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 1000);
               }
             } else {
@@ -210,29 +213,48 @@ function setupCopyButtons() {
  */
 function setupHeroStart() {
   try {
-    var btn = document.querySelector('.hero-start');
+    var btn = document.getElementById('hero-start-btn');
     if (!btn) return;
     btn.addEventListener('click', function(e) {
       e.preventDefault();
-      showPhase(state.phase || 1);
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        hero.classList.add('exiting');
+        setTimeout(function() {
+          showPhase(state.phase || 1);
+        }, 400);
+      }
     });
+
+    // Hero mode links
+    document.querySelectorAll('.hero-mode').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var mode = link.getAttribute('data-mode');
+        document.body.className = 'mode-' + mode;
+        var hero = document.querySelector('.hero');
+        if (hero) {
+          hero.classList.add('exiting');
+          setTimeout(function() { showPhase(1); }, 400);
+        }
+      });
+    });
+
+    // Finale restart
+    var restart = document.getElementById('finale-restart');
+    if (restart) {
+      restart.addEventListener('click', function() {
+        localStorage.removeItem('kiroWS');
+        location.reload();
+      });
+    }
   } catch (e) { console.error('Error en hero start', e); }
 }
 
 /**
- * Configura modos.
+ * Configura modos (ahora en hero).
  */
-function setupModes() {
-  try {
-    document.querySelectorAll('.extras-card').forEach(function(card) {
-      card.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.body.className = 'mode-' + card.getAttribute('data-mode');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    });
-  } catch (e) { console.error('Error en modos', e); }
-}
+function setupModes() {}
 
 /**
  * Guarda estado.
