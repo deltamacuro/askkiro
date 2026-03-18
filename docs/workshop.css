@@ -244,41 +244,97 @@ body {
   opacity: 0.4;
 }
 
-.hero-details {
-  margin-top: 0.2rem;
+/* Chat preview */
+.chat-preview {
+  margin-top: 0.5rem;
+  max-width: 560px;
+  width: 100%;
 }
 
-.hero-details summary {
-  font-size: 0.75rem;
+.chat-preview-toggle {
+  font-size: 0.78rem;
   color: var(--kiro-text-dim);
   cursor: pointer;
+  text-align: center;
+  display: block;
+  padding: 0.3rem;
   transition: color 0.2s;
 }
 
-.hero-details summary:hover { color: var(--kiro-text-muted); }
+.chat-preview-toggle:hover { color: var(--kiro-text-muted); }
 
-.hero-details code {
-  display: block;
+.chat-preview-window {
   margin-top: 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--kiro-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0a0a0f;
+}
+
+.chat-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--kiro-surface);
+  border-bottom: 1px solid var(--kiro-border);
+}
+
+.chat-preview-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--kiro-border);
+}
+
+.chat-preview-title {
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--kiro-text-dim);
+  font-weight: 500;
+}
+
+.chat-preview-body {
+  padding: 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.chat-preview-body::-webkit-scrollbar { width: 4px; }
+.chat-preview-body::-webkit-scrollbar-thumb {
+  background: var(--kiro-border);
+  border-radius: 4px;
+}
+
+.chat-preview-msg {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.chat-preview-avatar {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
   border-radius: 6px;
-  padding: 0.7rem;
+  background: var(--kiro-accent);
+  color: var(--kiro-bg);
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+.chat-preview-msg code {
+  display: block;
   color: var(--kiro-text-muted);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   white-space: pre-wrap;
   line-height: 1.5;
-  max-height: 180px;
-  max-width: 560px;
-  overflow-y: auto;
   text-align: left;
-}
-
-.hero-details code::-webkit-scrollbar { width: 4px; }
-.hero-details code::-webkit-scrollbar-thumb {
-  background: var(--kiro-border);
-  border-radius: 4px;
 }
 
 /* Hide hero CTA in presenter mode */
