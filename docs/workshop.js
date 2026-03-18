@@ -278,8 +278,16 @@
     const home = document.getElementById('btn-home');
     if (home) home.addEventListener('click', function () { switchScreen('screen-start'); });
 
-    const backStart = document.getElementById('btn-back-start');
-    if (backStart) backStart.addEventListener('click', function () { switchScreen('screen-start'); });
+    const btnTeach = document.getElementById('btn-teach');
+    if (btnTeach) btnTeach.addEventListener('click', function () {
+      document.body.className = 'mode-presenter';
+      switchScreen('screen-start');
+    });
+
+    const btnRemix = document.getElementById('btn-remix');
+    if (btnRemix) btnRemix.addEventListener('click', function () {
+      switchScreen('screen-start');
+    });
 
     document.querySelectorAll('.start-mode').forEach(function (link) {
       link.addEventListener('click', function (e) {
