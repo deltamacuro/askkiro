@@ -6,9 +6,8 @@
   <title>Kiro Demo — De vibe coding a software real</title>
   <meta name="description" content="Aprende 9 features de Kiro en 30 minutos. 3 fases, 9 misiones, una app real.">
   <meta property="og:title" content="Kiro Demo — De vibe coding a software real">
-  <meta property="og:description" content="3 fases. 9 misiones. 30 minutos. Aprende Steering, Specs, Hooks, Agents, Skills, MCP y Powers.">
+  <meta property="og:description" content="3 fases. 9 misiones. 30 minutos. Tutorial interactivo de Kiro.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://deltamacuro.github.io/kiro-paso-a-paso/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,88 +15,67 @@
 </head>
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
-    <p class="hero-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a></p>
-    <h1>De vibe coding<br>a software real</h1>
-    <p class="hero-sub">3 fases. 9 misiones. 30 minutos.</p>
-    <p class="hero-desc">Cada mision desbloquea una feature de Kiro. Copia el prompt, pegalo en el chat, y mira lo que pasa.</p>
-    <a href="#phase-1" class="hero-start" id="hero-start-btn">Empezar</a>
-    <a href="#help" class="hero-help">Necesitas ayuda para configurar?</a>
-
-    <div class="hero-modes">
-      <a class="hero-mode" href="#" data-mode="presenter">
-        <span class="hero-mode-name">Presentador</span>
-        <span class="hero-mode-desc">Guion de clase con notas</span>
-      </a>
-      <span class="hero-mode-sep">&middot;</span>
-      <a class="hero-mode" href="#" data-mode="remix">
-        <span class="hero-mode-name">Remix</span>
-        <span class="hero-mode-desc">Crea tu version</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- PHASE NAV -->
-  <nav class="phase-nav" id="phase-nav">
-    <button class="phase-tab active" data-phase="1">
-      <span class="phase-tab-num">1</span>
-      <span class="phase-tab-label">Construye</span>
-      <span class="phase-tab-sub">Vibe &middot; Steering &middot; Specs</span>
-    </button>
-    <button class="phase-tab locked" data-phase="2">
-      <span class="phase-tab-num">2</span>
-      <span class="phase-tab-label">Automatiza</span>
-      <span class="phase-tab-sub">Hooks &middot; Agents &middot; Skills</span>
-    </button>
-    <button class="phase-tab locked" data-phase="3">
-      <span class="phase-tab-num">3</span>
-      <span class="phase-tab-label">Conecta</span>
-      <span class="phase-tab-sub">Search &middot; MCP &middot; Powers</span>
-    </button>
-  </nav>
-
-  <main class="content">
-
-    <!-- FASE 1: CONSTRUYE -->
-    <section class="phase active" id="phase-1" data-phase="1">
-      <div class="phase-header">
-        <span class="phase-num">Fase 1</span>
-        <h2>Construye</h2>
-        <p>Crea la app, dale reglas, y planifica una feature real.</p>
+  <!-- ===== SCREEN: INICIO ===== -->
+  <div class="screen screen-start active" id="screen-start">
+    <div class="start-content">
+      <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a></p>
+      <h1>De vibe coding<br>a software real</h1>
+      <p class="start-sub">3 fases &middot; 9 misiones &middot; 30 minutos</p>
+      <button class="start-btn" id="btn-play">Empezar</button>
+      <div class="start-modes">
+        <a href="#" class="start-mode" data-mode="presenter">Modo presentador</a>
+        <span class="start-sep">&middot;</span>
+        <a href="#" class="start-mode" data-mode="remix">Modo remix</a>
       </div>
+      <a href="#help" class="start-help" id="btn-help">Ayuda</a>
+    </div>
+  </div>
 
-      <div class="phase-steps">
-        <div class="step-indicators">
-          <button class="step-dot active" data-step="1">1</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="2">2</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="3">3</button>
-        </div>
+  <!-- ===== SCREEN: MISIONES ===== -->
+  <div class="screen screen-play" id="screen-play">
 
-        <!-- 1.1 -->
-        <article class="step active" data-step="1">
-          <span class="step-tag">Vibe Coding</span>
-          <h3>Crea la app con un solo prompt</h3>
+    <!-- TOP BAR -->
+    <nav class="topbar">
+      <button class="topbar-home" id="btn-home" title="Volver al inicio">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+      </button>
+      <div class="topbar-phases">
+        <button class="topbar-phase active" data-phase="1">Construye</button>
+        <button class="topbar-phase locked" data-phase="2">Automatiza</button>
+        <button class="topbar-phase locked" data-phase="3">Conecta</button>
+      </div>
+      <div class="topbar-progress">
+        <span class="topbar-count" id="topbar-count">1/9</span>
+      </div>
+    </nav>
+
+    <!-- MISSION AREA -->
+    <div class="mission-area">
+
+      <!-- MISSION 1 -->
+      <article class="mission active" data-mission="1" data-phase="1">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 1 &middot; Vibe Coding</span>
+          <h2>Crea la app con un solo prompt</h2>
           <p>Un prompt. Treinta segundos. App funcionando.</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Crea una web app de conversor de temperaturas</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: una app funcional en el browser.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev toca este codigo?"</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="1"> Completado</label>
-        </article>
+          <p class="mission-result">Resultado: una app funcional en el browser.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Un prompt. Treinta segundos. Tenemos una app. Pero... ¿que pasa cuando otro dev toca este codigo?"</p></div>
+        </div>
+      </article>
 
-        <!-- 1.2 -->
-        <article class="step" data-step="2">
-          <span class="step-tag">Steering</span>
-          <h3>Haz que Kiro siga TUS reglas</h3>
-          <p>Cada dev le pide cosas distintas. El codigo es un caos. Arreglalo.</p>
+      <!-- MISSION 2 -->
+      <article class="mission" data-mission="2" data-phase="1">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 1 &middot; Steering</span>
+          <h2>Haz que Kiro siga TUS reglas</h2>
+          <p>Cada dev le pide cosas distintas. El codigo es un caos.</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Crea un steering file con las convenciones de nuestro proyecto:
 - Los mensajes de error deben estar en espanol
 - Usar camelCase para variables y funciones
@@ -108,206 +86,182 @@
 - La tipografia debe ser Roboto como primera opcion</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-then">Ahora pruebalo:</p>
+          <p class="mission-then">Ahora pruebalo:</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Refactoriza el conversor de temperaturas siguiendo las convenciones del proyecto.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: JSDoc, try/catch, errores en espanol. Sin repetir las reglas.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"No le repeti las reglas. Las leyo solas. Para siempre, para todo el equipo."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="2"> Completado</label>
-        </article>
+          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol. Sin repetir las reglas.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No le repeti las reglas. Las leyo solas. Para siempre, para todo el equipo."</p></div>
+        </div>
+      </article>
 
-        <!-- 1.3 -->
-        <article class="step" data-step="3">
-          <span class="step-tag">Specs</span>
-          <h3>Planifica antes de codear</h3>
-          <p>El cliente quiere historial. Un prompt largo sale mal. Hagamoslo bien.</p>
-          <div class="step-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; Nombre: <code>historial-conversiones</code></div>
+      <!-- MISSION 3 -->
+      <article class="mission" data-mission="3" data-phase="1">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 1 &middot; Specs</span>
+          <h2>Planifica antes de codear</h2>
+          <p>El cliente quiere historial. Un prompt largo sale mal.</p>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; <code>historial-conversiones</code></div>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Descripcion de la spec</div>
+            <div class="kiro-bar">Descripcion</div>
             <code>Agregar historial de conversiones al conversor.
 El usuario ve sus ultimas 10 conversiones,
 puede limpiar el historial y hacer clic en una entrada para reutilizarla.
 Los datos persisten con localStorage.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: requirements, design y tasks. Tu apruebas cada paso.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="3"> Completado</label>
-        </article>
-      </div>
-    </section>
-
-    <!-- FASE 2: AUTOMATIZA -->
-    <section class="phase" id="phase-2" data-phase="2">
-      <div class="phase-header">
-        <span class="phase-num">Fase 2</span>
-        <h2>Automatiza</h2>
-        <p>Dale inteligencia al IDE. Hooks, agentes y conocimiento de dominio.</p>
-      </div>
-
-      <div class="phase-steps">
-        <div class="step-indicators">
-          <button class="step-dot active" data-step="4">1</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="5">2</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="6">3</button>
+          <p class="mission-result">Resultado: requirements, design y tasks. Tu apruebas cada paso.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p></div>
         </div>
+      </article>
 
-        <!-- 2.1 -->
-        <article class="step active" data-step="4">
-          <span class="step-tag">Hooks</span>
-          <h3>El IDE que vigila por ti</h3>
-          <p>Guardas un archivo. Hay un error. Te enteras en produccion. No mas.</p>
-          <div class="step-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Agent Hooks &rarr; "+"</div>
+      <!-- MISSION 4 -->
+      <article class="mission" data-mission="4" data-phase="2">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 2 &middot; Hooks</span>
+          <h2>El IDE que vigila por ti</h2>
+          <p>Guardas un archivo. Hay un error. Te enteras en produccion.</p>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Agent Hooks &rarr; "+"</div>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones sin documentacion JSDoc y avisame en el chat.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-then">Pruebalo: borra un parentesis en app.js, guarda con Cmd+S, mira el chat.</p>
-          <p class="step-result">Resultado: Kiro detecta el error automaticamente.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"No corri ningun comando. No instale ningun linter. El IDE reacciono solo."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="4"> Completado</label>
-        </article>
+          <p class="mission-then">Pruebalo: borra un parentesis en app.js, guarda con Cmd+S.</p>
+          <p class="mission-result">Resultado: Kiro detecta el error automaticamente.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No corri ningun comando. El IDE reacciono solo."</p></div>
+        </div>
+      </article>
 
-        <!-- 2.2 -->
-        <article class="step" data-step="5">
-          <span class="step-tag">Agents</span>
-          <h3>Tu senior dev personal</h3>
+      <!-- MISSION 5 -->
+      <article class="mission" data-mission="5" data-phase="2">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 2 &middot; Agents</span>
+          <h2>Tu senior dev personal</h2>
           <p>La IA generica aprueba cualquier cosa. Dale criterio.</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Crea un agente llamado "revisor" que actue como un senior developer estricto con la calidad. Solo aprueba codigo que tenga manejo de errores explicito y funciones documentadas con JSDoc.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-then">Invocalo:</p>
+          <p class="mission-then">Invocalo:</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>@revisor revisa app.js y dime si lo aprobarias para produccion.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: APROBADO o RECHAZADO con detalles.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"Tiene el criterio de tu equipo. Uno para seguridad, otro para accesibilidad, otro para performance."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="5"> Completado</label>
-        </article>
+          <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Tiene el criterio de tu equipo."</p></div>
+        </div>
+      </article>
 
-        <!-- 2.3 -->
-        <article class="step" data-step="6">
-          <span class="step-tag">Skills</span>
-          <h3>Dale expertise a Kiro</h3>
-          <p>Steering son las reglas. Skills es el conocimiento. Se activa solo cuando lo necesita.</p>
+      <!-- MISSION 6 -->
+      <article class="mission" data-mission="6" data-phase="2">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 2 &middot; Skills</span>
+          <h2>Dale expertise a Kiro</h2>
+          <p>Steering son las reglas. Skills es el conocimiento.</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>Crea una skill llamada "fisica-temperaturas" que sepa sobre escalas de temperatura, sus rangos fisicos validos, y casos extremos como el cero absoluto.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-then">Pruebalo:</p>
+          <p class="mission-then">Pruebalo:</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>¿Que pasa si el usuario intenta convertir -300°C?</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: Kiro sabe que -300°C esta por debajo del cero absoluto.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"No cargue nada manualmente. Kiro supo cuando necesitaba ese conocimiento."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="6"> Completado</label>
-        </article>
-      </div>
-    </section>
-
-    <!-- FASE 3: CONECTA -->
-    <section class="phase" id="phase-3" data-phase="3">
-      <div class="phase-header">
-        <span class="phase-num">Fase 3</span>
-        <h2>Conecta</h2>
-        <p>Conecta Kiro al mundo real. Internet, AWS y el ecosistema.</p>
-      </div>
-
-      <div class="phase-steps">
-        <div class="step-indicators">
-          <button class="step-dot active" data-step="7">1</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="8">2</button>
-          <span class="step-line"></span>
-          <button class="step-dot" data-step="9">3</button>
+          <p class="mission-result">Resultado: Kiro sabe que -300°C esta por debajo del cero absoluto.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Kiro supo cuando necesitaba ese conocimiento."</p></div>
         </div>
+      </article>
 
-        <!-- 3.1 -->
-        <article class="step active" data-step="7">
-          <span class="step-tag">Web Search</span>
-          <h3>Busca sin salir del IDE</h3>
-          <p>Necesitas un dato. Sales al browser. Rompe el flow. No mas.</p>
+      <!-- MISSION 7 -->
+      <article class="mission" data-mission="7" data-phase="3">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 3 &middot; Web Search</span>
+          <h2>Busca sin salir del IDE</h2>
+          <p>Necesitas un dato. Sales al browser. Rompe el flow.</p>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>¿Cual fue la temperatura mas baja registrada en la Tierra y donde?</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: dato real con fuente, directo en el chat.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"No abri ninguna pestana. La informacion llego donde la necesitaba."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="7"> Completado</label>
-        </article>
+          <p class="mission-result">Resultado: dato real con fuente, directo en el chat.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"No abri ninguna pestana."</p></div>
+        </div>
+      </article>
 
-        <!-- 3.2 -->
-        <article class="step" data-step="8">
-          <span class="step-tag">MCP</span>
-          <h3>Conecta con AWS en tiempo real</h3>
-          <p>La IA generica no sabe que servicios de AWS existen hoy. Conectala.</p>
-          <div class="step-action"><span class="action-lbl">En Kiro</span> Abre <code>.kiro/settings/mcp.json</code> y agrega el servidor de documentacion de AWS.</div>
+      <!-- MISSION 8 -->
+      <article class="mission" data-mission="8" data-phase="3">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 3 &middot; MCP</span>
+          <h2>Conecta con AWS en tiempo real</h2>
+          <p>La IA generica no sabe que servicios de AWS existen hoy.</p>
+          <div class="mission-action"><span class="action-lbl">En Kiro</span> Configura <code>.kiro/settings/mcp.json</code> con el servidor de docs de AWS.</div>
           <div class="kiro-chat">
-            <div class="kiro-chat-bar">Kiro Chat</div>
+            <div class="kiro-bar">Kiro Chat</div>
             <code>¿Cual es la mejor forma de hacer deploy de esta app a un servicio de hosting estatico en AWS? Busca en la documentacion oficial.</code>
             <button class="ask-btn"><img src="kiro-ghost.jpeg" alt="" width="18" height="18" class="ask-icon"> Ask Kiro</button>
           </div>
-          <p class="step-result">Resultado: respuesta basada en docs oficiales de AWS.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"Es la documentacion oficial, leida en tiempo real, aplicada a tu proyecto."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="8"> Completado</label>
-        </article>
+          <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Documentacion oficial, leida en tiempo real."</p></div>
+        </div>
+      </article>
 
-        <!-- 3.3 -->
-        <article class="step" data-step="9">
-          <span class="step-tag">Powers</span>
-          <h3>Empaqueta todo en un clic</h3>
-          <p>Todo funciona pero vive disperso. Empaquetalo para tu equipo.</p>
-          <p>Un Power empaqueta MCP + steering + hooks + onboarding en una unidad instalable. Usa "Build a Power" para crear el tuyo.</p>
-          <p class="step-result">Resultado: un paquete que cualquier dev instala y tiene todo.</p>
-          <div class="presenter-note"><span class="note-lbl">Lo que dices</span><p>"Con MCP conectaste la IA a una herramienta. Con Powers le diste el manual. Un clic."</p></div>
-          <label class="step-check"><input type="checkbox" class="check-input" data-step="9"> Completado</label>
-        </article>
-      </div>
-    </section>
+      <!-- MISSION 9 -->
+      <article class="mission" data-mission="9" data-phase="3">
+        <div class="mission-inner">
+          <span class="mission-tag">Fase 3 &middot; Powers</span>
+          <h2>Empaqueta todo en un clic</h2>
+          <p>Todo funciona pero vive disperso. Empaquetalo.</p>
+          <p>Un Power empaqueta MCP + steering + hooks + onboarding. Usa "Build a Power" para crear el tuyo.</p>
+          <p class="mission-result">Resultado: un paquete que cualquier dev instala y tiene todo.</p>
+          <div class="pnote"><span class="pnote-lbl">Lo que dices</span><p>"Con MCP conectaste la IA. Con Powers le diste el manual. Un clic."</p></div>
+        </div>
+      </article>
+    </div>
 
-    <!-- FINALE -->
-    <section class="finale" id="finale">
-      <div class="finale-ghost">
-        <img src="kiro-ghost.jpeg" alt="Kiro" width="80" height="80" class="finale-img">
-      </div>
-      <h2 class="finale-title">Mision cumplida</h2>
-      <p class="finale-stats"><span id="finale-count">9</span> features desbloqueadas. <span id="finale-phases">3</span> fases completadas.</p>
-      <blockquote class="finale-quote">Empezamos con un prompt de una linea. Agregamos las reglas del equipo, una feature con plan aprobado, automatizacion que corre sola, un agente con criterio propio, expertise que se activa cuando la necesitas, busqueda en internet sin salir del IDE, conexion directa con la documentacion oficial de AWS, y un ecosistema de herramientas listo con un clic. Eso no es vibe coding. Eso es software.</blockquote>
-      <div class="finale-actions">
-        <a href="https://kiro.dev" target="_blank" rel="noopener" class="finale-btn">Seguir construyendo con Kiro</a>
-        <button class="finale-restart" id="finale-restart">Reiniciar workshop</button>
-      </div>
-    </section>
-  </main>
+    <!-- BOTTOM NAV -->
+    <nav class="bottombar">
+      <button class="nav-btn" id="btn-prev" disabled>Anterior</button>
+      <div class="nav-dots" id="nav-dots"></div>
+      <button class="nav-btn nav-btn-next" id="btn-next">Siguiente</button>
+    </nav>
+  </div>
 
-  <!-- AYUDA -->
-  <section class="help" id="help">
-    <div class="help-inner">
-      <p class="help-label">Ayuda</p>
-      <div class="help-grid">
-        <details class="help-item"><summary>Como instalar Kiro</summary><p>Descargalo gratis desde <a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a>. macOS, Windows y Linux.</p></details>
+  <!-- ===== SCREEN: FINAL ===== -->
+  <div class="screen screen-end" id="screen-end">
+    <div class="end-content">
+      <img src="kiro-ghost.jpeg" alt="Kiro" width="80" height="80" class="end-ghost">
+      <h2>Mision cumplida</h2>
+      <p class="end-stats">9 features desbloqueadas &middot; 3 fases completadas</p>
+      <blockquote class="end-quote">Eso no es vibe coding. Eso es software.</blockquote>
+      <div class="end-actions">
+        <a href="https://kiro.dev" target="_blank" rel="noopener" class="end-btn-primary">Seguir con Kiro</a>
+        <button class="end-btn-secondary" id="btn-restart">Reiniciar</button>
+        <button class="end-btn-secondary" id="btn-back-start">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELP OVERLAY -->
+  <div class="help-overlay" id="help-overlay">
+    <div class="help-panel">
+      <button class="help-close" id="help-close">&times;</button>
+      <h3>Ayuda</h3>
+      <div class="help-items">
+        <details class="help-item"><summary>Como instalar Kiro</summary><p>Descargalo gratis desde <a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a>.</p></details>
         <details class="help-item"><summary>Como ver la app en el browser</summary><p>Instala <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener">Live Server</a>. Click derecho en index.html &rarr; "Open with Live Server".</p></details>
         <details class="help-item"><summary>Como descargar el proyecto</summary><p><code>git clone https://github.com/deltamacuro/kiro-paso-a-paso.git</code> o <a href="https://github.com/deltamacuro/kiro-paso-a-paso/archive/refs/heads/main.zip">descarga ZIP</a>.</p></details>
         <details class="help-item"><summary>Que es modo Autopilot</summary><p>El modo en que Kiro ejecuta acciones automaticamente. Abajo a la derecha en Kiro.</p></details>
       </div>
     </div>
-  </section>
+  </div>
 
-  <footer><a href="https://kiro.dev" target="_blank" rel="noopener">kiro.dev</a></footer>
   <script src="workshop.js"></script>
 </body>
 </html>
