@@ -5,6 +5,8 @@
   --text: #e8e8ed; --muted: #7c7c7e; --dim: #58535d;
 }
 body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; height: 100dvh; }
+a { color: var(--accent-bright); text-decoration-color: rgba(194,169,223,0.3); text-underline-offset: 2px; transition: text-decoration-color 0.2s; }
+a:hover { text-decoration-color: var(--accent-bright); }
 
 /* SCREENS */
 .screen { display: none; position: fixed; inset: 0; overflow-y: auto; opacity: 0; transition: opacity 0.35s ease; }
@@ -398,32 +400,6 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .mission-tip::before {
   content: '\f0eb'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
   color: var(--accent); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem;
-}
-
-/* MCP PICKER */
-.mcp-pick {
-  list-style: none; padding: 0; margin: 0.5rem 0;
-  display: flex; flex-direction: column; gap: 0.4rem;
-}
-.mcp-pick-item {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 8px; padding: 0.55rem 0.75rem;
-  font-size: 0.85rem; color: var(--text); line-height: 1.4;
-}
-.mcp-pick-item strong { font-weight: 600; }
-.mcp-pick-desc {
-  width: 100%; font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem;
-}
-.mcp-recommended {
-  border-color: var(--accent);
-  background: var(--accent-dim);
-}
-.mcp-pick-badge {
-  font-size: 0.62rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.04em; color: var(--accent-bright);
-  background: rgba(117,64,176,0.18); border-radius: 4px;
-  padding: 0.12rem 0.4rem;
 }
 
 /* MCP MANUAL (details/summary) */
