@@ -369,18 +369,26 @@
   /**
    * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
    */
+  /**
+   * Actualiza visibilidad de botones Continuar/Reiniciar en screen-start.
+   */
+  function updateStartButtons() {
+    const btnContinue = document.getElementById('btn-continue');
+    const btnReset = document.getElementById('btn-reset');
+    const hasProgress = current > 1 || Object.keys(visited).length > 0;
+    if (btnContinue) btnContinue.hidden = !hasProgress;
+    if (btnReset) btnReset.hidden = !hasProgress;
+  }
+
   function setupScreens() {
     const play = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
     const btnReset = document.getElementById('btn-reset');
 
     if (play) play.addEventListener('click', function () {
-      current = 1;
-      visited = {};
-      saveState();
-      updateUI();
       if (!location.hash || location.hash === '#') setModeHash('play');
       trackEvent('mode_select', { mode: 'play' });
+      goTo(1);
       switchScreen('screen-play');
       let seen = false;
       try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
@@ -404,8 +412,7 @@
       savedScreen = null;
       try { localStorage.removeItem('kiroWS'); } catch (e) {}
       updateUI();
-      if (btnContinue) btnContinue.hidden = true;
-      btnReset.hidden = true;
+      updateStartButtons();
     });
 
     const onboardGo = document.getElementById('btn-onboard-go');
@@ -416,10 +423,10 @@
     });
 
     const home = document.getElementById('btn-home');
-    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); });
+    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(updateStartButtons, FADE_MS + 50); });
 
     const btnBackStart = document.getElementById('btn-back-start');
-    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); });
+    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(updateStartButtons, FADE_MS + 50); });
 
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
@@ -427,6 +434,7 @@
       setModeHash('presenter');
       trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
       switchScreen('screen-start');
+      setTimeout(updateStartButtons, FADE_MS + 50);
       showPresenterOnboard();
     });
 
@@ -530,18 +538,9 @@
    * Solo restaura screen-end directamente.
    */
   function restoreScreen() {
-    const btnContinue = document.getElementById('btn-continue');
-    const btnReset = document.getElementById('btn-reset');
-    const hasProgress = current > 1 || Object.keys(visited).length > 0;
-
-    if (hasProgress && savedScreen !== 'screen-end') {
-      if (btnContinue) btnContinue.hidden = false;
-      if (btnReset) btnReset.hidden = false;
-    }
+    updateStartButtons();
 
     if (savedScreen === 'screen-end') {
-      if (btnContinue) btnContinue.hidden = true;
-      if (btnReset) btnReset.hidden = false;
       const start = document.getElementById('screen-start');
       const target = document.getElementById('screen-end');
       if (start) start.classList.remove('active');
