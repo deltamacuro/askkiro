@@ -386,9 +386,12 @@
     const btnReset = document.getElementById('btn-reset');
 
     if (play) play.addEventListener('click', function () {
+      current = 1;
+      visited = {};
       if (!location.hash || location.hash === '#') setModeHash('play');
       trackEvent('mode_select', { mode: 'play' });
-      goTo(1);
+      updateUI();
+      saveState();
       switchScreen('screen-play');
       let seen = false;
       try { seen = localStorage.getItem('kiroOnboard') === '1'; } catch (e) {}
