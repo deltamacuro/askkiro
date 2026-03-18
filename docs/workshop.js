@@ -1,189 +1,320 @@
-var current = 1;
-var total = 9;
-var visited = {};
+(function () {
+  'use strict';
 
-function init() {
-  try {
-    buildDots();
-    setupNav();
-    setupCopy();
-    setupScreens();
-    setupHelp();
-    loadState();
-    updateUI();
-  } catch (e) { console.error(e); }
-}
+  /** @type {number} Mision actual (1-based) */
+  let current = 1;
+  /** @type {number} Total de misiones */
+  const total = 9;
+  /** @type {Object<number, boolean>} Misiones visitadas */
+  let visited = {};
+  /** @type {boolean} Indica si hay una transicion de pantalla en curso */
+  let transitioning = false;
+  /** @type {number} Duracion del fade-out en ms (debe coincidir con CSS transition) */
+  const FADE_MS = 350;
 
-/**
- * Construye los dots con separadores entre fases.
- */
-function buildDots() {
-  var c = document.getElementById('nav-dots');
-  if (!c) return;
-  for (var i = 1; i <= total; i++) {
-    if (i === 4 || i === 7) {
-      var sep = document.createElement('span');
-      sep.className = 'nav-sep';
-      c.appendChild(sep);
-    }
-    var d = document.createElement('button');
-    d.className = 'nav-dot';
-    d.setAttribute('data-m', i);
-    d.addEventListener('click', (function(n) { return function() { goTo(n); }; })(i));
-    c.appendChild(d);
-  }
-}
+  /** Primera mision de cada fase */
+  const PHASE_START = { 1: 1, 2: 4, 3: 7 };
 
-function goTo(n) {
-  if (n < 1 || n > total) return;
-  visited[current] = true;
-  current = n;
-  updateUI();
-  saveState();
-}
+  /**
+   * Titulos de cada mision para aria-labels.
+   * @type {string[]}
+   */
+  const missionTitles = [];
 
-function updateUI() {
-  document.querySelectorAll('.mission').forEach(function(m) { m.classList.remove('active'); });
-  var active = document.querySelector('.mission[data-mission="' + current + '"]');
-  if (active) active.classList.add('active');
-
-  document.querySelectorAll('.nav-dot').forEach(function(d) {
-    var n = parseInt(d.getAttribute('data-m'));
-    d.classList.remove('active', 'visited');
-    if (n === current) d.classList.add('active');
-    else if (visited[n]) d.classList.add('visited');
-  });
-
-  var prev = document.getElementById('btn-prev');
-  var next = document.getElementById('btn-next');
-  if (prev) prev.disabled = (current <= 1);
-  if (next) {
-    if (current >= total) { next.textContent = 'Finalizar'; next.classList.add('finish'); }
-    else { next.textContent = 'Siguiente'; next.classList.remove('finish'); }
+  /**
+   * Inicializa la aplicacion.
+   */
+  function init() {
+    try {
+      cacheMissionTitles();
+      buildDots();
+      setupNav();
+      setupCopy();
+      setupScreens();
+      setupHelp();
+      loadState();
+      updateUI();
+      restoreScreen();
+    } catch (e) { console.error('Error al inicializar:', e); }
   }
 
-  var phase = active ? parseInt(active.getAttribute('data-phase')) : 1;
-  document.querySelectorAll('.topbar-phase').forEach(function(t) {
-    var p = parseInt(t.getAttribute('data-phase'));
-    t.classList.remove('active', 'locked', 'unlocked', 'done');
-    if (p === phase) t.classList.add('active');
-    else if (p < phase) t.classList.add('done');
-    else t.classList.add('unlocked');
-  });
-
-  var counter = document.getElementById('topbar-count');
-  if (counter) counter.textContent = current + '/' + total;
-}
-
-function setupNav() {
-  var prev = document.getElementById('btn-prev');
-  var next = document.getElementById('btn-next');
-  if (prev) prev.addEventListener('click', function() { goTo(current - 1); });
-  if (next) next.addEventListener('click', function() {
-    if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
-    else { goTo(current + 1); }
-  });
-
-  document.addEventListener('keydown', function(e) {
-    var play = document.getElementById('screen-play');
-    if (!play || !play.classList.contains('active')) return;
-    if (e.key === 'ArrowRight') { e.preventDefault(); if (current < total) goTo(current + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
-  });
-
-  document.querySelectorAll('.topbar-phase').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      if (tab.classList.contains('locked')) return;
-      var p = parseInt(tab.getAttribute('data-phase'));
-      goTo({ 1: 1, 2: 4, 3: 7 }[p] || 1);
+  /**
+   * Cachea los titulos de las misiones para usar en aria-labels.
+   */
+  function cacheMissionTitles() {
+    document.querySelectorAll('.mission').forEach(function (m) {
+      const idx = parseInt(m.getAttribute('data-mission'));
+      const h2 = m.querySelector('h2');
+      missionTitles[idx] = h2 ? h2.textContent : 'Mision ' + idx;
     });
-  });
-}
+  }
 
-function setupCopy() {
-  document.querySelectorAll('.ask-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var code = btn.parentElement.querySelector('code');
-      if (!code) return;
-      navigator.clipboard.writeText(code.textContent.trim()).then(function() {
-        var orig = btn.textContent;
-        btn.classList.add('copied');
-        btn.textContent = 'Copiado';
-        setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  /**
+   * Construye los dots de navegacion con separadores entre fases.
+   */
+  function buildDots() {
+    const c = document.getElementById('nav-dots');
+    if (!c) return;
+    for (let i = 1; i <= total; i++) {
+      if (i === 4 || i === 7) {
+        const sep = document.createElement('span');
+        sep.className = 'nav-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        c.appendChild(sep);
+      }
+      const d = document.createElement('button');
+      d.className = 'nav-dot';
+      d.setAttribute('data-m', i);
+      d.setAttribute('aria-label', 'Mision ' + i + ': ' + (missionTitles[i] || ''));
+      d.addEventListener('click', function () { goTo(i); });
+      c.appendChild(d);
+    }
+  }
+
+  /**
+   * Navega a una mision especifica.
+   * @param {number} n - Numero de mision (1-based)
+   */
+  function goTo(n) {
+    if (n < 1 || n > total) return;
+    visited[current] = true;
+    current = n;
+    updateUI();
+    saveState();
+  }
+
+  /**
+   * Determina si una fase esta desbloqueada.
+   * Fase 1 siempre desbloqueada. Fase N se desbloquea al visitar la ultima mision de la fase anterior.
+   * @param {number} phase - Numero de fase (1-3)
+   * @returns {boolean}
+   */
+  function isPhaseUnlocked(phase) {
+    if (phase <= 1) return true;
+    const lastOfPrev = PHASE_START[phase] - 1;
+    return !!visited[lastOfPrev];
+  }
+
+  /**
+   * Actualiza toda la UI: mision activa, dots, fases, contador.
+   */
+  function updateUI() {
+    document.querySelectorAll('.mission').forEach(function (m) { m.classList.remove('active'); });
+    const active = document.querySelector('.mission[data-mission="' + current + '"]');
+    if (active) active.classList.add('active');
+
+    document.querySelectorAll('.nav-dot').forEach(function (d) {
+      const n = parseInt(d.getAttribute('data-m'));
+      d.classList.remove('active', 'visited');
+      if (n === current) d.classList.add('active');
+      else if (visited[n]) d.classList.add('visited');
+      d.setAttribute('aria-current', n === current ? 'step' : 'false');
+    });
+
+    const prev = document.getElementById('btn-prev');
+    const next = document.getElementById('btn-next');
+    if (prev) prev.disabled = (current <= 1);
+    if (next) {
+      if (current >= total) { next.textContent = 'Finalizar'; next.classList.add('finish'); }
+      else { next.textContent = 'Siguiente'; next.classList.remove('finish'); }
+    }
+
+    const phase = active ? parseInt(active.getAttribute('data-phase')) : 1;
+    document.querySelectorAll('.topbar-phase').forEach(function (t) {
+      const p = parseInt(t.getAttribute('data-phase'));
+      t.classList.remove('active', 'locked', 'unlocked', 'done');
+      if (p === phase) {
+        t.classList.add('active');
+        t.removeAttribute('aria-disabled');
+      } else if (p < phase) {
+        t.classList.add('done');
+        t.removeAttribute('aria-disabled');
+      } else if (isPhaseUnlocked(p)) {
+        t.classList.add('unlocked');
+        t.removeAttribute('aria-disabled');
+      } else {
+        t.classList.add('locked');
+        t.setAttribute('aria-disabled', 'true');
+      }
+    });
+
+    const counter = document.getElementById('topbar-count');
+    if (counter) counter.textContent = current + '/' + total;
+  }
+
+  /**
+   * Configura la navegacion: botones prev/next, flechas de teclado, tabs de fases.
+   */
+  function setupNav() {
+    const prev = document.getElementById('btn-prev');
+    const next = document.getElementById('btn-next');
+    if (prev) prev.addEventListener('click', function () { goTo(current - 1); });
+    if (next) next.addEventListener('click', function () {
+      if (current >= total) { visited[current] = true; switchScreen('screen-end'); saveState(); }
+      else { goTo(current + 1); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      const play = document.getElementById('screen-play');
+      if (!play || !play.classList.contains('active')) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); if (current < total) goTo(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
+    });
+
+    document.querySelectorAll('.topbar-phase').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        if (tab.classList.contains('locked')) return;
+        const p = parseInt(tab.getAttribute('data-phase'));
+        goTo(PHASE_START[p] || 1);
       });
     });
-  });
-}
-
-/**
- * Cambia de pantalla con transicion.
- * @param {string} id
- */
-function switchScreen(id) {
-  var current_screen = document.querySelector('.screen.active');
-  var next_screen = document.getElementById(id);
-  if (!next_screen || current_screen === next_screen) return;
-
-  if (current_screen) {
-    current_screen.classList.add('fading');
-    setTimeout(function() {
-      current_screen.classList.remove('active', 'fading');
-      next_screen.classList.add('active');
-    }, 250);
-  } else {
-    next_screen.classList.add('active');
   }
-}
 
-function setupScreens() {
-  var play = document.getElementById('btn-play');
-  if (play) play.addEventListener('click', function() { switchScreen('screen-play'); });
+  /**
+   * Configura los botones "Ask Kiro" / "Copiar" con clipboard y fallback.
+   */
+  function setupCopy() {
+    document.querySelectorAll('.ask-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const code = btn.parentElement.querySelector('code');
+        if (!code) return;
+        const text = code.textContent.trim();
+        const orig = btn.textContent;
+        copyToClipboard(text).then(function () {
+          btn.classList.add('copied');
+          btn.textContent = 'Copiado';
+          setTimeout(function () { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+        }).catch(function () {
+          btn.textContent = 'Error';
+          setTimeout(function () { btn.textContent = orig; }, 2000);
+        });
+      });
+    });
+  }
 
-  var home = document.getElementById('btn-home');
-  if (home) home.addEventListener('click', function() { switchScreen('screen-start'); });
+  /**
+   * Copia texto al clipboard con fallback para contextos sin HTTPS.
+   * @param {string} text - Texto a copiar
+   * @returns {Promise<void>}
+   */
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        resolve();
+      } catch (err) { reject(err); }
+    });
+  }
 
-  var backStart = document.getElementById('btn-back-start');
-  if (backStart) backStart.addEventListener('click', function() { switchScreen('screen-start'); });
+  /**
+   * Cambia de pantalla con transicion fade-out/fade-in.
+   * Protegido contra doble-clic con flag transitioning.
+   * @param {string} id - ID de la pantalla destino
+   */
+  function switchScreen(id) {
+    if (transitioning) return;
+    const currentScreen = document.querySelector('.screen.active');
+    const nextScreen = document.getElementById(id);
+    if (!nextScreen || currentScreen === nextScreen) return;
 
-  var restart = document.getElementById('btn-restart');
-  if (restart) restart.addEventListener('click', function() {
-    localStorage.removeItem('kiroWS');
-    current = 1; visited = {};
-    updateUI();
-    switchScreen('screen-play');
-  });
+    if (currentScreen) {
+      transitioning = true;
+      currentScreen.classList.add('fading');
+      setTimeout(function () {
+        currentScreen.classList.remove('active', 'fading');
+        nextScreen.classList.add('active');
+        transitioning = false;
+      }, FADE_MS);
+    } else {
+      nextScreen.classList.add('active');
+    }
+  }
 
-  document.querySelectorAll('.start-mode').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.body.className = 'mode-' + link.getAttribute('data-mode');
+  /**
+   * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
+   */
+  function setupScreens() {
+    const play = document.getElementById('btn-play');
+    if (play) play.addEventListener('click', function () { switchScreen('screen-play'); });
+
+    const home = document.getElementById('btn-home');
+    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); });
+
+    const backStart = document.getElementById('btn-back-start');
+    if (backStart) backStart.addEventListener('click', function () { switchScreen('screen-start'); });
+
+    const restart = document.getElementById('btn-restart');
+    if (restart) restart.addEventListener('click', function () {
+      try { localStorage.removeItem('kiroWS'); } catch (e) {}
+      current = 1; visited = {};
+      updateUI();
       switchScreen('screen-play');
     });
-  });
-}
 
-function setupHelp() {
-  var overlay = document.getElementById('help-overlay');
-  var btnHelp = document.getElementById('btn-help');
-  var btnClose = document.getElementById('help-close');
-  if (btnHelp && overlay) btnHelp.addEventListener('click', function(e) { e.preventDefault(); overlay.classList.add('open'); });
-  if (btnClose && overlay) btnClose.addEventListener('click', function() { overlay.classList.remove('open'); });
-  if (overlay) overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
-}
+    document.querySelectorAll('.start-mode').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.body.className = 'mode-' + link.getAttribute('data-mode');
+        switchScreen('screen-play');
+      });
+    });
+  }
 
-function saveState() {
-  try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited })); } catch (e) {}
-}
+  /**
+   * Configura el overlay de ayuda: abrir, cerrar, clic fuera.
+   */
+  function setupHelp() {
+    const overlay = document.getElementById('help-overlay');
+    const btnHelp = document.getElementById('btn-help');
+    const btnClose = document.getElementById('help-close');
+    if (btnHelp && overlay) btnHelp.addEventListener('click', function (e) { e.preventDefault(); overlay.classList.add('open'); });
+    if (btnClose && overlay) btnClose.addEventListener('click', function () { overlay.classList.remove('open'); });
+    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.classList.remove('open'); });
+  }
 
-function loadState() {
-  try {
-    var data = localStorage.getItem('kiroWS');
-    if (!data) return;
-    var s = JSON.parse(data);
-    if (s.current) current = s.current;
-    if (s.visited) visited = s.visited;
-  } catch (e) {}
-}
+  /**
+   * Guarda el estado actual en localStorage.
+   */
+  function saveState() {
+    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited })); } catch (e) {}
+  }
 
-init();
+  /**
+   * Restaura el estado desde localStorage.
+   */
+  function loadState() {
+    try {
+      const data = localStorage.getItem('kiroWS');
+      if (!data) return;
+      const s = JSON.parse(data);
+      if (s.current) current = s.current;
+      if (s.visited) visited = s.visited;
+    } catch (e) {}
+  }
+
+  /**
+   * Restaura la pantalla activa segun el estado guardado.
+   * Si habia progreso, salta directo a screen-play sin transicion.
+   */
+  function restoreScreen() {
+    if (current > 1) {
+      const start = document.getElementById('screen-start');
+      const play = document.getElementById('screen-play');
+      if (start) start.classList.remove('active');
+      if (play) play.classList.add('active');
+    }
+  }
+
+  init();
+})();

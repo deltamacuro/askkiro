@@ -27,7 +27,7 @@
   <div class="screen screen-start active" id="screen-start" role="region" aria-label="Pantalla de inicio">
     <div class="start-content">
       <div class="start-ghost-wrap anim-ghost">
-        <img src="kiro.svg" alt="Kiro" class="start-ghost-img">
+        <img src="kiro.svg" alt="Fantasma de Kiro, mascota del tutorial" class="start-ghost-img">
       </div>
       <div class="start-left anim-stagger">
         <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener">Kiro</a></p>
@@ -52,8 +52,8 @@
       </button>
       <div class="topbar-phases">
         <button class="topbar-phase active" data-phase="1">Construye</button>
-        <button class="topbar-phase locked" data-phase="2">Automatiza</button>
-        <button class="topbar-phase locked" data-phase="3">Conecta</button>
+        <button class="topbar-phase locked" data-phase="2" aria-disabled="true">Automatiza</button>
+        <button class="topbar-phase locked" data-phase="3" aria-disabled="true">Conecta</button>
       </div>
       <span class="topbar-count" id="topbar-count">1/9</span>
     </nav>
@@ -83,14 +83,14 @@
           <p>Cada dev le pide cosas distintas. El codigo es un caos.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Crea un steering file con las convenciones de nuestro proyecto:
+            <pre><code>Crea un steering file con las convenciones de nuestro proyecto:
 - Mensajes de error en espanol
 - camelCase para variables y funciones
 - Comentarios JSDoc en todas las funciones
 - try/catch en todo
 - Separar html, css y js
 - Color principal #FF9900 y #000000
-- Tipografia Roboto</code>
+- Tipografia Roboto</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-then">Ahora pruebalo:</p>
@@ -113,7 +113,7 @@
           <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel lateral &rarr; Specs &rarr; "+" &rarr; <code>historial-conversiones</code></div>
           <div class="kiro-chat">
             <div class="kiro-bar">Descripcion</div>
-            <code>Agregar historial de conversiones al conversor. El usuario ve sus ultimas 10 conversiones, puede limpiar el historial y hacer clic en una entrada para reutilizarla. Los datos persisten con localStorage.</code>
+            <pre><code>Agregar historial de conversiones al conversor. El usuario ve sus ultimas 10 conversiones, puede limpiar el historial y hacer clic en una entrada para reutilizarla. Los datos persisten con localStorage.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: requirements, design y tasks. Tu apruebas cada paso.</p>
@@ -208,7 +208,7 @@
           <div class="mission-action"><span class="action-lbl">En Kiro</span> Abre <code>.kiro/settings/mcp.json</code> y agrega:</div>
           <div class="kiro-chat">
             <div class="kiro-bar">mcp.json</div>
-            <code>{
+            <pre><code>{
   "mcpServers": {
     "awslabs.aws-documentation-mcp-server": {
       "command": "uvx",
@@ -218,7 +218,7 @@
       "autoApprove": []
     }
   }
-}</code>
+}</code></pre>
             <button class="ask-btn">Copiar</button>
           </div>
           <p class="mission-then">Ahora pregunta:</p>
@@ -240,7 +240,7 @@
           <p>Todo funciona pero vive disperso en <code>.kiro/</code>. Empaquetalo.</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de fisica de temperaturas, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code>
+            <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de fisica de temperaturas, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: un paquete instalable que cualquier dev usa con un clic.</p>
@@ -252,7 +252,7 @@
     <!-- BOTTOM NAV -->
     <nav class="bottombar">
       <button class="nav-btn" id="btn-prev" disabled aria-label="Mision anterior">Anterior</button>
-      <div class="nav-dots" id="nav-dots" role="tablist" aria-label="Navegacion de misiones"></div>
+      <div class="nav-dots" id="nav-dots" aria-label="Navegacion de misiones"></div>
       <button class="nav-btn nav-btn-next" id="btn-next" aria-label="Siguiente mision">Siguiente</button>
     </nav>
   </div>
@@ -260,7 +260,7 @@
   <!-- SCREEN: FINAL -->
   <div class="screen screen-end" id="screen-end" role="region" aria-label="Pantalla final">
     <div class="end-content">
-      <img src="kiro.svg" alt="Kiro" class="end-ghost">
+      <img src="kiro.svg" alt="Fantasma de Kiro celebrando" class="end-ghost">
       <h2>Mision cumplida</h2>
       <p class="end-stats">9 features desbloqueadas &middot; 3 fases completadas</p>
       <blockquote class="end-quote">Eso no es vibe coding. Eso es software.</blockquote>
