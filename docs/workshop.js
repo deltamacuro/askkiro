@@ -281,14 +281,6 @@
     const backStart = document.getElementById('btn-back-start');
     if (backStart) backStart.addEventListener('click', function () { switchScreen('screen-start'); });
 
-    const restart = document.getElementById('btn-restart');
-    if (restart) restart.addEventListener('click', function () {
-      try { localStorage.removeItem('kiroWS'); } catch (e) {}
-      current = 1; visited = {};
-      updateUI();
-      switchScreen('screen-play');
-    });
-
     document.querySelectorAll('.start-mode').forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
