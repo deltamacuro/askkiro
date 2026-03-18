@@ -54,6 +54,7 @@
       setupCopy();
       setupScreens();
       setupHelp();
+      setupPresenterOnboard();
       loadState();
       updateUI();
       restoreScreen();
@@ -312,6 +313,45 @@
   }
 
   /**
+   * Muestra el modal de onboarding del presentador si no lo ha visto antes.
+   * Guarda en localStorage para no repetir.
+   */
+  function showPresenterOnboard() {
+    let seen = false;
+    try { seen = localStorage.getItem('kiroPresenterOnboard') === '1'; } catch (e) {}
+    if (seen) return;
+    const overlay = document.getElementById('presenter-onboard-overlay');
+    if (!overlay) return;
+    setTimeout(function () {
+      overlay.classList.add('open');
+      const goBtn = document.getElementById('btn-presenter-go');
+      if (goBtn) goBtn.focus();
+    }, FADE_MS + 50);
+  }
+
+  /**
+   * Configura el boton de cerrar del modal de presentador.
+   */
+  function setupPresenterOnboard() {
+    const goBtn = document.getElementById('btn-presenter-go');
+    const overlay = document.getElementById('presenter-onboard-overlay');
+    if (goBtn && overlay) {
+      goBtn.addEventListener('click', function () {
+        overlay.classList.remove('open');
+        try { localStorage.setItem('kiroPresenterOnboard', '1'); } catch (e) {}
+      });
+    }
+    if (overlay) {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+          try { localStorage.setItem('kiroPresenterOnboard', '1'); } catch (e) {}
+        }
+      });
+    }
+  }
+
+  /**
    * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
    */
   function setupScreens() {
@@ -347,6 +387,7 @@
       document.body.className = 'mode-presenter';
       setModeHash('presenter');
       switchScreen('screen-start');
+      showPresenterOnboard();
     });
 
     const btnRemix = document.getElementById('btn-remix');
@@ -363,6 +404,7 @@
         document.body.className = 'mode-' + mode;
         setModeHash(mode);
         switchScreen('screen-play');
+        if (mode === 'presenter') showPresenterOnboard();
       });
     });
   }
