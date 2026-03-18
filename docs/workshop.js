@@ -1,21 +1,176 @@
 /**
- * Inicializa el workshop.
+ * Estado del workshop.
+ */
+var state = { phase: 1, steps: {} };
+
+/**
+ * Inicializa.
  */
 function init() {
   try {
-    setupCopyButtons();
-    setupCheckboxes();
-    setupMissionClicks();
-    setupStickyBar();
-    setupModes();
     loadState();
-  } catch (e) {
-    console.error('Error: no se pudo inicializar', e);
-  }
+    setupPhaseTabs();
+    setupStepDots();
+    setupCheckboxes();
+    setupCopyButtons();
+    setupModes();
+  } catch (e) { console.error('Error al inicializar', e); }
 }
 
 /**
- * Configura todos los botones Ask Kiro para copiar.
+ * Muestra una fase.
+ * @param {number} num
+ */
+function showPhase(num) {
+  try {
+    document.querySelectorAll('.phase').forEach(function(p) { p.classList.remove('active'); });
+    var phase = document.getElementById('phase-' + num);
+    if (phase) phase.classList.add('active');
+
+    document.querySelectorAll('.phase-tab').forEach(function(t) { t.classList.remove('active'); });
+    var tab = document.querySelector('.phase-tab[data-phase="' + num + '"]');
+    if (tab) tab.classList.add('active');
+
+    state.phase = num;
+    saveState();
+  } catch (e) { console.error('Error al mostrar fase', e); }
+}
+
+/**
+ * Muestra un paso dentro de la fase activa.
+ * @param {number} stepNum
+ */
+function showStep(stepNum) {
+  try {
+    var phase = document.querySelector('.phase.active');
+    if (!phase) return;
+
+    phase.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+    var step = phase.querySelector('.step[data-step="' + stepNum + '"]');
+    if (step) step.classList.add('active');
+
+    phase.querySelectorAll('.step-dot').forEach(function(d) {
+      var dStep = parseInt(d.getAttribute('data-step'));
+      d.classList.remove('active');
+      if (dStep === stepNum) d.classList.add('active');
+    });
+  } catch (e) { console.error('Error al mostrar paso', e); }
+}
+
+/**
+ * Configura los tabs de fase.
+ */
+function setupPhaseTabs() {
+  try {
+    document.querySelectorAll('.phase-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        if (tab.classList.contains('locked')) return;
+        showPhase(parseInt(tab.getAttribute('data-phase')));
+      });
+    });
+  } catch (e) { console.error('Error en tabs', e); }
+}
+
+/**
+ * Configura los dots de paso.
+ */
+function setupStepDots() {
+  try {
+    document.querySelectorAll('.step-dot').forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        showStep(parseInt(dot.getAttribute('data-step')));
+      });
+    });
+  } catch (e) { console.error('Error en dots', e); }
+}
+
+/**
+ * Configura checkboxes.
+ */
+function setupCheckboxes() {
+  try {
+    document.querySelectorAll('.check-input').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        try {
+          var stepNum = parseInt(cb.getAttribute('data-step'));
+          state.steps[stepNum] = cb.checked;
+
+          var dot = document.querySelector('.step-dot[data-step="' + stepNum + '"]');
+          if (dot) {
+            if (cb.checked) { dot.classList.add('done'); dot.classList.remove('active'); }
+            else { dot.classList.remove('done'); }
+          }
+
+          // Mark line as done
+          updateLines();
+
+          if (cb.checked) {
+            var phase = cb.closest('.phase');
+            var phaseNum = parseInt(phase.getAttribute('data-phase'));
+            var stepsInPhase = phase.querySelectorAll('.check-input');
+            var allDone = true;
+            stepsInPhase.forEach(function(c) { if (!c.checked) allDone = false; });
+
+            if (allDone) {
+              unlockNextPhase(phaseNum);
+            } else {
+              // Advance to next step in phase
+              var nextStep = stepNum + 1;
+              var nextStepEl = phase.querySelector('.step[data-step="' + nextStep + '"]');
+              if (nextStepEl) {
+                setTimeout(function() { showStep(nextStep); }, 400);
+              }
+            }
+          }
+          saveState();
+        } catch (e) { console.error('Error en checkbox', e); }
+      });
+    });
+  } catch (e) { console.error('Error en checkboxes', e); }
+}
+
+/**
+ * Desbloquea la siguiente fase.
+ * @param {number} completedPhase
+ */
+function unlockNextPhase(completedPhase) {
+  try {
+    var nextPhaseNum = completedPhase + 1;
+    var nextTab = document.querySelector('.phase-tab[data-phase="' + nextPhaseNum + '"]');
+    if (!nextTab) return;
+
+    // Mark current tab as completed
+    var currentTab = document.querySelector('.phase-tab[data-phase="' + completedPhase + '"]');
+    if (currentTab) currentTab.classList.add('completed');
+
+    // Unlock next
+    nextTab.classList.remove('locked');
+    nextTab.classList.add('unlocked');
+
+    // Auto-switch after delay
+    setTimeout(function() { showPhase(nextPhaseNum); }, 800);
+  } catch (e) { console.error('Error al desbloquear fase', e); }
+}
+
+/**
+ * Actualiza las lineas entre dots.
+ */
+function updateLines() {
+  try {
+    document.querySelectorAll('.step-indicators').forEach(function(ind) {
+      var dots = ind.querySelectorAll('.step-dot');
+      var lines = ind.querySelectorAll('.step-line');
+      dots.forEach(function(d, i) {
+        if (i < lines.length && d.classList.contains('done')) {
+          lines[i].classList.add('done');
+        }
+      });
+    });
+  } catch (e) {}
+}
+
+/**
+ * Configura botones de copiar.
  */
 function setupCopyButtons() {
   try {
@@ -29,196 +184,75 @@ function setupCopyButtons() {
             var orig = btn.innerHTML;
             btn.classList.add('copied');
             btn.textContent = 'Copiado';
-            setTimeout(function() {
-              btn.innerHTML = orig;
-              btn.classList.remove('copied');
-            }, 2000);
+            setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
           });
-        } catch (e) {
-          console.error('Error: no se pudo copiar', e);
-        }
+        } catch (e) { console.error('Error al copiar', e); }
       });
     });
-  } catch (e) {
-    console.error('Error: no se pudieron configurar los botones', e);
-  }
+  } catch (e) { console.error('Error en copy buttons', e); }
 }
 
 /**
- * Configura los checkboxes para avanzar misiones.
- */
-function setupCheckboxes() {
-  try {
-    document.querySelectorAll('.check-input').forEach(function(cb) {
-      cb.addEventListener('change', function() {
-        try {
-          var mission = cb.closest('.mission');
-          if (!mission) return;
-          if (cb.checked) {
-            mission.classList.remove('active');
-            mission.classList.add('completed');
-            var next = mission.nextElementSibling;
-            while (next && !next.classList.contains('mission')) {
-              next = next.nextElementSibling;
-            }
-            if (next && !next.classList.contains('completed')) {
-              next.classList.add('active');
-              setTimeout(function() {
-                next.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }, 300);
-            }
-          } else {
-            mission.classList.remove('completed');
-            mission.classList.add('active');
-          }
-          updateProgress();
-          saveState();
-        } catch (e) {
-          console.error('Error: no se pudo actualizar la mision', e);
-        }
-      });
-    });
-  } catch (e) {
-    console.error('Error: no se pudieron configurar los checkboxes', e);
-  }
-}
-
-/**
- * Permite hacer clic en el head de una mision para expandirla.
- */
-function setupMissionClicks() {
-  try {
-    document.querySelectorAll('.mission-head').forEach(function(head) {
-      head.addEventListener('click', function() {
-        try {
-          var mission = head.closest('.mission');
-          if (!mission || mission.classList.contains('active')) return;
-          document.querySelectorAll('.mission.active').forEach(function(m) {
-            if (!m.classList.contains('completed')) {
-              m.classList.remove('active');
-            }
-          });
-          mission.classList.add('active');
-        } catch (e) {
-          console.error('Error: no se pudo expandir la mision', e);
-        }
-      });
-    });
-  } catch (e) {
-    console.error('Error: no se pudieron configurar los clics', e);
-  }
-}
-
-/**
- * Actualiza la barra de progreso.
- */
-function updateProgress() {
-  try {
-    var total = document.querySelectorAll('.check-input').length;
-    var done = document.querySelectorAll('.check-input:checked').length;
-    var pct = total > 0 ? ((done + 1) / (total + 1)) * 100 : 0;
-    if (done === total) pct = 100;
-
-    var stickyFill = document.getElementById('sticky-fill');
-    var stickyCount = document.getElementById('sticky-count');
-    if (stickyFill) stickyFill.style.width = Math.max(pct, 11) + '%';
-    if (stickyCount) stickyCount.textContent = done + '/' + total;
-  } catch (e) {
-    console.error('Error: no se pudo actualizar el progreso', e);
-  }
-}
-
-/**
- * Configura la sticky bar.
- */
-function setupStickyBar() {
-  try {
-    var bar = document.getElementById('sticky-bar');
-    var hero = document.querySelector('.hero');
-    if (!bar || !hero) return;
-    window.addEventListener('scroll', function() {
-      try {
-        if (hero.getBoundingClientRect().bottom < 0) {
-          bar.classList.add('visible');
-        } else {
-          bar.classList.remove('visible');
-        }
-      } catch (e) {}
-    }, { passive: true });
-  } catch (e) {
-    console.error('Error: no se pudo configurar la sticky bar', e);
-  }
-}
-
-/**
- * Configura los modos (presentador/remix).
+ * Configura modos.
  */
 function setupModes() {
   try {
-    document.querySelectorAll('.other-mode-card').forEach(function(card) {
+    document.querySelectorAll('.extras-card').forEach(function(card) {
       card.addEventListener('click', function(e) {
-        try {
-          e.preventDefault();
-          var mode = card.getAttribute('data-mode');
-          document.body.className = 'mode-' + mode;
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch (e) {
-          console.error('Error: no se pudo cambiar de modo', e);
-        }
+        e.preventDefault();
+        document.body.className = 'mode-' + card.getAttribute('data-mode');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
-  } catch (e) {
-    console.error('Error: no se pudieron configurar los modos', e);
-  }
+  } catch (e) { console.error('Error en modos', e); }
 }
 
 /**
- * Guarda el estado.
+ * Guarda estado.
  */
 function saveState() {
   try {
-    var checks = [];
-    document.querySelectorAll('.check-input').forEach(function(c) {
-      checks.push(c.checked);
-    });
-    localStorage.setItem('kiroWorkshop', JSON.stringify({ checks: checks }));
-  } catch (e) {
-    console.error('Error: no se pudo guardar', e);
-  }
+    localStorage.setItem('kiroWS', JSON.stringify(state));
+  } catch (e) {}
 }
 
 /**
- * Carga el estado guardado.
+ * Carga estado.
  */
 function loadState() {
   try {
-    var data = localStorage.getItem('kiroWorkshop');
-    if (!data) { updateProgress(); return; }
-    var state = JSON.parse(data);
-    if (state.checks && Array.isArray(state.checks)) {
-      var cbs = document.querySelectorAll('.check-input');
-      var lastCompleted = -1;
-      state.checks.forEach(function(val, i) {
-        if (cbs[i] && val) {
-          cbs[i].checked = true;
-          var m = cbs[i].closest('.mission');
-          if (m) {
-            m.classList.remove('active');
-            m.classList.add('completed');
-          }
-          lastCompleted = i;
+    var data = localStorage.getItem('kiroWS');
+    if (!data) return;
+    var saved = JSON.parse(data);
+    if (saved.steps) {
+      Object.keys(saved.steps).forEach(function(key) {
+        var stepNum = parseInt(key);
+        if (saved.steps[key]) {
+          var cb = document.querySelector('.check-input[data-step="' + stepNum + '"]');
+          if (cb) { cb.checked = true; }
+          var dot = document.querySelector('.step-dot[data-step="' + stepNum + '"]');
+          if (dot) { dot.classList.add('done'); dot.classList.remove('active'); }
         }
       });
-      if (lastCompleted >= 0 && lastCompleted < cbs.length - 1) {
-        var next = cbs[lastCompleted + 1].closest('.mission');
-        if (next) next.classList.add('active');
-      }
+      updateLines();
+
+      // Unlock phases based on completed steps
+      [1, 2, 3].forEach(function(phaseNum) {
+        var phase = document.getElementById('phase-' + phaseNum);
+        if (!phase) return;
+        var checks = phase.querySelectorAll('.check-input');
+        var allDone = true;
+        checks.forEach(function(c) { if (!c.checked) allDone = false; });
+        if (allDone && phaseNum < 3) {
+          var tab = document.querySelector('.phase-tab[data-phase="' + phaseNum + '"]');
+          if (tab) tab.classList.add('completed');
+          var nextTab = document.querySelector('.phase-tab[data-phase="' + (phaseNum + 1) + '"]');
+          if (nextTab) { nextTab.classList.remove('locked'); nextTab.classList.add('unlocked'); }
+        }
+      });
     }
-    updateProgress();
-  } catch (e) {
-    console.error('Error: no se pudo cargar el estado', e);
-    updateProgress();
-  }
+    if (saved.phase) showPhase(saved.phase);
+  } catch (e) { console.error('Error al cargar estado', e); }
 }
 
 init();
