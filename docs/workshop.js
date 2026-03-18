@@ -555,28 +555,11 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
-    /* Boton "¿Como funciona?" abre el onboarding sobre screen-play */
-    const btnHow = document.getElementById('btn-how');
-    const onboardOverlay = document.getElementById('onboard-overlay');
-    if (btnHow && onboardOverlay) btnHow.addEventListener('click', function (e) {
-      e.preventDefault();
-      const playScreen = document.getElementById('screen-play');
-      if (playScreen && !playScreen.classList.contains('active')) {
-        switchScreen('screen-play');
-        setTimeout(function () { onboardOverlay.classList.add('open'); }, FADE_MS + 50);
-      } else {
-        onboardOverlay.classList.add('open');
-      }
-      const goBtn = document.getElementById('btn-onboard-go');
-      if (goBtn) goBtn.focus();
-    });
-
-    /* Boton "?" en topbar abre el onboarding */
+    /* Boton "?" en topbar abre el panel de ayuda */
     const btnTopbarHelp = document.getElementById('btn-topbar-help');
-    if (btnTopbarHelp && onboardOverlay) btnTopbarHelp.addEventListener('click', function () {
-      onboardOverlay.classList.add('open');
-      const go = document.getElementById('btn-onboard-go');
-      if (go) go.focus();
+    if (btnTopbarHelp && overlay) btnTopbarHelp.addEventListener('click', function () {
+      overlay.classList.add('open');
+      if (btnClose) btnClose.focus();
     });
   }
 

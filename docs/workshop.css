@@ -835,6 +835,8 @@ body.mode-presenter .pnote { display: block; }
 .help-item .kiro-chat code { font-size: 0.72rem; padding: 0.5rem 0.7rem; }
 .help-item a { color: var(--accent); text-decoration: none; }
 .help-item code { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; background: var(--accent-dim); padding: 0.1rem 0.2rem; border-radius: 3px; }
+.help-steps { padding: 0.2rem 0.7rem 0.5rem 1.8rem; font-size: 0.76rem; color: var(--dim); line-height: 1.6; }
+.help-steps li { margin-bottom: 0.15rem; }
 
 @media (max-width: 600px) {
   .start-left h1 { font-size: 1.8rem; }
