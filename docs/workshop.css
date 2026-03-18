@@ -104,8 +104,6 @@ body {
 
 .hero-btn-icon {
   transition: transform 0.3s;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .hero-btn:hover {
@@ -178,49 +176,6 @@ body {
 
 /* Hide hero CTA in presenter mode */
 body.mode-presenter .hero-cta { display: none; }
-
-/* Mode selector */
-.mode-selector {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.mode-btn {
-  padding: 0.6rem 1.2rem;
-  border: 1px solid var(--kiro-border);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--kiro-text-muted);
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  min-width: 140px;
-}
-
-.mode-btn.active {
-  background: var(--kiro-accent);
-  color: var(--kiro-bg);
-  border-color: var(--kiro-accent);
-}
-
-.mode-btn:hover:not(.active) {
-  background: var(--kiro-accent-dim);
-  border-color: var(--kiro-accent);
-}
-
-.mode-hint {
-  font-size: 0.7rem;
-  font-weight: 400;
-  opacity: 0.7;
-}
 
 /* Sticky bar */
 .sticky-bar {
@@ -806,6 +761,65 @@ body.mode-remix .remix-note { display: block; }
   padding: 0.35rem 0.4rem;
   border-bottom: 1px solid #18181f;
   color: var(--kiro-text-muted);
+}
+
+/* Other modes */
+.other-modes {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--kiro-border);
+}
+
+.other-modes-label {
+  font-size: 0.8rem;
+  color: var(--kiro-text-dim);
+  text-align: center;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.other-modes-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.other-mode-card {
+  background: var(--kiro-surface);
+  border: 1px solid var(--kiro-border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: block;
+}
+
+.other-mode-card:hover {
+  border-color: var(--kiro-accent);
+  background: var(--kiro-accent-dim);
+}
+
+.other-mode-title {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--kiro-text);
+  margin-bottom: 0.2rem;
+}
+
+.other-mode-desc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--kiro-text-muted);
+}
+
+@media (max-width: 600px) {
+  .other-modes-options {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Footer */

@@ -22,31 +22,28 @@ function inicializarWorkshop() {
  */
 function configurarModos() {
   try {
-    var botones = document.querySelectorAll('.mode-btn');
-    botones.forEach(function(btn) {
-      btn.addEventListener('click', function() {
+    document.body.className = 'mode-self-service';
+    actualizarAskKiro('self-service');
+
+    var cards = document.querySelectorAll('.other-mode-card');
+    cards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
         try {
-          botones.forEach(function(b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          var modo = btn.getAttribute('data-mode');
+          e.preventDefault();
+          var modo = card.getAttribute('data-mode');
           document.body.className = 'mode-' + modo;
-          document.querySelectorAll('.mode-description').forEach(function(d) {
-            d.classList.add('hidden');
-          });
-          var desc = document.getElementById('desc-' + modo);
-          if (desc) desc.classList.remove('hidden');
-          var stickyMode = document.getElementById('sticky-mode');
-          if (stickyMode) stickyMode.textContent = btn.childNodes[0].textContent.trim();
-          actualizarSetupUrls(modo);
           actualizarAskKiro(modo);
-          guardarEstado();
+          var stickyMode = document.getElementById('sticky-mode');
+          if (stickyMode) {
+            var title = card.querySelector('.other-mode-title');
+            if (title) stickyMode.textContent = title.textContent;
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (error) {
           console.error('Error: no se pudo cambiar de modo', error);
         }
       });
     });
-    document.body.className = 'mode-self-service';
-    actualizarAskKiro('self-service');
   } catch (error) {
     console.error('Error: no se pudieron configurar los modos', error);
   }
