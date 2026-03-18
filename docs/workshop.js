@@ -278,6 +278,9 @@
     const home = document.getElementById('btn-home');
     if (home) home.addEventListener('click', function () { switchScreen('screen-start'); });
 
+    const btnBackStart = document.getElementById('btn-back-start');
+    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); });
+
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
       document.body.className = 'mode-presenter';
