@@ -49,11 +49,19 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
 .phase-tab.locked .phase-tab-sub { color: var(--dim); }
 
 /* CONTENT */
-.content { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+.content {
+  max-width: 640px; margin: 0 auto; padding: 0 1.5rem;
+  min-height: calc(100vh - 58px);
+  display: flex; flex-direction: column; justify-content: center;
+}
 
 /* PHASES */
-.phase { display: none; padding: 1.5rem 0; }
-.phase.active { display: block; animation: fadeIn 0.3s ease; }
+.phase { display: none; padding: 1rem 0; width: 100%; }
+.phase.active {
+  display: flex; flex-direction: column; justify-content: center;
+  animation: fadeIn 0.3s ease;
+  flex: 1;
+}
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 .phase-header { text-align: center; margin-bottom: 1.5rem; }
@@ -178,6 +186,14 @@ body.mode-presenter .presenter-note { display: block; }
 footer { text-align: center; padding: 2rem; font-size: 0.75rem; }
 footer a { color: var(--dim); text-decoration: none; }
 footer a:hover { color: var(--accent); }
+
+/* IMMERSIVE MODE */
+body.immersive .hero { display: none; }
+body.immersive .extras { display: none; }
+body.immersive .help { display: none; }
+body.immersive footer { display: none; }
+body.immersive .finale { display: none; }
+body.immersive .content { min-height: calc(100vh - 58px); }
 
 @media (max-width: 600px) {
   .hero h1 { font-size: 1.8rem; }

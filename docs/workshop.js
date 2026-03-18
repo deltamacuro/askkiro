@@ -14,6 +14,7 @@ function init() {
     setupCheckboxes();
     setupCopyButtons();
     setupModes();
+    setupHeroStart();
   } catch (e) { console.error('Error al inicializar', e); }
 }
 
@@ -23,6 +24,8 @@ function init() {
  */
 function showPhase(num) {
   try {
+    document.body.classList.add('immersive');
+
     document.querySelectorAll('.phase').forEach(function(p) { p.classList.remove('active'); });
     var phase = document.getElementById('phase-' + num);
     if (phase) phase.classList.add('active');
@@ -33,6 +36,7 @@ function showPhase(num) {
 
     state.phase = num;
     saveState();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (e) { console.error('Error al mostrar fase', e); }
 }
 
@@ -113,6 +117,15 @@ function setupCheckboxes() {
 
             if (allDone) {
               unlockNextPhase(phaseNum);
+              // Check if ALL phases done
+              var totalDone = document.querySelectorAll('.check-input:checked').length;
+              var totalSteps = document.querySelectorAll('.check-input').length;
+              if (totalDone === totalSteps) {
+                setTimeout(function() {
+                  document.body.classList.remove('immersive');
+                  document.getElementById('finale').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+              }
             } else {
               // Advance to next step in phase
               var nextStep = stepNum + 1;
@@ -190,6 +203,20 @@ function setupCopyButtons() {
       });
     });
   } catch (e) { console.error('Error en copy buttons', e); }
+}
+
+/**
+ * Configura el boton Empezar del hero.
+ */
+function setupHeroStart() {
+  try {
+    var btn = document.querySelector('.hero-start');
+    if (!btn) return;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      showPhase(state.phase || 1);
+    });
+  } catch (e) { console.error('Error en hero start', e); }
 }
 
 /**
