@@ -94,7 +94,12 @@
             <code>Crea un juego tipo runner: el fantasma de Kiro corre, esquiva obstaculos saltando con la barra espaciadora y acumula puntaje. HTML, CSS y JS.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: un juego funcional en el browser. Puede crear un solo archivo o varios — ambas opciones son validas.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> El juego corre en el browser y el fantasma salta con la barra espaciadora.
+              <span class="mission-check-sub">Puede crear un solo archivo o varios — ambas opciones son validas.</span></span>
+          </label>
           <p class="mission-tip"><span>Para ver la app: instala la extension Live Server (Cmd+Shift+X &rarr; buscar "Live Server"). Click derecho en index.html &rarr; "Open with Live Server". Alternativa: abre el archivo directo en el browser (Cmd+O).</span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -133,7 +138,12 @@
             <code>Si no lo hiciste automaticamente, refactoriza el juego siguiendo las convenciones. Hazme un resumen de los cambios.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: JSDoc, try/catch, errores en espanol, 3 archivos (html, css, js). Sin carpetas extra, sin tests, sin repetir las reglas.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> Existe <code>.kiro/steering/</code> y el juego quedo en 3 archivos (html, css, js) con JSDoc y try/catch.
+              <span class="mission-check-sub">Sin carpetas extra, sin tests, sin repetir las reglas.</span></span>
+          </label>
           <p class="mission-tip">El steering se activa con "always" (por defecto), "fileMatch" (por tipo de archivo) o "manual". Para convenciones generales, usa always.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -223,7 +233,11 @@
             </div>
           </div>
           <p class="mission-tip">Si algo no te convence, no escribas "yes". Puedes pedir cambios en el chat y Kiro regenera ese paso.</p>
-          <p class="mission-result">Resultado: Kiro crea los archivos del spec (.md) con requirements, design y tasks. Aprueba cada paso, implementa el codigo y veras las mejoras en el juego.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> Ves <code>.kiro/specs/</code> con requirements, design y tasks, y el juego tiene vidas, high score y game over.</span>
+          </label>
           <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -253,7 +267,11 @@
             <code>Crea un archivo ejemplo.js con una funcion simple sin JSDoc y guardalo.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: al guardar, Kiro detecta el error automaticamente y sugiere correcciones.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> Al guardar <code>ejemplo.js</code>, Kiro avisa en el chat que falta JSDoc y sugiere correcciones.</span>
+          </label>
           <p class="mission-tip">Si el hook no se activa, deshabilitalo y vuelvelo a habilitar desde el panel de Agent Hooks. A veces tarda unos segundos en dispararse.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -282,7 +300,12 @@
             <code>@revisor revisa el codigo JavaScript del juego y dime si lo aprobarias para produccion.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles. El agente aplica su criterio, no solo ejecuta.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> <code>@revisor</code> responde APROBADO o RECHAZADO con motivos concretos.
+              <span class="mission-check-sub">El agente aplica su criterio, no solo ejecuta.</span></span>
+          </label>
           <p class="mission-tip">Puedes tener multiples agentes (seguridad, UI, arquitectura) y ejecutarlos en paralelo con una sola instruccion.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -305,7 +328,11 @@
             <code>¿Cuales son las mejores practicas para hacer un juego runner en el browser con buen game feel? Busca en internet.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: dato real con fuente, directo en el chat. Sin abrir ninguna pestana.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> La respuesta trae fuentes de internet, sin que abrieras ninguna pestana.</span>
+          </label>
           <p class="mission-tip">Puedes ser intencional: "busca en internet" o "investiga en la documentacion oficial". Util para validar buenas practicas o datos actualizados.</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -333,7 +360,11 @@
             <code>El salto del personaje se siente flotante. ¿Como hago que se sienta mas responsivo y satisfactorio?</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: Kiro activa la skill y recomienda gravedad variable (mas fuerte al caer), coyote time y input buffering.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> La skill aparece en <code>.kiro/skills/</code> y Kiro la usa para recomendar gravedad variable, coyote time o input buffering.</span>
+          </label>
           <p class="mission-tip">Si la skill no aparece en el panel, dile a Kiro: "revisa que la skill cumpla con la documentacion oficial de Kiro, investiga en internet".</p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -388,7 +419,11 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
               <button class="ask-btn">Copiar</button>
             </div>
           </details>
-          <p class="mission-result">Resultado: respuesta basada en docs oficiales de AWS, con fuentes y opciones comparadas.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> Kiro responde citando la documentacion oficial de AWS, con opciones comparadas.</span>
+          </label>
           <p class="mission-tip"><span>Este es solo un ejemplo. Hay cientos de MCPs: <a href="https://awslabs.github.io/mcp/" target="_blank" rel="noopener noreferrer">AWS tiene mas de 10</a> (CDK, CloudFormation, Core...) y hay de GitHub, Atlassian, bases de datos, Figma, Slack y mas. Son conectores universales.</span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -413,7 +448,12 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
             <pre><code>Quiero crear un Power que empaquete todo lo que hicimos: el steering de convenciones, la skill de game physics, el hook de revision al guardar, y el agente revisor. Usa el Power "Build a Power" para crearlo.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-result">Resultado: un paquete instalable en un repo aparte (POWER.md, steering/, mcp.json). Otro dev lo instala desde Powers &rarr; "Add power from GitHub" y tiene todo el contexto listo.</p>
+          <label class="mission-check">
+            <input type="checkbox" class="mission-check-input">
+            <span class="mission-check-box" aria-hidden="true"></span>
+            <span class="mission-check-text"><strong>Verifica:</strong> Tienes la carpeta del Power (POWER.md, steering/, mcp.json) lista para subir a un repo.
+              <span class="mission-check-sub">Otro dev lo instala desde Powers &rarr; "Add power from GitHub" y tiene todo el contexto listo.</span></span>
+          </label>
           <p class="mission-tip"><span>Prueba instalando este Power que creamos en el workshop: <a href="https://github.com/deltamacuro/kiro-powers/tree/main/kiro-game-dev-toolkit" target="_blank" rel="noopener noreferrer">kiro-game-dev-toolkit</a>. Documentacion: <a href="https://kiro.dev/docs/powers/installation/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/powers/installation</a></span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
@@ -425,6 +465,26 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
           </div>
         </div>
       </article>
+      <details class="kiro-tree" id="kiro-tree">
+        <summary class="kiro-tree-head">
+          <i class="fa-solid fa-folder-tree" aria-hidden="true"></i>
+          <span>Tu proyecto</span>
+          <span class="kiro-tree-hint">crece con cada mision</span>
+        </summary>
+        <ul class="kiro-tree-list">
+          <li class="tree-item tree-root" data-from="1"><span class="tree-name">mi-juego/</span></li>
+          <li class="tree-item" data-from="1"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">index.html, css, js</span><span class="tree-role">la app</span></li>
+          <li class="tree-item tree-kiro" data-from="2"><span class="tree-glyph" aria-hidden="true">└─</span><span class="tree-name">.kiro/</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="2"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">steering/</span><span class="tree-role">el que</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="3"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">specs/</span><span class="tree-role">el plan</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="4"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">hooks/</span><span class="tree-role">el cuando</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="5"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">agents/</span><span class="tree-role">el quien</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="7"><span class="tree-glyph" aria-hidden="true">├─</span><span class="tree-name">skills/</span><span class="tree-role">el como</span></li>
+          <li class="tree-item tree-kiro tree-sub" data-from="8"><span class="tree-glyph" aria-hidden="true">└─</span><span class="tree-name">settings/mcp.json</span><span class="tree-role">las conexiones</span></li>
+        </ul>
+        <p class="tree-note" data-only="6"><i class="fa-solid fa-globe" aria-hidden="true"></i> Web Search no crea archivos: es una herramienta que Kiro ya trae.</p>
+        <p class="tree-note" data-only="9"><i class="fa-solid fa-cube" aria-hidden="true"></i> Un Power empaqueta todo <code>.kiro/</code> para que otro dev lo instale en un clic.</p>
+      </details>
     </div>
 
     <!-- BOTTOM NAV -->

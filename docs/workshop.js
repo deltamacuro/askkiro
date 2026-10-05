@@ -7,6 +7,10 @@
   const total = 9;
   /** @type {Object<number, boolean>} Misiones visitadas */
   let visited = {};
+  /** @type {Object<number, boolean>} Misiones verificadas por el usuario */
+  let checked = {};
+  /** @type {number} Mision donde estaba el fantasma la ultima vez que se movio */
+  let ghostAt = 0;
   /** @type {boolean} Indica si hay una transicion de pantalla en curso */
   let transitioning = false;
   /** @type {string|null} Pantalla guardada en localStorage */
@@ -105,6 +109,8 @@
       buildDots();
       setupNav();
       setupCopy();
+      setupChecks();
+      setupTree();
       setupScreens();
       setupHelp();
       setupPresenterOnboard();
@@ -149,6 +155,44 @@
       });
       c.appendChild(d);
     }
+    const ghost = document.createElement('span');
+    ghost.className = 'nav-ghost';
+    ghost.id = 'nav-ghost';
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.innerHTML = '<img src="kiro.svg" alt="">';
+    c.appendChild(ghost);
+    if (typeof ResizeObserver === 'function') new ResizeObserver(function () { placeGhost(false); }).observe(c);
+  }
+
+  /**
+   * Ubica el fantasma sobre el dot de la mision actual.
+   * Si cambio de mision, salta en la direccion del movimiento (salto grande al cruzar de fase).
+   * @param {boolean} animate - Si debe animar el salto
+   */
+  function placeGhost(animate) {
+    const ghost = document.getElementById('nav-ghost');
+    const dot = document.querySelector('.nav-dot[data-m="' + current + '"]');
+    if (!ghost || !dot || !dot.offsetWidth) return;
+    const x = dot.offsetLeft + dot.offsetWidth / 2 - ghost.offsetWidth / 2;
+    ghost.style.setProperty('--ghost-x', x + 'px');
+    if (animate && ghostAt && ghostAt !== current) {
+      ghost.style.setProperty('--ghost-dir', current > ghostAt ? '-1' : '1');
+      hop(ghost, phaseOf(current) !== phaseOf(ghostAt) ? 'jump-big' : 'jump');
+    }
+    ghostAt = current;
+    /* Habilitar la transicion despues del primer posicionamiento para que no se deslice al cargar */
+    requestAnimationFrame(function () { ghost.classList.add('ready'); });
+  }
+
+  /**
+   * Reinicia una animacion del fantasma.
+   * @param {HTMLElement} ghost - Elemento del fantasma
+   * @param {string} cls - 'jump', 'jump-big' o 'cheer'
+   */
+  function hop(ghost, cls) {
+    ghost.classList.remove('jump', 'jump-big', 'cheer');
+    void ghost.offsetWidth; /* forzar reflow para reiniciar la animacion */
+    ghost.classList.add(cls);
   }
 
   /**
@@ -197,11 +241,13 @@
     document.querySelectorAll('.nav-dot').forEach(function (d) {
       const n = parseInt(d.getAttribute('data-m'));
       const locked = !isPhaseUnlocked(phaseOf(n));
-      d.classList.remove('active', 'visited', 'dot-locked');
+      d.classList.remove('active', 'visited', 'done', 'dot-locked');
       if (locked) {
         d.classList.add('dot-locked');
       } else if (n === current) {
         d.classList.add('active');
+      } else if (checked[n]) {
+        d.classList.add('done');
       } else if (visited[n]) {
         d.classList.add('visited');
       }
@@ -252,6 +298,66 @@
 
     const counter = document.getElementById('topbar-count');
     if (counter) counter.textContent = current + '/' + total;
+
+    document.querySelectorAll('.mission-check-input').forEach(function (input) {
+      input.checked = !!checked[missionOf(input)];
+    });
+    updateTree();
+    placeGhost(true);
+  }
+
+  /**
+   * Devuelve el numero de mision que contiene un elemento.
+   * @param {Element} el - Elemento dentro de una mision
+   * @returns {number}
+   */
+  function missionOf(el) {
+    const m = el.closest('.mission');
+    return m ? parseInt(m.getAttribute('data-mission')) : 0;
+  }
+
+  /**
+   * Configura los checkbox "Verifica": guardan la mision como completada.
+   */
+  function setupChecks() {
+    document.querySelectorAll('.mission-check-input').forEach(function (input) {
+      input.addEventListener('change', function () {
+        const n = missionOf(input);
+        if (input.checked) checked[n] = true;
+        else delete checked[n];
+        trackEvent('mission_check', { mission: n, checked: input.checked });
+        updateUI();
+        saveState();
+        const ghost = document.getElementById('nav-ghost');
+        if (ghost && input.checked) hop(ghost, 'cheer');
+      });
+    });
+  }
+
+  /**
+   * Abre el arbol del proyecto por defecto solo en pantallas anchas (en angostas queda colapsado bajo la mision).
+   */
+  function setupTree() {
+    const tree = document.getElementById('kiro-tree');
+    if (tree && window.matchMedia('(min-width: 1101px)').matches) tree.open = true;
+  }
+
+  /**
+   * Actualiza el arbol del proyecto segun la mision actual:
+   * lo ya creado se ve normal, lo nuevo se resalta y lo que viene queda atenuado.
+   */
+  function updateTree() {
+    const tree = document.getElementById('kiro-tree');
+    if (!tree) return;
+    tree.querySelectorAll('.tree-item').forEach(function (item) {
+      const from = parseInt(item.getAttribute('data-from'));
+      item.classList.toggle('is-future', from > current);
+      item.classList.toggle('is-new', from === current && !item.classList.contains('tree-root'));
+    });
+    tree.querySelectorAll('.tree-note').forEach(function (note) {
+      note.classList.toggle('show', parseInt(note.getAttribute('data-only')) === current);
+    });
+    tree.classList.toggle('is-packed', current === total);
   }
 
   /**
@@ -420,7 +526,7 @@
     const btnPlay = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
     const btnReset = document.getElementById('btn-reset');
-    const hasProgress = current > 1 || Object.keys(visited).length > 0 || savedScreen === 'screen-end';
+    const hasProgress = current > 1 || Object.keys(visited).length > 0 || Object.keys(checked).length > 0 || savedScreen === 'screen-end';
     if (btnPlay) {
       const wasHidden = btnPlay.hidden;
       btnPlay.hidden = hasProgress;
@@ -457,6 +563,7 @@
     if (play) play.addEventListener('click', function () {
       current = 1;
       visited = {};
+      checked = {};
       if (!location.hash || location.hash === '#') setModeHash('play');
       trackEvent('mode_select', { mode: 'play' });
       updateUI();
@@ -493,6 +600,7 @@
       closeOverlay(resetOverlay);
       current = 1;
       visited = {};
+      checked = {};
       savedScreen = null;
       try { localStorage.removeItem('kiroWS'); } catch (e) {}
       updateUI();
@@ -563,7 +671,7 @@
   function saveState() {
     const activeScreen = document.querySelector('.screen.active');
     const screen = activeScreen ? activeScreen.id : 'screen-start';
-    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited, screen: screen })); } catch (e) {}
+    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited, checked: checked, screen: screen })); } catch (e) {}
   }
 
   /**
@@ -576,6 +684,7 @@
       const s = JSON.parse(data);
       if (Number.isInteger(s.current) && s.current >= 1 && s.current <= total) current = s.current;
       if (s.visited && typeof s.visited === 'object') visited = s.visited;
+      if (s.checked && typeof s.checked === 'object') checked = s.checked;
       if (typeof s.screen === 'string') savedScreen = s.screen;
     } catch (e) {}
   }

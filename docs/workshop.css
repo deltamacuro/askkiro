@@ -318,7 +318,7 @@ a:hover { text-decoration-color: var(--accent-bright); }
 .topbar-help:hover { color: var(--accent); }
 
 /* MISSION AREA */
-.mission-area { flex: 1; display: flex; align-items: safe center; justify-content: center; overflow-y: auto; padding: 1.5rem; position: relative; z-index: 1; }
+.mission-area { flex: 1; display: flex; align-items: safe center; justify-content: center; gap: 2.5rem; overflow-y: auto; padding: 1.5rem; position: relative; z-index: 1; }
 .mission { display: none; max-width: 640px; width: 100%; }
 .mission.active { display: block; animation: missionIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes missionIn {
@@ -342,8 +342,45 @@ a:hover { text-decoration-color: var(--accent-bright); }
   filter: drop-shadow(0 1px 6px rgba(117,64,176,0.2));
 }
 .mission-inner > p { font-size: 0.92rem; color: #9a9a9f; margin-bottom: 0.7rem; line-height: 1.5; }
-.mission-result { font-size: 0.85rem; color: var(--accent-bright); font-weight: 500; margin: 0.7rem 0; }
-.mission-result::before { content: '✦ '; opacity: 0.7; }
+
+/* STEPS: cada accion de la mision se numera 1, 2, 3... */
+.mission-inner { counter-reset: step; }
+.mission-inner > .kiro-chat,
+.mission-inner > .mission-action,
+.mission-inner > .mission-check { counter-increment: step; }
+.mission-inner > .kiro-chat > .kiro-bar::before,
+.mission-inner > .mission-action::before,
+.mission-check-box::after {
+  content: counter(step);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.15rem; height: 1.15rem; border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 500;
+  color: #fff; background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(117,64,176,0.15);
+}
+.mission-inner > .kiro-chat > .kiro-bar { display: flex; align-items: center; gap: 0.5rem; }
+.mission-inner > .mission-action { display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
+.mission-inner > .mission-action::before { flex-shrink: 0; }
+
+/* VERIFICA: checkbox que marca la mision como completada */
+.mission-check {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  margin: 0.8rem 0; padding: 0.65rem 0.85rem;
+  border: 1px dashed rgba(194,169,223,0.35); border-radius: 10px;
+  background: rgba(117,64,176,0.04);
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.mission-check:hover { border-color: var(--accent-bright); }
+.mission-check-input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.mission-check-box { position: relative; flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: 0.05rem; }
+.mission-check-box::after { position: absolute; inset: 0; transition: background 0.2s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.mission-check-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
+.mission-check-text strong { color: var(--accent-bright); font-weight: 600; }
+.mission-check-text code { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent-bright); }
+.mission-check-sub { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 0.15rem; }
+.mission-check-input:focus-visible + .mission-check-box::after { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mission-check:has(.mission-check-input:checked) { border-style: solid; border-color: rgba(117,64,176,0.55); background: var(--accent-dim); }
+.mission-check-input:checked + .mission-check-box::after { content: '\2713'; background: var(--accent-bright); color: var(--bg); font-family: 'Inter', sans-serif; font-weight: 800; transform: scale(1.15); }
 .mission-then { font-size: 0.88rem; color: var(--muted); margin: 0.7rem 0 0.2rem; }
 
 /* KIRO CHAT */
@@ -579,7 +616,7 @@ body.mode-presenter .pnote { display: block; }
 .nav-btn-next.finish { background: linear-gradient(135deg, var(--accent-bright) 0%, #5b2d8e 100%); }
 
 /* DOTS with phase separators */
-.nav-dots { flex: 1; display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
+.nav-dots { flex: 1; display: flex; justify-content: center; align-items: center; gap: 0.3rem; position: relative; }
 .nav-dot {
   width: 26px; height: 26px; border-radius: 50%;
   background: transparent; border: none; cursor: pointer;
@@ -594,10 +631,81 @@ body.mode-presenter .pnote { display: block; }
 }
 .nav-dot.active::after { width: 12px; height: 12px; background: var(--accent-bright); box-shadow: 0 0 8px rgba(117,64,176,0.5); }
 .nav-dot.visited::after { background: var(--accent-bright); opacity: 0.6; width: 8px; height: 8px; animation: dotComplete 0.3s ease; }
+.nav-dot.done::after { background: var(--accent-bright); opacity: 1; width: 9px; height: 9px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--accent); }
 @keyframes dotComplete { 0% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.6); } 100% { transform: translate(-50%,-50%) scale(1); } }
 .nav-dot.dot-locked { cursor: default; }
 .nav-dot.dot-locked::after { background: var(--dim); opacity: 0.25; }
 .nav-sep { width: 2px; height: 16px; background: var(--accent); opacity: 0.3; border-radius: 1px; margin: 0 0.4rem; }
+
+/* GHOST RUNNER: el fantasma salta de mision en mision sobre los dots */
+.nav-dot.active::after { width: 14px; height: 4px; top: 82%; background: rgba(117,64,176,0.6); box-shadow: 0 0 10px rgba(117,64,176,0.6); }
+.nav-ghost {
+  position: absolute; left: 0; top: 50%; width: 18px; height: 21px; margin-top: -13px;
+  pointer-events: none; transform: translateX(var(--ghost-x, 0));
+}
+.nav-ghost.ready { transition: transform 0.45s cubic-bezier(0.45, 0, 0.2, 1); }
+.nav-ghost img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 0 6px rgba(194,169,223,0.55)); transform: scaleX(var(--ghost-dir, -1)); }
+.nav-ghost.jump img { animation: ghostHop 0.45s cubic-bezier(0.3, 0, 0.3, 1); }
+.nav-ghost.jump-big img { animation: ghostHopBig 0.6s cubic-bezier(0.3, 0, 0.3, 1); }
+.nav-ghost.cheer img { animation: ghostCheer 0.6s ease; }
+@keyframes ghostHop {
+  0%, 100% { transform: scaleX(var(--ghost-dir, -1)) translateY(0); }
+  45% { transform: scaleX(var(--ghost-dir, -1)) translateY(-10px) rotate(-6deg); }
+  80% { transform: scaleX(var(--ghost-dir, -1)) translateY(0) scale(1.08, 0.9); }
+}
+@keyframes ghostHopBig {
+  0%, 100% { transform: scaleX(var(--ghost-dir, -1)) translateY(0); }
+  40% { transform: scaleX(var(--ghost-dir, -1)) translateY(-20px) rotate(-12deg); }
+  82% { transform: scaleX(var(--ghost-dir, -1)) translateY(0) scale(1.12, 0.85); }
+}
+@keyframes ghostCheer {
+  0%, 100% { transform: scaleX(var(--ghost-dir, -1)) translateY(0) rotate(0); }
+  25% { transform: scaleX(var(--ghost-dir, -1)) translateY(-8px) rotate(-10deg); }
+  55% { transform: scaleX(var(--ghost-dir, -1)) translateY(-8px) rotate(10deg); }
+}
+
+/* KIRO TREE: estructura del proyecto que crece con cada mision */
+.kiro-tree {
+  flex-shrink: 0; width: 272px; align-self: flex-start; position: sticky; top: 0; margin-top: 2.4rem;
+  background: rgba(8,8,12,0.75); border: 1px solid var(--border); border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.kiro-tree-head {
+  display: flex; align-items: baseline; gap: 0.45rem; flex-wrap: wrap;
+  padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border);
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--text);
+  list-style: none; cursor: pointer;
+}
+.kiro-tree-head::-webkit-details-marker { display: none; }
+.kiro-tree-head i { color: var(--accent-bright); font-size: 0.72rem; }
+.kiro-tree-hint { font-weight: 400; color: var(--dim); font-size: 0.66rem; }
+.kiro-tree:not([open]) .kiro-tree-head { border-bottom: none; }
+.kiro-tree-list { list-style: none; margin: 0; padding: 0.6rem 0.8rem 0.5rem; }
+.tree-item { display: flex; align-items: baseline; gap: 0.35rem; font-size: 0.72rem; line-height: 1.85; color: var(--text); transition: opacity 0.3s, color 0.3s; }
+.tree-sub { padding-left: 1.25rem; }
+.tree-glyph { color: var(--dim); }
+.tree-role { margin-left: auto; font-family: 'Inter', sans-serif; font-size: 0.62rem; color: var(--muted); white-space: nowrap; }
+.tree-item.is-future { opacity: 0.22; }
+.tree-item.is-future .tree-name { text-decoration: underline dashed rgba(124,124,126,0.6); text-underline-offset: 3px; }
+.tree-item.is-new { color: var(--accent-bright); }
+.tree-item.is-new .tree-role { color: var(--accent-bright); }
+.tree-item.is-new .tree-name { animation: treeNew 0.9s ease; border-radius: 3px; }
+@keyframes treeNew {
+  0% { background: rgba(194,169,223,0.35); box-shadow: 0 0 0 3px rgba(194,169,223,0.35); }
+  100% { background: transparent; box-shadow: 0 0 0 3px transparent; }
+}
+.kiro-tree.is-packed .tree-kiro { background: var(--accent-dim); color: var(--accent-bright); }
+.kiro-tree.is-packed .tree-kiro:first-of-type { border-radius: 4px 4px 0 0; }
+.kiro-tree.is-packed .tree-kiro:last-of-type { border-radius: 0 0 4px 4px; }
+.tree-note { display: none; margin: 0 0.8rem 0.65rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); font-family: 'Inter', sans-serif; font-size: 0.7rem; color: var(--muted); line-height: 1.5; }
+.tree-note.show { display: block; }
+.tree-note i { color: var(--accent-bright); margin-right: 0.2rem; }
+.tree-note code { font-family: 'JetBrains Mono', monospace; color: var(--accent-bright); }
+
+@media (max-width: 1100px) {
+  .mission-area { flex-direction: column; align-items: center; justify-content: safe center; gap: 1rem; }
+  .kiro-tree { width: 100%; max-width: 640px; align-self: center; position: static; margin-top: 0; }
+}
 
 /* END SCREEN — Victory / Power-Up */
 .screen-end {
