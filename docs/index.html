@@ -186,55 +186,107 @@
             <pre><code>Crea un Spec para agregar sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar. Solo ejecuta las tareas obligatorias.</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
-          <p class="mission-then">Kiro te guia por un wizard. Algunos pasos son botones en la UI, otros se escriben en el chat:</p>
-          <div class="spec-tree">
-            <div class="spec-tree-node spec-tree-kiro">
-              <span class="spec-tree-badge">Kiro</span> ¿Que tipo de spec?
-              <div class="spec-tree-opts">
-                <span class="spec-tree-opt spec-tree-pick">Feature &check;</span>
-                <span class="spec-tree-opt">Bugfix</span>
-              </div>
+          <p class="mission-then">Antes de escribir nada, Kiro te pregunta como quieres trabajar:</p>
+          <div class="spec-choices">
+            <div class="spec-choice">
+              <span class="spec-choice-q">Tipo</span>
+              <span class="spec-chip spec-chip-pick">Feature <i class="fa-solid fa-check" aria-hidden="true"></i></span>
+              <span class="spec-chip">Bug Fix</span>
             </div>
-            <div class="spec-tree-node spec-tree-kiro">
-              <span class="spec-tree-badge">Kiro</span> ¿Como empezar?
-              <div class="spec-tree-opts">
-                <span class="spec-tree-opt spec-tree-pick">Requirements-First &check;</span>
-                <span class="spec-tree-opt">Design-First</span>
-              </div>
-            </div>
-            <div class="spec-tree-node spec-tree-kiro">
-              <span class="spec-tree-badge">Kiro</span> Genera requirements
-            </div>
-            <div class="spec-tree-node spec-tree-tu">
-              <span class="spec-tree-badge">Escribe en el chat</span> Revisa &rarr; <strong>yes</strong>
-            </div>
-            <div class="spec-tree-node spec-tree-kiro">
-              <span class="spec-tree-badge">Kiro</span> Genera design
-            </div>
-            <div class="spec-tree-node spec-tree-tu">
-              <span class="spec-tree-badge">Escribe en el chat</span> Revisa &rarr; <strong>yes</strong>
-            </div>
-            <div class="spec-tree-node spec-tree-kiro">
-              <span class="spec-tree-badge">Kiro</span> Genera tasks
-            </div>
-            <div class="spec-tree-node spec-tree-tu">
-              <span class="spec-tree-badge">Escribe en el chat</span> ¿Que ejecutar?
-              <div class="spec-tree-opts">
-                <span class="spec-tree-opt spec-tree-pick">Solo requeridas &check;</span>
-                <span class="spec-tree-opt">Todas</span>
-              </div>
-            </div>
-            <div class="spec-tree-node spec-tree-kiro spec-tree-final">
-              <span class="spec-tree-badge">Kiro</span> Ejecuta las tasks
+            <div class="spec-choice">
+              <span class="spec-choice-q">Flujo</span>
+              <span class="spec-chip spec-chip-pick">Requirements-First <i class="fa-solid fa-check" aria-hidden="true"></i></span>
+              <span class="spec-chip" title="Empieza por la arquitectura y deriva los requirements">Design-First</span>
+              <span class="spec-chip" title="Genera las 3 fases de corrido, sin aprobaciones">Quick Spec</span>
             </div>
           </div>
-          <p class="mission-tip">Si algo no te convence, no escribas "yes". Puedes pedir cambios en el chat y Kiro regenera ese paso.</p>
+
+          <p class="mission-then">Kiro escribe 3 documentos, uno por fase. Toca cada uno para ver que contiene:</p>
+          <div class="spec-flow">
+            <div class="spec-stages" role="tablist" aria-label="Documentos del spec">
+              <button class="spec-stage active" role="tab" id="spec-tab-req" aria-selected="true" aria-controls="spec-doc-req" data-doc="req">
+                <span class="spec-stage-n">1</span>
+                <span class="spec-stage-body"><span class="spec-stage-name">requirements.md</span><span class="spec-stage-what">el que</span></span>
+              </button>
+              <span class="spec-gate" aria-hidden="true"><i class="fa-solid fa-user-check"></i><span>apruebas</span></span>
+              <button class="spec-stage" role="tab" id="spec-tab-design" aria-selected="false" aria-controls="spec-doc-design" data-doc="design" tabindex="-1">
+                <span class="spec-stage-n">2</span>
+                <span class="spec-stage-body"><span class="spec-stage-name">design.md</span><span class="spec-stage-what">el como</span></span>
+              </button>
+              <span class="spec-gate" aria-hidden="true"><i class="fa-solid fa-user-check"></i><span>apruebas</span></span>
+              <button class="spec-stage" role="tab" id="spec-tab-tasks" aria-selected="false" aria-controls="spec-doc-tasks" data-doc="tasks" tabindex="-1">
+                <span class="spec-stage-n">3</span>
+                <span class="spec-stage-body"><span class="spec-stage-name">tasks.md</span><span class="spec-stage-what">los pasos</span></span>
+              </button>
+            </div>
+
+            <div class="spec-doc active" role="tabpanel" id="spec-doc-req" aria-labelledby="spec-tab-req">
+              <div class="spec-doc-tab"><i class="fa-brands fa-markdown" aria-hidden="true"></i> .kiro/specs/vidas-y-dificultad/<strong>requirements.md</strong></div>
+              <div class="spec-doc-body">
+                <p class="md-h1"># Requirements</p>
+                <p class="md-h2">## 1. Vidas</p>
+                <p class="md-story"><span class="md-b">User story:</span> Como jugador, quiero 3 vidas, para no perder al primer choque.</p>
+                <p class="md-b">Acceptance criteria</p>
+                <ol class="md-ears">
+                  <li><span class="ears">WHEN</span> la partida empieza <span class="ears">THE SYSTEM SHALL</span> mostrar 3 vidas</li>
+                  <li><span class="ears">WHEN</span> el fantasma choca con un obstaculo <span class="ears">THE SYSTEM SHALL</span> restar 1 vida</li>
+                  <li><span class="ears">WHEN</span> las vidas llegan a 0 <span class="ears">THE SYSTEM SHALL</span> mostrar game over</li>
+                </ol>
+              </div>
+              <p class="spec-doc-caption"><strong>Que debe hacer el juego.</strong> Cada criterio usa notacion EARS: <span class="ears">WHEN</span> [evento] <span class="ears">THE SYSTEM SHALL</span> [comportamiento]. Sin ambiguedad y facil de testear.</p>
+            </div>
+
+            <div class="spec-doc" role="tabpanel" id="spec-doc-design" aria-labelledby="spec-tab-design" hidden>
+              <div class="spec-doc-tab"><i class="fa-brands fa-markdown" aria-hidden="true"></i> .kiro/specs/vidas-y-dificultad/<strong>design.md</strong></div>
+              <div class="spec-doc-body">
+                <p class="md-h1"># Design</p>
+                <p class="md-h2">## Arquitectura</p>
+                <div class="md-diagram" aria-label="Diagrama: game loop, colisiones, vidas, game over; dificultad y localStorage">
+                  <span class="md-node">Game loop</span><span class="md-arrow">&rarr;</span>
+                  <span class="md-node">Colisiones</span><span class="md-arrow">&rarr;</span>
+                  <span class="md-node md-node-hot">Vidas</span><span class="md-arrow">&rarr;</span>
+                  <span class="md-node">Game over</span>
+                  <span class="md-row2">
+                    <span class="md-node md-node-hot">Dificultad <small>+velocidad / 100 pts</small></span>
+                    <span class="md-node md-node-store"><i class="fa-solid fa-database" aria-hidden="true"></i> localStorage <small>highScore</small></span>
+                  </span>
+                </div>
+                <p class="md-h2">## Modelo de datos</p>
+                <p class="md-code">state = { lives: 3, score, speed, highScore }</p>
+                <p class="md-h2">## Manejo de errores &middot; Testing</p>
+                <p class="md-muted">Si localStorage no esta disponible, el juego sigue sin guardar el record.</p>
+              </div>
+              <p class="spec-doc-caption"><strong>Como se va a construir.</strong> Arquitectura, modelo de datos, manejo de errores y estrategia de testing, validados contra los requirements. Todavia cero lineas de codigo.</p>
+            </div>
+
+            <div class="spec-doc" role="tabpanel" id="spec-doc-tasks" aria-labelledby="spec-tab-tasks" hidden>
+              <div class="spec-doc-tab"><i class="fa-brands fa-markdown" aria-hidden="true"></i> .kiro/specs/vidas-y-dificultad/<strong>tasks.md</strong></div>
+              <div class="spec-doc-body">
+                <p class="md-h1"># Tasks</p>
+                <ul class="md-tasks">
+                  <li><span class="md-box"></span>1. Agregar estado de vidas al juego
+                    <ul>
+                      <li><span class="md-box"></span>1.1 Iniciar con <code>lives = 3</code></li>
+                      <li><span class="md-box"></span>1.2 Dibujar las vidas en pantalla</li>
+                    </ul>
+                  </li>
+                  <li><span class="md-box"></span>2. Restar una vida al chocar</li>
+                  <li><span class="md-box"></span>3. Subir la velocidad cada 100 puntos</li>
+                  <li><span class="md-box"></span>4. Guardar el high score en localStorage</li>
+                  <li><span class="md-box"></span>5. Pantalla de game over con reiniciar</li>
+                </ul>
+                <span class="md-run"><i class="fa-solid fa-play" aria-hidden="true"></i> Run all Tasks</span>
+              </div>
+              <p class="spec-doc-caption"><strong>Pasos concretos con checkbox.</strong> "Run all Tasks" ejecuta las tareas requeridas pendientes, o puedes ejecutarlas de a una. Recien aqui Kiro escribe codigo.</p>
+            </div>
+          </div>
+          <p class="mission-tip">Si un documento no te convence, no lo apruebes: pide cambios en el chat y Kiro lo regenera antes de pasar a la siguiente fase.</p>
           <label class="mission-check">
             <input type="checkbox" class="mission-check-input">
             <span class="mission-check-box" aria-hidden="true"></span>
             <span class="mission-check-text"><strong>Verifica:</strong> Ves <code>.kiro/specs/</code> con requirements, design y tasks, y el juego tiene vidas, high score y game over.</span>
           </label>
-          <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
+          <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Si despues cambias los requirements, abre tasks.md y usa "Sync Files" para generar las tareas nuevas. Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"No es un prompt que espero que funcione. Es un plan que yo revise y aprobe."</p>

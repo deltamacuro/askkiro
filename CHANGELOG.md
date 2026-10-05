@@ -1,5 +1,18 @@
 # Changelog — Ask Kiro
 
+## v1.5.0 — 2026-10-05 — Claridad del tutorial + vista de orador
+
+| ID | Descripcion |
+|----|-------------|
+| UX-012 | Pasos numerados (1, 2, 3...) en cada mision |
+| UX-013 | "Resultado" pasa a ser un checkbox "Verifica" con criterio concreto; marca el dot como completado |
+| UX-014 | Panel "Tu proyecto": estructura `.kiro/` que crece mision a mision (el que, el plan, el cuando, el quien, el como) |
+| UX-015 | El fantasma salta sobre los dots al avanzar; salto grande al cruzar de fase y festejo al verificar |
+| UX-016 | M3 Specs: wizard reemplazado por los 3 documentos reales (requirements.md con EARS, design.md con diagrama, tasks.md con checkboxes) y sus puertas de aprobacion, segun kiro.dev/docs/specs |
+| PRES-001 | Modo presentador reemplazado por `orador.html`: vista de orador en ventana aparte, sincronizada con el tutorial, con cronometros y bloques Decir / Mostrar / Preguntar / Confirma |
+| PRES-002 | Navegacion con clickers de presentacion (PageUp/PageDown) en ambas ventanas |
+| CONT-002 | M3: se corrige "Solo requeridas / Todas" (no existe; "Run all Tasks" ejecuta las requeridas pendientes), se agregan Quick Spec y Sync Files |
+
 ## v1.4.0 — 2026-10-05 — Auditoria
 
 | ID | Descripcion |

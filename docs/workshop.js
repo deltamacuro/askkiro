@@ -167,6 +167,7 @@
       setupCopy();
       setupChecks();
       setupTree();
+      setupSpecFlow();
       setupScreens();
       setupHelp();
       loadState();
@@ -386,6 +387,42 @@
         saveState();
         const ghost = document.getElementById('nav-ghost');
         if (ghost && input.checked) hop(ghost, 'cheer');
+      });
+    });
+  }
+
+  /**
+   * Configura las pestanas de documentos del spec (M3): clic o flechas para cambiar de documento.
+   * Numera los checkbox de tasks.md para que se completen en secuencia.
+   */
+  function setupSpecFlow() {
+    document.querySelectorAll('.spec-flow').forEach(function (flow) {
+      const tabs = Array.from(flow.querySelectorAll('.spec-stage'));
+      flow.querySelectorAll('.md-box').forEach(function (box, i) { box.style.setProperty('--i', i); });
+
+      /** @param {HTMLElement} tab - Pestana a activar */
+      function select(tab) {
+        tabs.forEach(function (t) {
+          const on = t === tab;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) { panel.hidden = !on; panel.classList.toggle('active', on); }
+        });
+        trackEvent('spec_doc_view', { doc: tab.getAttribute('data-doc') });
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab); });
+        tab.addEventListener('keydown', function (e) {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          e.preventDefault();
+          e.stopPropagation();
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus();
+          select(next);
+        });
       });
     });
   }
