@@ -336,8 +336,8 @@ a:hover { text-decoration-color: var(--accent-bright); }
   box-shadow: 0 0 0 3px rgba(117,64,176,0.15);
 }
 .mission-inner > .kiro-chat > .kiro-bar { display: flex; align-items: center; gap: 0.5rem; }
-.mission-inner > .mission-action { display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
-.mission-inner > .mission-action::before { flex-shrink: 0; }
+.mission-inner > .mission-action::before { vertical-align: middle; margin-right: 0.45rem; }
+.mission-inner > .mission-action .action-lbl { vertical-align: middle; }
 
 /* VERIFICA: checkbox que marca la mision como completada */
 .mission-check {
@@ -442,6 +442,16 @@ a:hover { text-decoration-color: var(--accent-bright); }
   color: var(--accent); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem;
 }
 
+/* SKILL SOURCES: skills externas para importar */
+.skill-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.5rem 0; }
+.skill-source { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.6rem 0.7rem 0.1rem; border: 1px solid var(--border); border-radius: 10px; background: rgba(20,20,24,0.55); min-width: 0; }
+.skill-source-org { font-size: 0.74rem; font-weight: 600; color: var(--text); }
+.skill-source-org i { color: var(--accent-bright); margin-right: 0.25rem; }
+.skill-source-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+.skill-source .kiro-chat { margin: 0.4rem 0 0.5rem; }
+.skill-source .kiro-chat code { font-size: 0.66rem; word-break: break-all; }
+@media (max-width: 600px) { .skill-sources { grid-template-columns: 1fr; } }
+
 /* MCP MANUAL (details/summary) */
 .mcp-manual { margin: 0.5rem 0; font-size: 0.82rem; }
 .mcp-manual summary {
@@ -486,16 +496,43 @@ a:hover { text-decoration-color: var(--accent-bright); }
 .spec-vs-ok { color: var(--accent-bright); border-color: var(--accent); }
 .spec-vs-risk { border: none; background: none; font-size: 0.85rem; padding: 0; }
 
-/* SPEC CHOICES: tipo y flujo que Kiro pregunta al crear el spec */
-.spec-choices { display: flex; flex-direction: column; gap: 0.35rem; margin: 0.4rem 0 0.8rem; }
-.spec-choice { display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem; }
-.spec-choice-q { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); min-width: 3.2rem; }
-.spec-chip {
-  font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 20px;
-  border: 1px solid var(--border); color: var(--dim); background: var(--bg);
+/* SPEC DECIDE: arbol de decision para elegir agente de planificacion */
+.spec-decide { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.4rem 0 0.7rem; padding-left: 0.9rem; border-left: 2px solid var(--border); }
+.sd-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 0.5rem; padding: 0.35rem 0.6rem; border-radius: 8px; position: relative; }
+.sd-row::before { content: ''; position: absolute; left: -0.9rem; top: 50%; width: 0.7rem; height: 2px; background: var(--border); }
+.sd-q { font-size: 0.8rem; color: var(--muted); }
+.sd-line { height: 1px; background: repeating-linear-gradient(90deg, var(--border) 0 4px, transparent 4px 8px); }
+.sd-a { font-size: 0.74rem; font-weight: 600; color: var(--text); padding: 0.12rem 0.5rem; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); white-space: nowrap; }
+.sd-note { grid-column: 1 / -1; font-size: 0.7rem; color: var(--dim); }
+.sd-pick { background: var(--accent-dim); border: 1px solid rgba(117,64,176,0.45); }
+.sd-pick::before { background: var(--accent); }
+.sd-pick .sd-q { color: var(--text); }
+.sd-pick .sd-a { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 10px rgba(117,64,176,0.45); }
+.sd-pick .sd-a i { font-size: 0.6rem; margin-left: 0.15rem; }
+.sd-pick .sd-note { color: var(--accent-bright); }
+
+/* CHAT ANATOMY: barra del chat de Kiro (agente, modelo, Autopilot) */
+.chat-anatomy { margin: 0.6rem 0; border: 1px solid rgba(117,64,176,0.3); border-radius: 10px; background: #08080c; overflow: hidden; }
+.ca-input { padding: 0.65rem 0.85rem 0.4rem; font-size: 0.8rem; color: var(--dim); }
+.ca-bar { display: flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.6rem 0.6rem; flex-wrap: wrap; }
+.ca-pill, .ca-toggle {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.74rem; color: var(--text); padding: 0.18rem 0.5rem; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--surface);
 }
-.spec-chip-pick { border-color: rgba(117,64,176,0.5); color: var(--accent-bright); background: var(--accent-dim); font-weight: 600; }
-.spec-chip-pick i { font-size: 0.6rem; margin-left: 0.15rem; }
+.ca-pill i { font-size: 0.55rem; color: var(--muted); }
+.ca-toggle { border-color: transparent; background: transparent; }
+.ca-switch { position: relative; width: 26px; height: 15px; border-radius: 8px; background: var(--accent); box-shadow: 0 0 8px rgba(117,64,176,0.5); }
+.ca-switch::after { content: ''; position: absolute; top: 2px; right: 2px; width: 11px; height: 11px; border-radius: 50%; background: #fff; }
+.ca-n {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 1rem; height: 1rem; border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; color: var(--bg); background: var(--accent-bright);
+}
+.ca-legend { list-style: none; border-top: 1px dashed var(--border); padding: 0.55rem 0.85rem 0.6rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.ca-legend li { display: flex; gap: 0.5rem; font-size: 0.76rem; color: var(--muted); line-height: 1.45; }
+.ca-legend .ca-n { margin-top: 0.12rem; }
+.ca-legend strong { color: var(--text); font-weight: 600; }
 
 /* SPEC FLOW: los 3 documentos con sus puertas de aprobacion */
 .spec-flow { margin: 0.4rem 0 0.7rem; }
@@ -724,9 +761,7 @@ a:hover { text-decoration-color: var(--accent-bright); }
   0% { background: rgba(194,169,223,0.35); box-shadow: 0 0 0 3px rgba(194,169,223,0.35); }
   100% { background: transparent; box-shadow: 0 0 0 3px transparent; }
 }
-.kiro-tree.is-packed .tree-kiro { background: var(--accent-dim); color: var(--accent-bright); }
-.kiro-tree.is-packed .tree-kiro:first-of-type { border-radius: 4px 4px 0 0; }
-.kiro-tree.is-packed .tree-kiro:last-of-type { border-radius: 0 0 4px 4px; }
+.kiro-tree.is-packed .tree-power { background: var(--accent-dim); color: var(--accent-bright); border-radius: 4px; }
 .tree-note { display: none; margin: 0 0.8rem 0.65rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); font-family: 'Inter', sans-serif; font-size: 0.7rem; color: var(--muted); line-height: 1.5; }
 .tree-note.show { display: block; }
 .tree-note i { color: var(--accent-bright); margin-right: 0.2rem; }
@@ -1052,6 +1087,42 @@ a:hover { text-decoration-color: var(--accent-bright); }
   .recap-arrow { transform: rotate(90deg); }
   .recap-nodes { flex-direction: row; flex-wrap: wrap; justify-content: center; }
 }
+
+/* SURFACES: Kiro mas alla del IDE (pantalla final) */
+.surfaces { margin: 1.1rem auto 1.4rem; max-width: 640px; text-align: left; }
+.surface-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.45rem; }
+.surface { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.6rem 0.75rem; border-radius: 10px; border: 1px solid var(--border); background: rgba(20,20,24,0.6); min-width: 0; }
+.surface-here { border-color: rgba(117,64,176,0.5); background: var(--accent-dim); }
+.surface-name { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+.surface-name i { color: var(--accent-bright); margin-right: 0.3rem; width: 1rem; }
+.surface-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+.surface-cmd { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--accent-bright); background: #08080c; border: 1px solid var(--border); border-radius: 5px; padding: 0.2rem 0.4rem; margin-top: 0.15rem; white-space: nowrap; overflow-x: auto; }
+.surface-link { font-size: 0.72rem; margin-top: 0.1rem; }
+.validated-stamp { margin-top: 1rem; font-size: 0.68rem; color: var(--dim); }
+.validated-stamp i { color: var(--accent); margin-right: 0.25rem; }
+@media (max-width: 600px) { .surface-grid { grid-template-columns: 1fr; } }
+
+/* WORKFLOW GRAPH (M7) */
+.wf-graph {
+  position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 0.3rem;
+  margin: 0.6rem 0; padding: 0.8rem 0.8rem 2rem; border-radius: 10px; border: 1px solid var(--border);
+  background-color: #08080c;
+  background-image: radial-gradient(rgba(117,64,176,0.22) 1px, transparent 1px); background-size: 12px 12px;
+}
+.wf-node {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 0.05rem;
+  padding: 0.35rem 0.6rem; border-radius: 8px; font-size: 0.74rem; font-weight: 600; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border);
+}
+.wf-node i { color: var(--accent-bright); font-size: 0.7rem; }
+.wf-node small { font-size: 0.58rem; font-weight: 400; color: var(--muted); }
+.wf-node-hot { border-color: var(--accent); background: var(--accent-dim); }
+.wf-node-end { border-style: dashed; }
+.wf-edge { flex: 1; min-width: 14px; height: 2px; background: linear-gradient(90deg, var(--accent) 50%, transparent 50%); background-size: 8px 2px; animation: wfFlow 0.8s linear infinite; position: relative; }
+.wf-edge::after { content: ''; position: absolute; right: -2px; top: -3px; border-left: 6px solid var(--accent); border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+@keyframes wfFlow { to { background-position: 8px 0; } }
+.wf-loop { position: absolute; left: 0.8rem; bottom: 0.55rem; font-size: 0.64rem; color: var(--accent-bright); }
+.wf-loop i { margin-right: 0.25rem; }
 
 /* HELP */
 .help-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; }

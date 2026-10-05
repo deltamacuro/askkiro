@@ -4,7 +4,7 @@
   /** @type {number} Mision actual (1-based) */
   let current = 1;
   /** @type {number} Total de misiones */
-  const total = 9;
+  const total = document.querySelectorAll('.mission').length;
   /** @type {Object<number, boolean>} Misiones visitadas */
   let visited = {};
   /** @type {Object<number, boolean>} Misiones verificadas por el usuario */
@@ -19,7 +19,7 @@
   const FADE_MS = 350;
 
   /** Primera mision de cada fase */
-  const PHASE_START = { 1: 1, 2: 4, 3: 7 };
+  const PHASE_START = { 1: 1, 2: 4, 3: 8 };
 
   /** @type {Object<string, string>} Clave de localStorage que marca cada overlay como visto al cerrarlo */
   const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard' };

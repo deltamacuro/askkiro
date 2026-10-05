@@ -1,14 +1,14 @@
 (function () {
   'use strict';
 
-  /** @type {number} Total de misiones */
-  const total = 9;
+  /** @type {number} Total de misiones (se calcula al leer index.html) */
+  let total = 0;
   /** @type {BroadcastChannel|null} Canal compartido con el tutorial (workshop.js) */
   const channel = typeof BroadcastChannel === 'function' ? new BroadcastChannel('askkiro') : null;
 
   /**
    * Notas de cada mision, leidas de los .pnote de index.html (fuente unica de contenido).
-   * @type {Object<number, {tag: string, title: string, say: string[], show: string[], ask: string[], check: string, budgetMin: number}>}
+   * @type {Object<number, {phase: number, tag: string, title: string, say: string[], show: string[], ask: string[], check: string, budgetMin: number}>}
    */
   const missions = {};
 
@@ -68,7 +68,9 @@
           clone.querySelectorAll('strong, .mission-check-sub').forEach(function (el) { el.remove(); });
           checkHtml = clone.innerHTML.trim();
         }
+        total = Math.max(total, n);
         missions[n] = {
+          phase: parseInt(m.getAttribute('data-phase')) || 1,
           tag: (m.querySelector('.mission-tag') || {}).textContent || '',
           title: (m.querySelector('h2') || {}).textContent || 'Mision ' + n,
           say: plain.slice(0, 1).map(function (p) { return p.innerHTML; }),
@@ -114,7 +116,7 @@
     if (linked && screen === 'screen-start') {
       document.getElementById('sp-cover-tag').textContent = 'Portada';
       document.getElementById('sp-cover-title').textContent = 'El tutorial esta en la portada';
-      document.getElementById('sp-cover-text').textContent = 'Presenta el objetivo: en 50 minutos pasamos de vibe coding a software real. Presiona Siguiente para empezar la mision 1.';
+      document.getElementById('sp-cover-text').textContent = 'Presenta el objetivo: en 55 minutos pasamos de vibe coding a software real. Presiona Siguiente para empezar la mision 1.';
     } else if (linked && screen === 'screen-end') {
       document.getElementById('sp-cover-tag').textContent = 'Cierre';
       document.getElementById('sp-cover-title').textContent = '"Eso no es vibe coding. Eso es software."';
@@ -207,7 +209,7 @@
   function buildJump() {
     const c = document.getElementById('sp-jump');
     for (let i = 1; i <= total; i++) {
-      if (i === 4 || i === 7) {
+      if (i > 1 && missions[i] && missions[i - 1] && missions[i].phase !== missions[i - 1].phase) {
         const sep = document.createElement('span');
         sep.className = 'sp-jump-sep';
         sep.setAttribute('aria-hidden', 'true');
@@ -269,7 +271,6 @@
    * Inicializa la vista de orador.
    */
   function init() {
-    buildJump();
     setupControls();
     if (!channel) {
       document.getElementById('sp-link-text').textContent = 'Tu browser no soporta sincronizacion';
@@ -284,6 +285,7 @@
       console.error('No se pudieron cargar las notas:', err);
       document.getElementById('sp-link-text').textContent = 'No se pudieron cargar las notas (abre el sitio desde un servidor)';
     }).then(function () {
+      buildJump();
       render();
       send({ type: 'hello' });
     });

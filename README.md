@@ -1,22 +1,23 @@
 # Ask Kiro — De vibe coding a software real
 
-Tutorial interactivo para [Kiro](https://kiro.dev). 3 fases, 9 misiones, una app real.
+Tutorial interactivo para [Kiro](https://kiro.dev). 3 fases, 10 misiones, una app real. Validado contra Kiro IDE 1.2 (octubre 2026).
 
 Construyes un juego runner desde cero y en cada mision agregas una feature de Kiro que resuelve un problema concreto.
 
-## Las 9 misiones
+## Las 10 misiones
 
 | # | Fase | Feature | Problema que resuelve |
 |---|------|---------|----------------------|
-| 1 | Construye | Vibe Coding | Velocidad inicial |
+| 1 | Construye | Vibe Coding (agente Default) | Velocidad inicial |
 | 2 | Construye | Steering | Inconsistencia de equipo |
-| 3 | Construye | Specs | Features complejas sin plan |
+| 3 | Construye | Specs (Quick Spec) | Features sin plan |
 | 4 | Automatiza | Hooks | Errores que se cuelan |
-| 5 | Automatiza | Agents | Falta de criterio de equipo |
+| 5 | Automatiza | Custom Agents | Falta de criterio y permisos acotados |
 | 6 | Automatiza | Web Search | Salir del IDE a buscar info |
-| 7 | Conecta | Skills | Contexto especializado bajo demanda |
-| 8 | Conecta | MCP | IA desconectada del stack real |
-| 9 | Conecta | Powers | Todo disperso, dificil de compartir |
+| 7 | Automatiza | Workflows | Trabajo que no cabe en una sesion |
+| 8 | Conecta | Skills (propias e importadas) | Contexto especializado bajo demanda |
+| 9 | Conecta | MCP | IA desconectada del stack real |
+| 10 | Conecta | Powers | Todo disperso, dificil de compartir |
 
 ## Como empezar
 
@@ -33,7 +34,7 @@ En la portada de [askkiro.info](https://askkiro.info/), haz clic en "¿Vas a dar
 
 - Proyecta el tutorial; la vista de orador queda en tu laptop. La audiencia nunca ve las notas.
 - Cada mision muestra que decir, que mostrar, preguntas para la audiencia y que confirmar con la sala.
-- Cronometro de sesion y por mision con el tiempo sugerido (~50 min total).
+- Cronometro de sesion y por mision con el tiempo sugerido (~55 min total).
 - Avanza con flechas o un clicker de presentacion: ambas ventanas se mueven juntas.
 
 ## Guia web interactiva
