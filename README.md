@@ -22,11 +22,10 @@ Construyes un juego runner desde cero y en cada mision agregas una feature de Ki
 
 ### Self-Service
 
-```bash
-git clone https://github.com/deltamacuro/askkiro.git
-```
+1. Crea una carpeta vacia y abrela en [Kiro](https://kiro.dev) con Autopilot activado.
+2. Ve a [askkiro.info](https://askkiro.info/) y sigue las misiones: cada prompt se copia con "Ask Kiro" y se pega en el chat.
 
-Abre en Kiro con Autopilot activado. Ve a [askkiro.info](https://askkiro.info/) y sigue las misiones.
+No necesitas clonar este repo: solo contiene la guia web.
 
 ### Presentador
 

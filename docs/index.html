@@ -13,16 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09090a">
   <title>Ask Kiro — De vibe coding a software real</title>
-  <meta name="description" content="Aprende 9 features de Kiro en 45 minutos. 3 fases, 9 misiones, una app real.">
+  <meta name="description" content="Aprende 9 features de Kiro en 50 minutos. 3 fases, 9 misiones, una app real.">
   <link rel="canonical" href="https://askkiro.info/">
   <meta property="og:title" content="Ask Kiro — De vibe coding a software real">
-  <meta property="og:description" content="3 fases. 9 misiones. 45 minutos. Tutorial interactivo de Kiro.">
+  <meta property="og:description" content="3 fases. 9 misiones. 50 minutos. Tutorial interactivo de Kiro.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://askkiro.info/">
-  <meta property="og:image" content="https://askkiro.info/kiro.svg">
+  <meta property="og:image" content="https://askkiro.info/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ask Kiro — De vibe coding a software real">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ask Kiro — De vibe coding a software real">
-  <meta name="twitter:description" content="3 fases. 9 misiones. 45 minutos. Tutorial interactivo de Kiro.">
+  <meta name="twitter:description" content="3 fases. 9 misiones. 50 minutos. Tutorial interactivo de Kiro.">
+  <meta name="twitter:image" content="https://askkiro.info/og-image.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +45,7 @@
       <div class="start-left anim-stagger">
         <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a></p>
         <h1>De vibe coding<br>a software real</h1>
-        <p class="start-sub">3 fases &middot; 9 misiones &middot; 45 minutos</p>
+        <p class="start-sub">3 fases &middot; 9 misiones &middot; 50 minutos</p>
         <div class="start-actions" id="start-actions">
           <button class="start-btn" id="btn-play">Empezar</button>
           <button class="start-btn start-btn-secondary" id="btn-continue" hidden>Continuar</button>
@@ -218,7 +222,7 @@
               <span class="spec-tree-badge">Kiro</span> Ejecuta las tasks
             </div>
           </div>
-          <p class="mission-tip">Si algo no te convence, no escribas "yes". Podes pedir cambios en el chat y Kiro regenera ese paso.</p>
+          <p class="mission-tip">Si algo no te convence, no escribas "yes". Puedes pedir cambios en el chat y Kiro regenera ese paso.</p>
           <p class="mission-result">Resultado: Kiro crea los archivos del spec (.md) con requirements, design y tasks. Aprueba cada paso, implementa el codigo y veras las mejoras en el juego.</p>
           <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
           <div class="pnote">
@@ -275,7 +279,7 @@
           <p class="mission-then">Invocalo:</p>
           <div class="kiro-chat">
             <div class="kiro-bar">Kiro Chat</div>
-            <code>@revisor revisa game.js y dime si lo aprobarias para produccion.</code>
+            <code>@revisor revisa el codigo JavaScript del juego y dime si lo aprobarias para produccion.</code>
             <button class="ask-btn">Ask Kiro</button>
           </div>
           <p class="mission-result">Resultado: APROBADO o RECHAZADO con detalles. El agente aplica su criterio, no solo ejecuta.</p>
@@ -503,9 +507,9 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
   </div>
 
   <!-- HELP -->
-  <div class="help-overlay" id="help-overlay">
+  <div class="help-overlay" id="help-overlay" role="dialog" aria-modal="true" aria-label="Ayuda">
     <div class="help-panel">
-      <button class="help-close" id="help-close">&times;</button>
+      <button class="help-close" id="help-close" aria-label="Cerrar ayuda">&times;</button>
       <h3>Ayuda</h3>
       <div class="help-items">
         <details class="help-item" open>
@@ -535,10 +539,6 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
           </div>
         </details>
         <details class="help-item">
-          <summary>Como descargar el proyecto</summary>
-          <p><code>git clone https://github.com/deltamacuro/askkiro.git</code> o <a href="https://github.com/deltamacuro/askkiro/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer">descarga ZIP</a>.</p>
-        </details>
-        <details class="help-item">
           <summary>Que es modo Autopilot</summary>
           <p>Kiro ejecuta acciones automaticamente. Abajo a la derecha en la barra de estado.</p>
           <div class="kiro-chat">
@@ -552,7 +552,7 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
   </div>
 
   <!-- ONBOARDING MODAL -->
-  <div class="onboard-overlay" id="onboard-overlay">
+  <div class="onboard-overlay" id="onboard-overlay" role="dialog" aria-modal="true" aria-label="Como funciona">
     <div class="onboard-panel">
       <div class="onboard-header">
         <img src="kiro.svg" alt="" class="onboard-ghost">
@@ -587,7 +587,7 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
   </div>
 
   <!-- PRESENTER ONBOARDING MODAL -->
-  <div class="onboard-overlay" id="presenter-onboard-overlay">
+  <div class="onboard-overlay" id="presenter-onboard-overlay" role="dialog" aria-modal="true" aria-label="Modo presentador">
     <div class="onboard-panel">
       <div class="onboard-header">
         <img src="kiro.svg" alt="" class="onboard-ghost">
@@ -622,7 +622,7 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
   </div>
 
   <!-- RESET CONFIRMATION MODAL -->
-  <div class="onboard-overlay" id="reset-overlay">
+  <div class="onboard-overlay" id="reset-overlay" role="alertdialog" aria-modal="true" aria-label="Reiniciar progreso">
     <div class="onboard-panel reset-panel">
       <div class="onboard-header">
         <span class="reset-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
