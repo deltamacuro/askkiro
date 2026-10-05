@@ -11,6 +11,8 @@
   let checked = {};
   /** @type {number} Mision donde estaba el fantasma la ultima vez que se movio */
   let ghostAt = 0;
+  /** @type {number} Mision cuyas demos animadas ya se reprodujeron */
+  let demoAt = 0;
   /** @type {boolean} Indica si hay una transicion de pantalla en curso */
   let transitioning = false;
   /** @type {string|null} Pantalla guardada en localStorage */
@@ -166,6 +168,8 @@
       setupNav();
       setupCopy();
       setupChecks();
+      setupQuiz();
+      setupDemos();
       setupTree();
       setupSpecFlow();
       setupScreens();
@@ -358,6 +362,10 @@
     document.querySelectorAll('.mission-check-input').forEach(function (input) {
       input.checked = !!checked[missionOf(input)];
     });
+    document.querySelectorAll('.m-quiz').forEach(function (quiz) {
+      if (checked[missionOf(quiz)] && !quiz.classList.contains('solved')) markQuiz(quiz, quiz.getAttribute('data-answer'));
+    });
+    if (active && demoAt !== current) { active.querySelectorAll('.hook-demo').forEach(playDemo); demoAt = current; }
     updateTree();
     placeGhost(true);
     broadcastState();
@@ -388,6 +396,66 @@
         const ghost = document.getElementById('nav-ghost');
         if (ghost && input.checked) hop(ghost, 'cheer');
       });
+    });
+  }
+
+  /**
+   * Marca visualmente una opcion del quiz y muestra su feedback.
+   * @param {HTMLElement} quiz - Contenedor .m-quiz
+   * @param {string} opt - Valor data-opt elegido
+   * @returns {boolean} Si la opcion es la correcta
+   */
+  function markQuiz(quiz, opt) {
+    const right = opt === quiz.getAttribute('data-answer');
+    quiz.querySelectorAll('.m-quiz-opt').forEach(function (b) {
+      const isThis = b.getAttribute('data-opt') === opt;
+      b.classList.toggle('is-right', isThis && right);
+      b.classList.toggle('is-wrong', isThis && !right);
+      b.setAttribute('aria-pressed', isThis ? 'true' : 'false');
+      if (isThis) quiz.querySelector('.m-quiz-fb').textContent = b.getAttribute('data-feedback') || '';
+    });
+    quiz.classList.toggle('solved', right);
+    return right;
+  }
+
+  /**
+   * Configura los quiz de recuerdo: al acertar, la mision queda completada (igual que el checkbox "Verifica").
+   */
+  function setupQuiz() {
+    document.querySelectorAll('.m-quiz').forEach(function (quiz) {
+      quiz.querySelectorAll('.m-quiz-opt').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const n = missionOf(quiz);
+          const right = markQuiz(quiz, btn.getAttribute('data-opt'));
+          trackEvent('mission_quiz', { mission: n, answer: btn.getAttribute('data-opt'), right: right });
+          if (!right || checked[n]) return;
+          checked[n] = true;
+          updateUI();
+          saveState();
+          const ghost = document.getElementById('nav-ghost');
+          if (ghost) hop(ghost, 'cheer');
+        });
+      });
+    });
+  }
+
+  /**
+   * Reinicia la animacion de una demo (se reproduce una sola vez, menos de 5 s).
+   * @param {HTMLElement} demo - Contenedor .hook-demo
+   */
+  function playDemo(demo) {
+    demo.classList.remove('play');
+    void demo.offsetWidth; /* forzar reflow para reiniciar la animacion */
+    demo.classList.add('play');
+  }
+
+  /**
+   * Configura el boton "Repetir" de las demos animadas.
+   */
+  function setupDemos() {
+    document.querySelectorAll('.hook-demo').forEach(function (demo) {
+      const btn = demo.querySelector('.hd-replay');
+      if (btn) btn.addEventListener('click', function () { playDemo(demo); });
     });
   }
 

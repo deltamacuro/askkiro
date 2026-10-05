@@ -11,7 +11,7 @@
     gtag('config', 'G-ZDDXJ02XK6');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090a">
+  <meta name="theme-color" content="#000000">
   <title>Ask Kiro — De vibe coding a software real</title>
   <meta name="description" content="Aprende 10 features de Kiro en 55 minutos. 3 fases, 10 misiones, una app real.">
   <link rel="canonical" href="https://askkiro.info/">
@@ -30,7 +30,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fragment+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="workshop.css">
   <script src="https://kit.fontawesome.com/c4d3502012.js" crossorigin="anonymous"></script>
 </head>
@@ -139,7 +139,7 @@
 - Comentarios JSDoc en todas las funciones
 - try/catch en todo
 - Separar html, css y js en archivos distintos
-- Color principal #7540b0 y #c2a9df
+- Color principal #9147ff y #c59eff
 - Tipografia Roboto</code></pre>
             <button class="ask-btn">Ask Kiro</button>
           </div>
@@ -167,50 +167,12 @@
       </article>
 
       <!-- M3 -->
-      <article class="mission" data-mission="3" data-phase="1">
+      <article class="mission m-v2" data-mission="3" data-phase="1">
         <div class="mission-inner">
-          <span class="mission-tag">Fase 1 &middot; Specs</span>
+          <span class="mission-tag">Mision 3 &middot; Specs</span>
           <h2>Planifica antes de codear</h2>
-          <p>El vibe coding es rapido pero impredecible. El spec-driven development invierte tiempo al principio para que despues la ejecucion salga bien.</p>
-          <div class="spec-vs">
-            <div class="spec-vs-col spec-vs-vibe">
-              <span class="spec-vs-label">Vibe coding</span>
-              <div class="spec-vs-flow">
-                <span class="spec-vs-step">Prompt</span>
-                <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step">Codigo</span>
-                <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step spec-vs-risk">?</span>
-              </div>
-            </div>
-            <div class="spec-vs-col spec-vs-spec">
-              <span class="spec-vs-label">Spec-driven</span>
-              <div class="spec-vs-flow">
-                <span class="spec-vs-step spec-vs-check">Requirements</span>
-                <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step spec-vs-check">Design</span>
-                <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step spec-vs-check">Tasks</span>
-                <span class="spec-vs-arrow">&rarr;</span>
-                <span class="spec-vs-step spec-vs-ok">Codigo &#x2713;</span>
-              </div>
-            </div>
-          </div>
-          <p class="mission-then">Kiro tiene varios agentes para planificar. Elige segun lo que vas a hacer:</p>
-          <div class="spec-decide" role="list">
-            <div class="sd-row" role="listitem"><span class="sd-q">¿Arreglar un bug complejo?</span><span class="sd-line" aria-hidden="true"></span><span class="sd-a">Bug Fix</span></div>
-            <div class="sd-row sd-pick" role="listitem"><span class="sd-q">¿Feature clara y acotada?</span><span class="sd-line" aria-hidden="true"></span><span class="sd-a">Quick Spec <i class="fa-solid fa-check" aria-hidden="true"></i></span><span class="sd-note">esta mision: sabemos exactamente que queremos</span></div>
-            <div class="sd-row" role="listitem"><span class="sd-q">¿Feature ambigua, nueva o critica?</span><span class="sd-line" aria-hidden="true"></span><span class="sd-a">Spec</span><span class="sd-note">Requirements-First si sabes el comportamiento, Design-First si ya tienes la arquitectura</span></div>
-            <div class="sd-row" role="listitem"><span class="sd-q">¿Tarea mediana, sin documentos?</span><span class="sd-line" aria-hidden="true"></span><span class="sd-a">Plan</span><span class="sd-note">plan en la conversacion, sin tocar codigo hasta que apruebes</span></div>
-          </div>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Abajo en el chat, cambia el agente de <strong>Default</strong> a <strong>Quick Spec</strong> (o en una sesion nueva: "Let's build" &rarr; Start with a workflow &rarr; Quick Spec)</div>
-          <div class="kiro-chat">
-            <div class="kiro-bar">Kiro Chat &middot; Quick Spec</div>
-            <pre><code>Agrega un sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar. Cuando esten las tareas, ejecuta todas las requeridas.</code></pre>
-            <button class="ask-btn">Ask Kiro</button>
-          </div>
+          <p class="m-hook">El vibe coding es rapido pero impredecible. Un spec escribe el plan antes que el codigo.</p>
 
-          <p class="mission-then">Kiro te hace unas preguntas y escribe 3 documentos de corrido. Toca cada uno para ver que contiene:</p>
           <div class="spec-flow">
             <div class="spec-stages" role="tablist" aria-label="Documentos del spec">
               <button class="spec-stage active" role="tab" id="spec-tab-req" aria-selected="true" aria-controls="spec-doc-req" data-doc="req">
@@ -242,7 +204,7 @@
                   <li><span class="ears">WHEN</span> las vidas llegan a 0 <span class="ears">THE SYSTEM SHALL</span> mostrar game over</li>
                 </ol>
               </div>
-              <p class="spec-doc-caption"><strong>Que debe hacer el juego.</strong> Cada criterio usa notacion EARS: <span class="ears">WHEN</span> [evento] <span class="ears">THE SYSTEM SHALL</span> [comportamiento]. Sin ambiguedad y facil de testear.</p>
+              <p class="spec-doc-caption">Que debe hacer el juego, en criterios EARS que se pueden testear.</p>
             </div>
 
             <div class="spec-doc" role="tabpanel" id="spec-doc-design" aria-labelledby="spec-tab-design" hidden>
@@ -265,7 +227,7 @@
                 <p class="md-h2">## Manejo de errores &middot; Testing</p>
                 <p class="md-muted">Si localStorage no esta disponible, el juego sigue sin guardar el record.</p>
               </div>
-              <p class="spec-doc-caption"><strong>Como se va a construir.</strong> Arquitectura, modelo de datos, manejo de errores y estrategia de testing, validados contra los requirements. Todavia cero lineas de codigo.</p>
+              <p class="spec-doc-caption">Como se construye. Todavia cero lineas de codigo.</p>
             </div>
 
             <div class="spec-doc" role="tabpanel" id="spec-doc-tasks" aria-labelledby="spec-tab-tasks" hidden>
@@ -286,16 +248,60 @@
                 </ul>
                 <span class="md-run"><i class="fa-solid fa-play" aria-hidden="true"></i> Run all Tasks</span>
               </div>
-              <p class="spec-doc-caption"><strong>Pasos concretos con checkbox.</strong> "Run all Tasks" ejecuta las tareas requeridas pendientes, o puedes ejecutarlas de a una. Recien aqui Kiro escribe codigo.</p>
+              <p class="spec-doc-caption">Pasos con checkbox. <strong>Run all Tasks</strong> los ejecuta en orden.</p>
             </div>
           </div>
-          <p class="mission-tip">Quick Spec no se detiene entre documentos. Revisalos al final: si cambias algo en requirements, abre tasks.md y usa "Sync Files" para actualizar las tareas. Con el agente Spec, en cambio, Kiro espera tu aprobacion antes de cada fase.</p>
-          <label class="mission-check">
-            <input type="checkbox" class="mission-check-input">
-            <span class="mission-check-box" aria-hidden="true"></span>
-            <span class="mission-check-text"><strong>Verifica:</strong> Ves <code>.kiro/specs/</code> con requirements, design y tasks, y el juego tiene vidas, high score y game over.</span>
-          </label>
-          <p class="mission-tip"><span>Tambien puedes crear specs desde el panel lateral (Specs &rarr; "+"). Documentacion: <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></span></p>
+
+          <ol class="m-steps">
+            <li class="m-step">
+              <p class="m-do">Abajo en el chat, cambia el agente a <strong>Quick Spec</strong>.</p>
+              <div class="sd-chips" aria-label="Que agente usar">
+                <span class="sd-chip"><em>¿Bug?</em> Bug Fix</span>
+                <span class="sd-chip sd-chip-pick"><em>¿Feature clara?</em> Quick Spec <i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                <span class="sd-chip"><em>¿Ambigua o critica?</em> Spec</span>
+                <span class="sd-chip"><em>¿Sin documentos?</em> Plan</span>
+              </div>
+              <p class="m-see">El selector dice <strong>Quick Spec</strong>.</p>
+            </li>
+            <li class="m-step">
+              <p class="m-do">Pega el prompt y responde sus preguntas.</p>
+              <div class="kiro-chat">
+                <div class="kiro-bar">Quick Spec</div>
+                <pre><code>Agrega un sistema de vidas y dificultad progresiva al juego. El jugador empieza con 3 vidas, pierde una al chocar, y la velocidad aumenta cada 100 puntos. Guardar el high score en localStorage. Mostrar pantalla de game over con opcion de reiniciar.</code></pre>
+                <button class="ask-btn">Ask Kiro</button>
+              </div>
+              <p class="m-see">Aparecen <code>requirements.md</code>, <code>design.md</code> y <code>tasks.md</code> en <code>.kiro/specs/</code>.</p>
+            </li>
+            <li class="m-step">
+              <p class="m-do">En <code>tasks.md</code>, haz clic en <strong>Run all Tasks</strong>.</p>
+              <p class="m-see">Las tareas se marcan y el juego tiene vidas, high score y game over.</p>
+            </li>
+          </ol>
+
+          <div class="m-quiz" data-answer="quick">
+            <p class="m-quiz-q">Tu feature es clara y la quieres rapido. ¿Que agente usas?</p>
+            <div class="m-quiz-opts">
+              <button class="m-quiz-opt" data-opt="spec" data-feedback="Funciona, pero se detiene a pedir tu aprobacion en cada fase: es mas lento.">Spec</button>
+              <button class="m-quiz-opt" data-opt="quick" data-feedback="Exacto: genera los 3 documentos de corrido y despues los revisas.">Quick Spec</button>
+              <button class="m-quiz-opt" data-opt="plan" data-feedback="Plan arma un plan en la conversacion, pero no genera los documentos del spec.">Plan</button>
+            </div>
+            <p class="m-quiz-fb" aria-live="polite"></p>
+          </div>
+
+          <details class="m-more">
+            <summary><i class="fa-solid fa-plus" aria-hidden="true"></i> Mas detalles</summary>
+            <ul>
+              <li><strong>Spec</strong> pausa para que apruebes cada documento. Elige <em>Requirements-First</em> si sabes el comportamiento o <em>Design-First</em> si ya tienes la arquitectura.</li>
+              <li><strong>Bug Fix</strong> genera <code>bugfix.md</code> con el analisis de la causa.</li>
+              <li>Tambien puedes crear specs desde el panel Specs &rarr; <strong>+</strong>. <a href="https://kiro.dev/docs/specs/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/specs</a></li>
+            </ul>
+          </details>
+          <details class="m-more m-fix">
+            <summary><i class="fa-solid fa-wrench" aria-hidden="true"></i> Si algo falla</summary>
+            <ul>
+              <li>¿Falto algo? Edita <code>requirements.md</code> y en <code>tasks.md</code> usa <strong>Sync Files</strong>: crea las tareas que faltan.</li>
+            </ul>
+          </details>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"No es un prompt que espero que funcione. Es un plan escrito que puedo revisar antes de que exista una linea de codigo."</p>
@@ -308,29 +314,71 @@
       </article>
 
       <!-- M4 -->
-      <article class="mission" data-mission="4" data-phase="2">
+      <article class="mission m-v2" data-mission="4" data-phase="2">
         <div class="mission-inner">
-          <span class="mission-tag">Fase 2 &middot; Hooks</span>
+          <span class="mission-tag">Mision 4 &middot; Hooks</span>
           <h2>El IDE que vigila por ti</h2>
-          <p>Guardas un archivo con error y te enteras en produccion. Los hooks son acciones automaticas que se disparan ante eventos: al guardar o crear un archivo, al enviar un prompt, cuando el agente termina o antes de que use una herramienta.</p>
-          <div class="mission-action"><span class="action-lbl">En Kiro</span> Panel Agent Hooks &rarr; <strong>+</strong> &rarr; "Ask Kiro to create a hook". Tambien puedes pedirlo directo en el chat.</div>
-          <div class="kiro-chat">
-            <div class="kiro-bar">Kiro Chat</div>
-            <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones sin documentacion JSDoc y avisame en el chat.</code>
-            <button class="ask-btn">Ask Kiro</button>
+          <p class="m-hook">Un hook es una regla automatica: cuando pasa algo, Kiro actua sin que se lo pidas.</p>
+
+          <div class="hook-demo" aria-label="Ejemplo: guardas ejemplo.js, se dispara el hook File Save y Kiro avisa en el chat">
+            <div class="hd-stage">
+              <div class="hd-node hd-1"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i><span>Guardas <code>ejemplo.js</code></span><kbd>Cmd S</kbd></div>
+              <span class="hd-edge hd-e1" aria-hidden="true"></span>
+              <div class="hd-node hd-2"><i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Hook</span><small>File Save &middot; *.js</small></div>
+              <span class="hd-edge hd-e2" aria-hidden="true"></span>
+              <div class="hd-node hd-3"><i class="fa-solid fa-message" aria-hidden="true"></i><span>Kiro avisa</span><small>"sumar() no tiene JSDoc"</small></div>
+            </div>
+            <div class="hd-foot">
+              <span class="hd-events"><span>Otros eventos:</span> File Create &middot; Prompt Submit &middot; Agent Stop &middot; Pre Tool Use &middot; Manual</span>
+              <button class="hd-replay" type="button"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Repetir</button>
+            </div>
           </div>
-          <p class="mission-then">Pruebalo:</p>
-          <div class="kiro-chat">
-            <div class="kiro-bar">Kiro Chat</div>
-            <code>Crea un archivo ejemplo.js con una funcion simple sin JSDoc y guardalo.</code>
-            <button class="ask-btn">Ask Kiro</button>
+
+          <ol class="m-steps">
+            <li class="m-step">
+              <p class="m-do">Panel <strong>Agent Hooks</strong> &rarr; <strong>+</strong> &rarr; "Ask Kiro to create a hook", y pega:</p>
+              <div class="kiro-chat">
+                <div class="kiro-bar">Crear hook</div>
+                <code>Cuando guarde un archivo JavaScript, revisa si hay errores o funciones sin documentacion JSDoc y avisame en el chat.</code>
+                <button class="ask-btn">Ask Kiro</button>
+              </div>
+              <p class="m-see">Un hook nuevo en el panel, con evento <strong>File Save</strong>.</p>
+            </li>
+            <li class="m-step">
+              <p class="m-do">Pruebalo con un archivo nuevo:</p>
+              <div class="kiro-chat">
+                <div class="kiro-bar">Default</div>
+                <code>Crea un archivo ejemplo.js con una funcion simple sin JSDoc y guardalo.</code>
+                <button class="ask-btn">Ask Kiro</button>
+              </div>
+              <p class="m-see">Al guardarse, Kiro avisa en el chat que falta JSDoc.</p>
+            </li>
+          </ol>
+
+          <div class="m-quiz" data-answer="stop">
+            <p class="m-quiz-q">Quieres buscar secretos cada vez que el agente termina. ¿Que evento usas?</p>
+            <div class="m-quiz-opts">
+              <button class="m-quiz-opt" data-opt="save" data-feedback="Se dispararia en cada guardado, no cuando el agente termina.">File Save</button>
+              <button class="m-quiz-opt" data-opt="stop" data-feedback="Exacto: Agent Stop se dispara cuando el agente termina su trabajo.">Agent Stop</button>
+              <button class="m-quiz-opt" data-opt="git" data-feedback="Kiro no tiene un evento de git commit.">Git commit</button>
+            </div>
+            <p class="m-quiz-fb" aria-live="polite"></p>
           </div>
-          <label class="mission-check">
-            <input type="checkbox" class="mission-check-input">
-            <span class="mission-check-box" aria-hidden="true"></span>
-            <span class="mission-check-text"><strong>Verifica:</strong> Al guardar <code>ejemplo.js</code>, Kiro avisa en el chat que falta JSDoc y sugiere correcciones.</span>
-          </label>
-          <p class="mission-tip"><span>Si el hook no se activa, revisa en el panel Agent Hooks que este habilitado (icono del ojo), que el evento sea "File Save" y que el patron de archivos incluya <code>*.js</code>.</span></p>
+
+          <details class="m-more">
+            <summary><i class="fa-solid fa-plus" aria-hidden="true"></i> Mas detalles</summary>
+            <ul>
+              <li>Eventos disponibles: File Save, File Create, File Delete, Prompt Submit, Agent Stop, Pre/Post Tool Use, Pre/Post Task Execution y Manual.</li>
+              <li>Pre Tool Use sirve para frenar una accion antes de que ocurra, por ejemplo un comando peligroso. <a href="https://kiro.dev/docs/hooks/" target="_blank" rel="noopener noreferrer">kiro.dev/docs/hooks</a></li>
+            </ul>
+          </details>
+          <details class="m-more m-fix">
+            <summary><i class="fa-solid fa-wrench" aria-hidden="true"></i> Si algo falla</summary>
+            <ul>
+              <li>En el panel Agent Hooks, revisa que el hook este habilitado (icono del ojo).</li>
+              <li>Confirma que el evento sea File Save y que el patron incluya <code>*.js</code>.</li>
+            </ul>
+          </details>
           <div class="pnote">
             <span class="pnote-lbl">Guia del presentador</span>
             <p>"No corri ningun comando. El IDE reacciono solo."</p>

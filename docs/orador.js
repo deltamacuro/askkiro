@@ -61,7 +61,7 @@
         const note = m.querySelector('.pnote');
         const plain = note ? Array.from(note.querySelectorAll('p:not(.pnote-ask):not(.pnote-time)')) : [];
         const time = note ? note.querySelector('.pnote-time') : null;
-        const check = m.querySelector('.mission-check-text');
+        const check = m.querySelector('.mission-check-text') || m.querySelector('.m-quiz-q');
         let checkHtml = '';
         if (check) {
           const clone = check.cloneNode(true);
