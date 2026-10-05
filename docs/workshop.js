@@ -17,6 +17,11 @@
   /** Primera mision de cada fase */
   const PHASE_START = { 1: 1, 2: 4, 3: 7 };
 
+  /** @type {Object<string, string>} Clave de localStorage que marca cada overlay como visto al cerrarlo */
+  const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard', 'presenter-onboard-overlay': 'kiroPresenterOnboard' };
+  /** @type {Element|null} Elemento con foco antes de abrir un overlay */
+  let lastFocus = null;
+
   /**
    * Titulos de cada mision para aria-labels.
    * @type {string[]}
@@ -35,9 +40,49 @@
   }
 
   /**
+   * Devuelve la fase (1-3) a la que pertenece una mision.
+   * @param {number} n - Numero de mision (1-based)
+   * @returns {number}
+   */
+  function phaseOf(n) {
+    return n >= PHASE_START[3] ? 3 : n >= PHASE_START[2] ? 2 : 1;
+  }
+
+  /**
+   * Abre un overlay y mueve el foco a un elemento dentro de el.
+   * @param {HTMLElement} overlay - Overlay a abrir
+   * @param {HTMLElement|null} [focusEl] - Elemento que recibe el foco
+   */
+  function openOverlay(overlay, focusEl) {
+    lastFocus = document.activeElement;
+    overlay.classList.add('open');
+    if (focusEl) focusEl.focus();
+  }
+
+  /**
+   * Cierra un overlay, lo marca como visto si corresponde y devuelve el foco.
+   * @param {HTMLElement} overlay - Overlay a cerrar
+   */
+  function closeOverlay(overlay) {
+    overlay.classList.remove('open');
+    const key = OVERLAY_SEEN_KEYS[overlay.id];
+    if (key) { try { localStorage.setItem(key, '1'); } catch (e) {} }
+    if (lastFocus && document.contains(lastFocus) && typeof lastFocus.focus === 'function') lastFocus.focus();
+    lastFocus = null;
+  }
+
+  /**
+   * Devuelve el overlay abierto, si hay alguno.
+   * @returns {HTMLElement|null}
+   */
+  function getOpenOverlay() {
+    return document.querySelector('.help-overlay.open, .onboard-overlay.open');
+  }
+
+  /**
    * Actualiza el hash de la URL segun el modo activo.
-   * Permite trackear en analytics si el usuario juega, ensena o hace remix.
-   * @param {string} mode - 'play', 'presenter' o 'remix'
+   * Permite trackear en analytics si el usuario juega o ensena.
+   * @param {string} mode - 'play' o 'presenter'
    */
   function setModeHash(mode) {
     try { history.replaceState(null, '', '#' + mode); } catch (e) {}
@@ -47,12 +92,7 @@
    * Lee el hash de la URL y activa el modo correspondiente al cargar.
    */
   function restoreMode() {
-    const hash = location.hash.replace('#', '');
-    if (hash === 'presenter') {
-      document.body.classList.add('mode-presenter');
-    } else if (hash === 'remix') {
-      document.body.classList.add('mode-remix');
-    }
+    if (location.hash === '#presenter') document.body.classList.add('mode-presenter');
   }
 
   /**
@@ -93,7 +133,7 @@
     const c = document.getElementById('nav-dots');
     if (!c) return;
     for (let i = 1; i <= total; i++) {
-      if (i === 4 || i === 7) {
+      if (i === PHASE_START[2] || i === PHASE_START[3]) {
         const sep = document.createElement('span');
         sep.className = 'nav-sep';
         sep.setAttribute('aria-hidden', 'true');
@@ -104,8 +144,7 @@
       d.setAttribute('data-m', i);
       d.setAttribute('aria-label', 'Mision ' + i + ': ' + (missionTitles[i] || ''));
       d.addEventListener('click', function () {
-        const phase = i <= 3 ? 1 : i <= 6 ? 2 : 3;
-        if (!isPhaseUnlocked(phase)) return;
+        if (!isPhaseUnlocked(phaseOf(i))) return;
         goTo(i);
       });
       c.appendChild(d);
@@ -120,8 +159,7 @@
     if (n < 1 || n > total) return;
     visited[current] = true;
     current = n;
-    const phase = n <= 3 ? 1 : n <= 6 ? 2 : 3;
-    trackEvent('mission_view', { mission: n, phase: phase, title: missionTitles[n] || '' });
+    trackEvent('mission_view', { mission: n, phase: phaseOf(n), title: missionTitles[n] || '' });
     updateUI();
     saveState();
   }
@@ -158,8 +196,7 @@
 
     document.querySelectorAll('.nav-dot').forEach(function (d) {
       const n = parseInt(d.getAttribute('data-m'));
-      const dotPhase = n <= 3 ? 1 : n <= 6 ? 2 : 3;
-      const locked = !isPhaseUnlocked(dotPhase);
+      const locked = !isPhaseUnlocked(phaseOf(n));
       d.classList.remove('active', 'visited', 'dot-locked');
       if (locked) {
         d.classList.add('dot-locked');
@@ -233,18 +270,11 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      /* Cerrar onboarding con Escape */
-      const onboard = document.getElementById('onboard-overlay');
-      if (e.key === 'Escape' && onboard && onboard.classList.contains('open')) {
-        onboard.classList.remove('open');
-        try { localStorage.setItem('kiroOnboard', '1'); } catch (err) {}
-        return;
-      }
-
-      /* Cerrar help con Escape */
-      const overlay = document.getElementById('help-overlay');
-      if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
-        overlay.classList.remove('open');
+      /* Con un overlay abierto: Escape lo cierra, Tab queda atrapado y no se navega por detras */
+      const overlay = getOpenOverlay();
+      if (overlay) {
+        if (e.key === 'Escape') { closeOverlay(overlay); return; }
+        if (e.key === 'Tab') trapFocus(overlay, e);
         return;
       }
 
@@ -267,6 +297,21 @@
         goTo(PHASE_START[p] || 1);
       });
     });
+  }
+
+  /**
+   * Mantiene el foco de Tab/Shift+Tab dentro de un overlay.
+   * @param {HTMLElement} overlay - Overlay abierto
+   * @param {KeyboardEvent} e - Evento de teclado
+   */
+  function trapFocus(overlay, e) {
+    const focusable = overlay.querySelectorAll('button, a, summary, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!overlay.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
   /**
@@ -353,9 +398,7 @@
     const overlay = document.getElementById('presenter-onboard-overlay');
     if (!overlay) return;
     setTimeout(function () {
-      overlay.classList.add('open');
-      const goBtn = document.getElementById('btn-presenter-go');
-      if (goBtn) goBtn.focus();
+      openOverlay(overlay, document.getElementById('btn-presenter-go'));
     }, FADE_MS + 50);
   }
 
@@ -365,25 +408,10 @@
   function setupPresenterOnboard() {
     const goBtn = document.getElementById('btn-presenter-go');
     const overlay = document.getElementById('presenter-onboard-overlay');
-    if (goBtn && overlay) {
-      goBtn.addEventListener('click', function () {
-        overlay.classList.remove('open');
-        try { localStorage.setItem('kiroPresenterOnboard', '1'); } catch (e) {}
-      });
-    }
-    if (overlay) {
-      overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) {
-          overlay.classList.remove('open');
-          try { localStorage.setItem('kiroPresenterOnboard', '1'); } catch (e) {}
-        }
-      });
-    }
+    if (goBtn && overlay) goBtn.addEventListener('click', function () { closeOverlay(overlay); });
+    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(overlay); });
   }
 
-  /**
-   * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
-   */
   /**
    * Actualiza visibilidad de botones en screen-start segun progreso.
    * Sin progreso: solo "Empezar". Con progreso: "Continuar" (primario) + "Reiniciar" (destructivo).
@@ -418,6 +446,9 @@
     }
   }
 
+  /**
+   * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
+   */
   function setupScreens() {
     const play = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
@@ -436,7 +467,7 @@
       if (!seen) {
         setTimeout(function () {
           const overlay = document.getElementById('onboard-overlay');
-          if (overlay) { overlay.classList.add('open'); const goBtn = document.getElementById('btn-onboard-go'); if (goBtn) goBtn.focus(); }
+          if (overlay) openOverlay(overlay, document.getElementById('btn-onboard-go'));
         }, FADE_MS + 50);
       }
     });
@@ -449,23 +480,17 @@
 
     if (btnReset) btnReset.addEventListener('click', function () {
       const overlay = document.getElementById('reset-overlay');
-      if (overlay) {
-        overlay.classList.add('open');
-        const cancelBtn = document.getElementById('btn-reset-cancel');
-        if (cancelBtn) cancelBtn.focus();
-      }
+      if (overlay) openOverlay(overlay, document.getElementById('btn-reset-cancel'));
     });
 
     const resetCancel = document.getElementById('btn-reset-cancel');
     const resetConfirm = document.getElementById('btn-reset-confirm');
     const resetOverlay = document.getElementById('reset-overlay');
 
-    if (resetCancel && resetOverlay) resetCancel.addEventListener('click', function () {
-      resetOverlay.classList.remove('open');
-    });
+    if (resetCancel && resetOverlay) resetCancel.addEventListener('click', function () { closeOverlay(resetOverlay); });
 
     if (resetConfirm && resetOverlay) resetConfirm.addEventListener('click', function () {
-      resetOverlay.classList.remove('open');
+      closeOverlay(resetOverlay);
       current = 1;
       visited = {};
       savedScreen = null;
@@ -474,20 +499,12 @@
       updateStartButtons();
     });
 
-    if (resetOverlay) {
-      resetOverlay.addEventListener('click', function (e) {
-        if (e.target === resetOverlay) resetOverlay.classList.remove('open');
-      });
-      resetOverlay.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') resetOverlay.classList.remove('open');
-      });
-    }
+    if (resetOverlay) resetOverlay.addEventListener('click', function (e) { if (e.target === resetOverlay) closeOverlay(resetOverlay); });
 
     const onboardGo = document.getElementById('btn-onboard-go');
     if (onboardGo) onboardGo.addEventListener('click', function () {
       const overlay = document.getElementById('onboard-overlay');
-      if (overlay) overlay.classList.remove('open');
-      try { localStorage.setItem('kiroOnboard', '1'); } catch (e) {}
+      if (overlay) closeOverlay(overlay);
     });
 
     const home = document.getElementById('btn-home');
@@ -498,7 +515,6 @@
 
     const btnTeach = document.getElementById('btn-teach');
     if (btnTeach) btnTeach.addEventListener('click', function () {
-      document.body.classList.remove('mode-presenter', 'mode-remix');
       document.body.classList.add('mode-presenter');
       setModeHash('presenter');
       trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
@@ -507,17 +523,10 @@
       showPresenterOnboard();
     });
 
-    document.querySelectorAll('.start-mode').forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (link.getAttribute('aria-disabled') === 'true') return;
-      });
-    });
-
     const togglePresenter = document.getElementById('toggle-presenter');
     if (togglePresenter) togglePresenter.addEventListener('click', function () {
       const isActive = document.body.classList.contains('mode-presenter');
-      document.body.classList.remove('mode-presenter', 'mode-remix');
+      document.body.classList.remove('mode-presenter');
       if (isActive) {
         setModeHash('play');
         trackEvent('mode_select', { mode: 'play', source: 'toggle_off' });
@@ -534,33 +543,18 @@
   }
 
   /**
-   * Configura el overlay de ayuda: abrir, cerrar, clic fuera, focus trap.
+   * Configura el overlay de ayuda: abrir desde inicio o topbar, cerrar, clic fuera.
    */
   function setupHelp() {
     const overlay = document.getElementById('help-overlay');
     const btnHelp = document.getElementById('btn-help');
     const btnClose = document.getElementById('help-close');
-    if (btnHelp && overlay) btnHelp.addEventListener('click', function (e) { e.preventDefault(); overlay.classList.add('open'); if (btnClose) btnClose.focus(); });
-    if (btnClose && overlay) btnClose.addEventListener('click', function () { overlay.classList.remove('open'); if (btnHelp) btnHelp.focus(); });
-    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) { overlay.classList.remove('open'); if (btnHelp) btnHelp.focus(); } });
-
-    /* Focus trap dentro del help panel */
-    if (overlay) overlay.addEventListener('keydown', function (e) {
-      if (e.key !== 'Tab') return;
-      const focusable = overlay.querySelectorAll('button, a, summary, [tabindex]:not([tabindex="-1"])');
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    });
-
-    /* Boton "?" en topbar abre el panel de ayuda */
     const btnTopbarHelp = document.getElementById('btn-topbar-help');
-    if (btnTopbarHelp && overlay) btnTopbarHelp.addEventListener('click', function () {
-      overlay.classList.add('open');
-      if (btnClose) btnClose.focus();
-    });
+    if (!overlay) return;
+    if (btnHelp) btnHelp.addEventListener('click', function (e) { e.preventDefault(); openOverlay(overlay, btnClose); });
+    if (btnTopbarHelp) btnTopbarHelp.addEventListener('click', function () { openOverlay(overlay, btnClose); });
+    if (btnClose) btnClose.addEventListener('click', function () { closeOverlay(overlay); });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(overlay); });
   }
 
   /**
@@ -580,9 +574,9 @@
       const data = localStorage.getItem('kiroWS');
       if (!data) return;
       const s = JSON.parse(data);
-      if (s.current) current = s.current;
-      if (s.visited) visited = s.visited;
-      if (s.screen) savedScreen = s.screen;
+      if (Number.isInteger(s.current) && s.current >= 1 && s.current <= total) current = s.current;
+      if (s.visited && typeof s.visited === 'object') visited = s.visited;
+      if (typeof s.screen === 'string') savedScreen = s.screen;
     } catch (e) {}
   }
 

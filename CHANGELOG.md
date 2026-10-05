@@ -1,4 +1,18 @@
-# Changelog — Kiro Paso a Paso
+# Changelog — Ask Kiro
+
+## v1.4.0 — 2026-10-05 — Auditoria
+
+| ID | Descripcion |
+|----|-------------|
+| BUG-019 | Con un overlay abierto, flechas/Enter navegaban misiones por detras — ahora se bloquean |
+| BUG-020 | Escape no cerraba el onboarding de presentador — manejo unificado de Escape para todos los overlays |
+| BUG-021 | El foco no volvia al boton de origen al cerrar overlays — `openOverlay`/`closeOverlay` lo restauran |
+| BUG-022 | `loadState` no validaba datos de localStorage — `current` fuera de rango dejaba la pantalla vacia |
+| A11Y-001 | Focus trap en todos los overlays (antes solo ayuda) + `role="dialog"` y `aria-modal` |
+| SEO-001 | og:image/twitter:image en PNG 1200x630 (`og-image.png`); SVG no es soportado por LinkedIn/X |
+| CONT-001 | Duracion unificada a 50 minutos; "Podes" → "Puedes"; M5 ya no asume que existe `game.js` |
+| CODE-001 | Eliminados restos del modo remix, listener muerto de `.start-mode` y logica de fase duplicada (`phaseOf`) |
+| DOC-001 | README: se trabaja en una carpeta vacia, no clonando este repo |
 
 ## v1.3.0 — 2026-03-18 — Onboarding + Recap
 
