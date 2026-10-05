@@ -51,15 +51,11 @@
           <button class="start-btn start-btn-secondary" id="btn-continue" hidden>Continuar</button>
           <button class="start-btn-reset" id="btn-reset" hidden>Reiniciar progreso</button>
         </div>
-        <div class="start-modes">
-          <button class="mode-toggle" id="toggle-presenter" role="switch" aria-checked="false" aria-label="Modo presentador">
-            <span class="mode-toggle-track">
-              <span class="mode-toggle-knob"></span>
-            </span>
-            <span class="mode-toggle-label">Presentador</span>
-          </button>
-        </div>
         <a href="#help" class="start-help" id="btn-help">¿Necesitas ayuda?</a>
+        <a href="orador.html" class="start-speaker" id="btn-speaker">
+          <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
+          <span><strong>¿Vas a dar este taller?</strong> Abre la vista de orador en otra ventana. Las notas quedan contigo, no en la pantalla proyectada.</span>
+        </a>
       </div>
     </div>
   </div>
@@ -542,7 +538,7 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
         </button>
         <button class="end-btn end-btn-secondary" id="btn-teach">
           <i class="fa-solid fa-chalkboard-user"></i>
-          <span>Enseña Kiro</span>
+          <span>Dar este taller</span>
         </button>
       </div>
       <div class="end-share">
@@ -643,41 +639,6 @@ Luego busca en la documentacion oficial cual es la mejor forma de hacer deploy d
       </div>
       <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Necesitas <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a> abierto con un proyecto vacio. Busca "Live Server" en extensiones (Cmd+Shift+X) para ver la app en el browser.</span></p>
       <button class="onboard-go" id="btn-onboard-go">Entendido, vamos</button>
-    </div>
-  </div>
-
-  <!-- PRESENTER ONBOARDING MODAL -->
-  <div class="onboard-overlay" id="presenter-onboard-overlay" role="dialog" aria-modal="true" aria-label="Modo presentador">
-    <div class="onboard-panel">
-      <div class="onboard-header">
-        <img src="kiro.svg" alt="" class="onboard-ghost">
-        <h3>Modo presentador</h3>
-      </div>
-      <div class="onboard-steps">
-        <div class="onboard-step">
-          <span class="onboard-icon"><i class="fa-solid fa-note-sticky"></i></span>
-          <div>
-            <p class="onboard-step-title">Notas del presentador</p>
-            <p class="onboard-step-desc">Cada mision tiene una guia con que decir, preguntas para la audiencia y tiempo estimado.</p>
-          </div>
-        </div>
-        <div class="onboard-step">
-          <span class="onboard-icon"><i class="fa-solid fa-clock"></i></span>
-          <div>
-            <p class="onboard-step-title">~50 minutos en total</p>
-            <p class="onboard-step-desc">La mision 3 (Specs) es la mas larga (~15-20 min). Las demas van de 2 a 5 minutos. Con preguntas, calcula 1 hora.</p>
-          </div>
-        </div>
-        <div class="onboard-step">
-          <span class="onboard-icon"><i class="fa-solid fa-people-group"></i></span>
-          <div>
-            <p class="onboard-step-title">Preguntas a la audiencia</p>
-            <p class="onboard-step-desc">Las notas incluyen preguntas sugeridas en lila. Usalas para generar conversacion.</p>
-          </div>
-        </div>
-      </div>
-      <p class="onboard-note"><i class="fa-solid fa-circle-info"></i> <span>Prepara un proyecto vacio en Kiro con Autopilot activado antes de empezar. Haz las misiones en vivo.</span></p>
-      <button class="onboard-go" id="btn-presenter-go">Listo, a presentar</button>
     </div>
   </div>
 

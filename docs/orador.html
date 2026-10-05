@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090a">
+  <meta name="robots" content="noindex">
+  <title>Vista de orador — Ask Kiro</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="workshop.css">
+  <script src="https://kit.fontawesome.com/c4d3502012.js" crossorigin="anonymous"></script>
+</head>
+<body class="speaker">
+
+  <header class="sp-top">
+    <img src="kiro.svg" alt="" class="sp-ghost">
+    <div class="sp-brand">
+      <span class="sp-brand-title">Vista de orador</span>
+      <span class="sp-link" id="sp-link" data-state="waiting"><span class="sp-link-dot"></span><span id="sp-link-text">Esperando el tutorial</span></span>
+    </div>
+    <div class="sp-clock" aria-label="Tiempo total de la sesion">
+      <span class="sp-clock-time" id="sp-total">00:00</span>
+      <button class="sp-icon-btn" id="sp-pause" aria-label="Pausar cronometro" title="Pausar / reanudar"><i class="fa-solid fa-pause"></i></button>
+      <button class="sp-icon-btn" id="sp-reset" aria-label="Reiniciar cronometro" title="Reiniciar cronometro"><i class="fa-solid fa-rotate-left"></i></button>
+    </div>
+  </header>
+
+  <main class="sp-main" id="sp-main">
+
+    <!-- Sin conexion: instrucciones para preparar la sesion -->
+    <section class="sp-waiting" id="sp-waiting">
+      <h1>Prepara la sesion</h1>
+      <ol class="sp-setup">
+        <li>
+          <span class="sp-setup-n">1</span>
+          <div>
+            <strong>Abre el tutorial en la pantalla que vas a proyectar</strong>
+            <p>Esta ventana queda en tu laptop. La audiencia ve el tutorial normal; las notas son solo para ti.</p>
+            <button class="sp-btn" id="sp-open-tutorial"><i class="fa-solid fa-up-right-from-square"></i> Abrir tutorial</button>
+          </div>
+        </li>
+        <li>
+          <span class="sp-setup-n">2</span>
+          <div>
+            <strong>Ten Kiro listo con una carpeta vacia</strong>
+            <p>Autopilot activado. Haz las misiones en vivo mientras explicas.</p>
+          </div>
+        </li>
+        <li>
+          <span class="sp-setup-n">3</span>
+          <div>
+            <strong>Avanza desde aqui</strong>
+            <p>Con <kbd>&larr;</kbd> <kbd>&rarr;</kbd> o un clicker de presentacion. Ambas ventanas se mueven juntas.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="sp-budget-note"><i class="fa-solid fa-clock"></i> ~50 min en total. La mision 3 (Specs) es la mas larga (~15-20 min). Con preguntas, calcula 1 hora.</p>
+    </section>
+
+    <!-- Portada o final del tutorial -->
+    <section class="sp-cover" id="sp-cover" hidden>
+      <p class="sp-tag" id="sp-cover-tag">Portada</p>
+      <h1 id="sp-cover-title">El tutorial esta en la portada</h1>
+      <p class="sp-cover-text" id="sp-cover-text">Presenta el objetivo: en 50 minutos pasamos de vibe coding a software real. Presiona Siguiente para empezar la mision 1.</p>
+    </section>
+
+    <!-- Mision actual -->
+    <section class="sp-mission" id="sp-mission" hidden>
+      <div class="sp-mission-head">
+        <p class="sp-tag" id="sp-tag"></p>
+        <h1 id="sp-title"></h1>
+      </div>
+
+      <div class="sp-timer" id="sp-timer">
+        <div class="sp-timer-row">
+          <span class="sp-timer-label">En esta mision</span>
+          <span class="sp-timer-value"><strong id="sp-elapsed">00:00</strong> <span class="sp-timer-budget" id="sp-budget"></span></span>
+        </div>
+        <div class="sp-bar"><span class="sp-bar-fill" id="sp-bar-fill"></span></div>
+      </div>
+
+      <div class="sp-block sp-say" id="sp-say-block">
+        <h2><i class="fa-solid fa-quote-left"></i> Decir</h2>
+        <div id="sp-say"></div>
+      </div>
+      <div class="sp-block" id="sp-do-block">
+        <h2><i class="fa-solid fa-display"></i> Mostrar</h2>
+        <div id="sp-do"></div>
+      </div>
+      <div class="sp-block sp-ask" id="sp-ask-block">
+        <h2><i class="fa-solid fa-people-group"></i> Preguntar a la audiencia</h2>
+        <div id="sp-ask"></div>
+      </div>
+      <div class="sp-block sp-check" id="sp-check-block">
+        <h2><i class="fa-solid fa-circle-check"></i> Confirma con la sala</h2>
+        <p id="sp-check"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sp-nav">
+    <div class="sp-jump" id="sp-jump" role="group" aria-label="Saltar a mision"></div>
+    <div class="sp-nav-row">
+      <button class="sp-btn sp-btn-ghost" id="sp-prev"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+      <span class="sp-next-label" id="sp-next-label"></span>
+      <button class="sp-btn sp-btn-primary" id="sp-next">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </footer>
+
+  <script src="orador.js"></script>
+</body>
+</html>

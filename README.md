@@ -29,7 +29,12 @@ No necesitas clonar este repo: solo contiene la guia web.
 
 ### Presentador
 
-Usa la [guia web](https://askkiro.info/) con modo Presentador activado. Cada mision tiene notas con que decir, preguntas para la audiencia y tiempo estimado (~50 min total).
+En la portada de [askkiro.info](https://askkiro.info/), haz clic en "¿Vas a dar este taller?" para abrir la **vista de orador** en otra ventana (o ve directo a [askkiro.info/orador.html](https://askkiro.info/orador.html)).
+
+- Proyecta el tutorial; la vista de orador queda en tu laptop. La audiencia nunca ve las notas.
+- Cada mision muestra que decir, que mostrar, preguntas para la audiencia y que confirmar con la sala.
+- Cronometro de sesion y por mision con el tiempo sugerido (~50 min total).
+- Avanza con flechas o un clicker de presentacion: ambas ventanas se mueven juntas.
 
 ## Guia web interactiva
 

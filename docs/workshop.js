@@ -22,7 +22,9 @@
   const PHASE_START = { 1: 1, 2: 4, 3: 7 };
 
   /** @type {Object<string, string>} Clave de localStorage que marca cada overlay como visto al cerrarlo */
-  const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard', 'presenter-onboard-overlay': 'kiroPresenterOnboard' };
+  const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard' };
+  /** @type {BroadcastChannel|null} Canal de sincronizacion con la vista de orador (orador.html) */
+  const speakerChannel = typeof BroadcastChannel === 'function' ? new BroadcastChannel('askkiro') : null;
   /** @type {Element|null} Elemento con foco antes de abrir un overlay */
   let lastFocus = null;
 
@@ -84,19 +86,73 @@
   }
 
   /**
-   * Actualiza el hash de la URL segun el modo activo.
-   * Permite trackear en analytics si el usuario juega o ensena.
-   * @param {string} mode - 'play' o 'presenter'
+   * Marca la URL con #play para distinguir en analytics a quien hace el tutorial.
    */
-  function setModeHash(mode) {
-    try { history.replaceState(null, '', '#' + mode); } catch (e) {}
+  function setPlayHash() {
+    if (location.hash && location.hash !== '#') return;
+    try { history.replaceState(null, '', '#play'); } catch (e) {}
   }
 
   /**
-   * Lee el hash de la URL y activa el modo correspondiente al cargar.
+   * Abre la vista de orador en una ventana aparte.
+   * @param {string} source - Desde donde se abrio (para analytics)
    */
-  function restoreMode() {
-    if (location.hash === '#presenter') document.body.classList.add('mode-presenter');
+  function openSpeakerView(source) {
+    trackEvent('mode_select', { mode: 'presenter', source: source });
+    const win = window.open('orador.html', 'askkiro-orador', 'popup,width=600,height=860');
+    if (win) win.focus();
+    else location.href = 'orador.html';
+  }
+
+  /**
+   * Envia el estado actual (mision y pantalla) a la vista de orador.
+   * @param {string} [screenId] - Pantalla destino si hay una transicion en curso
+   */
+  function broadcastState(screenId) {
+    if (!speakerChannel) return;
+    const active = document.querySelector('.screen.active');
+    speakerChannel.postMessage({ type: 'state', current: current, screen: screenId || (active ? active.id : 'screen-start') });
+  }
+
+  /**
+   * Avanza o retrocede una mision, saliendo de la portada o del final si hace falta.
+   * Lo usan las flechas, los clickers de presentacion y la vista de orador.
+   * @param {number} dir - 1 para avanzar, -1 para retroceder
+   */
+  function step(dir) {
+    const active = document.querySelector('.screen.active');
+    const screen = active ? active.id : 'screen-start';
+    if (screen === 'screen-start') { if (dir > 0) { setPlayHash(); switchScreen('screen-play'); } return; }
+    if (screen === 'screen-end') { if (dir < 0) switchScreen('screen-play'); return; }
+    if (dir > 0) { if (current < total) goTo(current + 1); else finishTutorial(); }
+    else if (current > 1) goTo(current - 1);
+  }
+
+  /**
+   * Escucha los comandos de la vista de orador: pedir estado, navegar o saltar a una mision.
+   */
+  function setupSpeakerSync() {
+    if (!speakerChannel) return;
+    speakerChannel.onmessage = function (e) {
+      const msg = e.data || {};
+      if (msg.type === 'hello') broadcastState();
+      else if (msg.type === 'step') step(msg.dir);
+      else if (msg.type === 'goto' && msg.n >= 1 && msg.n <= total) {
+        const active = document.querySelector('.screen.active');
+        if (!active || active.id !== 'screen-play') switchScreen('screen-play');
+        goTo(msg.n);
+      }
+    };
+    broadcastState();
+    window.addEventListener('pagehide', function () { speakerChannel.postMessage({ type: 'bye' }); });
+  }
+
+  /**
+   * Vuelve a la portada y actualiza sus botones al terminar la transicion.
+   */
+  function goHome() {
+    switchScreen('screen-start');
+    setTimeout(updateStartButtons, FADE_MS + 50);
   }
 
   /**
@@ -104,7 +160,7 @@
    */
   function init() {
     try {
-      restoreMode();
+      if (location.hash === '#presenter') { try { history.replaceState(null, '', '#play'); } catch (e) {} }
       cacheMissionTitles();
       buildDots();
       setupNav();
@@ -113,11 +169,10 @@
       setupTree();
       setupScreens();
       setupHelp();
-      setupPresenterOnboard();
       loadState();
       updateUI();
-      updateModeLinks();
       restoreScreen();
+      setupSpeakerSync();
     } catch (e) { console.error('Error al inicializar:', e); }
   }
 
@@ -213,7 +268,7 @@
    */
   function finishTutorial() {
     visited[current] = true;
-    trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' });
+    trackEvent('tutorial_complete', { mode: 'play' });
     switchScreen('screen-end');
     setTimeout(saveState, FADE_MS + 50);
   }
@@ -304,6 +359,7 @@
     });
     updateTree();
     placeGhost(true);
+    broadcastState();
   }
 
   /**
@@ -367,8 +423,8 @@
     const prev = document.getElementById('btn-prev');
     const next = document.getElementById('btn-next');
     if (prev) prev.addEventListener('click', function () {
-      if (current <= 1) { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); }
-      else { goTo(current - 1); }
+      if (current <= 1) goHome();
+      else goTo(current - 1);
     });
     if (next) next.addEventListener('click', function () {
       if (current >= total) { finishTutorial(); }
@@ -384,15 +440,13 @@
         return;
       }
 
+      if (e.repeat) return;
+      /* PageDown/PageUp: los clickers de presentacion envian estas teclas */
+      if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); step(e.key === 'PageDown' ? 1 : -1); return; }
       const play = document.getElementById('screen-play');
       if (!play || !play.classList.contains('active')) return;
-      if (e.repeat) return;
       if (['BUTTON', 'A', 'SUMMARY'].includes(e.target.tagName)) return;
-      if (e.key === 'ArrowRight' || e.key === 'Enter') {
-        e.preventDefault();
-        if (current < total) goTo(current + 1);
-        else if (current >= total) { finishTutorial(); }
-      }
+      if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); step(1); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
 
@@ -479,6 +533,7 @@
     const nextScreen = document.getElementById(id);
     if (!nextScreen || currentScreen === nextScreen) return;
     trackEvent('screen_view', { screen: id });
+    broadcastState(id);
 
     if (currentScreen) {
       transitioning = true;
@@ -487,35 +542,11 @@
         currentScreen.classList.remove('active', 'fading');
         nextScreen.classList.add('active');
         transitioning = false;
+        broadcastState();
       }, FADE_MS);
     } else {
       nextScreen.classList.add('active');
     }
-  }
-
-  /**
-   * Muestra el modal de onboarding del presentador si no lo ha visto antes.
-   * Guarda en localStorage para no repetir.
-   */
-  function showPresenterOnboard() {
-    let seen = false;
-    try { seen = localStorage.getItem('kiroPresenterOnboard') === '1'; } catch (e) {}
-    if (seen) return;
-    const overlay = document.getElementById('presenter-onboard-overlay');
-    if (!overlay) return;
-    setTimeout(function () {
-      openOverlay(overlay, document.getElementById('btn-presenter-go'));
-    }, FADE_MS + 50);
-  }
-
-  /**
-   * Configura el boton de cerrar del modal de presentador.
-   */
-  function setupPresenterOnboard() {
-    const goBtn = document.getElementById('btn-presenter-go');
-    const overlay = document.getElementById('presenter-onboard-overlay');
-    if (goBtn && overlay) goBtn.addEventListener('click', function () { closeOverlay(overlay); });
-    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(overlay); });
   }
 
   /**
@@ -541,18 +572,6 @@
   }
 
   /**
-   * Actualiza el estado visual del toggle de modo presentador.
-   * Sincroniza aria-checked con el estado real del body.
-   */
-  function updateModeLinks() {
-    const toggle = document.getElementById('toggle-presenter');
-    if (toggle) {
-      const isActive = document.body.classList.contains('mode-presenter');
-      toggle.setAttribute('aria-checked', isActive ? 'true' : 'false');
-    }
-  }
-
-  /**
    * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
    */
   function setupScreens() {
@@ -564,7 +583,7 @@
       current = 1;
       visited = {};
       checked = {};
-      if (!location.hash || location.hash === '#') setModeHash('play');
+      setPlayHash();
       trackEvent('mode_select', { mode: 'play' });
       updateUI();
       saveState();
@@ -580,7 +599,7 @@
     });
 
     if (btnContinue) btnContinue.addEventListener('click', function () {
-      if (!location.hash || location.hash === '#') setModeHash('play');
+      setPlayHash();
       trackEvent('mode_select', { mode: 'continue' });
       switchScreen('screen-play');
     });
@@ -616,38 +635,16 @@
     });
 
     const home = document.getElementById('btn-home');
-    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
+    if (home) home.addEventListener('click', goHome);
 
     const btnBackStart = document.getElementById('btn-back-start');
-    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
+    if (btnBackStart) btnBackStart.addEventListener('click', goHome);
 
     const btnTeach = document.getElementById('btn-teach');
-    if (btnTeach) btnTeach.addEventListener('click', function () {
-      document.body.classList.add('mode-presenter');
-      setModeHash('presenter');
-      trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
-      switchScreen('screen-start');
-      setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50);
-      showPresenterOnboard();
-    });
+    if (btnTeach) btnTeach.addEventListener('click', function () { openSpeakerView('end_screen'); });
 
-    const togglePresenter = document.getElementById('toggle-presenter');
-    if (togglePresenter) togglePresenter.addEventListener('click', function () {
-      const isActive = document.body.classList.contains('mode-presenter');
-      document.body.classList.remove('mode-presenter');
-      if (isActive) {
-        setModeHash('play');
-        trackEvent('mode_select', { mode: 'play', source: 'toggle_off' });
-        updateModeLinks();
-        return;
-      }
-      document.body.classList.add('mode-presenter');
-      setModeHash('presenter');
-      trackEvent('mode_select', { mode: 'presenter' });
-      updateModeLinks();
-      switchScreen('screen-play');
-      showPresenterOnboard();
-    });
+    const btnSpeaker = document.getElementById('btn-speaker');
+    if (btnSpeaker) btnSpeaker.addEventListener('click', function (e) { e.preventDefault(); openSpeakerView('start_screen'); });
   }
 
   /**
