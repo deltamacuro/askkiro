@@ -34,7 +34,7 @@ Que la portada de askkiro.info se sienta como la intro de un juego y no como una
 
 **Indicador.** `— PULSA ENTER —` parpadeando debajo del menú. Con puntero táctil (`@media (hover: none)`), `— TOCA PARA JUGAR —`.
 
-**Pie.** Una sola línea en mono de unos 0.62rem en `--dim`: `© 2026 COMUNIDAD · NO OFICIAL · KIRO ES MARCA DE AWS`. Reemplaza el `.unofficial` actual.
+**Pie.** Una sola línea en mono de unos 0.62rem en `--muted` (`--dim` no llega a 4.5:1 sobre negro): `© 2026 COMUNIDAD · NO OFICIAL · KIRO ES MARCA DE AWS`. Reemplaza el `.unofficial` actual.
 
 **Esquina de fork.** El octocat de github-corners (tholman, MIT) en la esquina superior derecha, solo en la portada:
 - Triángulo en `--accent` y octocat en `--bg`.
