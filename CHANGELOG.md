@@ -1,5 +1,34 @@
 # Changelog — Ask Kiro
 
+## v1.6.0 — 2026-10-06 — Rediseño, Kiro IDE 1.2 y Askiro
+
+| ID | Descripción |
+|----|-------------|
+| BRAND-001 | Tokens alineados a kiro.dev: fondo #000, grises con tinte morado, morado #9147ff / #c59eff, Fragment Mono, cuadrícula de puntos de 18px |
+| BRAND-002 | Askiro: fantasma con bigote negro tupido en la portada (SVG; se probó una versión 3D con Three.js y se descartó) |
+| BRAND-003 | Aviso "Sitio no oficial, sin afiliación con AWS" en portada y pantalla final |
+| UX-017 | Plantilla v2 en las 10 misiones: gancho, una visual central, pasos con resultado esperado, quiz de recuerdo, "Más detalles" y ayuda con nombre específico |
+| UX-018 | Jerarquía visual (Refactoring UI / NN/g): acción y prompt en alto contraste; gancho, resultado, quiz y ayudas desenfatizados |
+| UX-019 | Visuales nuevas por misión: barra del chat, antes/después del steering, spec en 3 documentos, demo del hook, permisos del agente, respuesta con fuentes, workflow, steering/skill/agent, flujo MCP, qué viaja en un Power |
+| UX-020 | Botón de ventana compacta para poner el tutorial al lado de Kiro; menos animaciones dentro de las misiones (WCAG 2.2.2) |
+| CONT-003 | Actualizado contra Kiro IDE 1.2: agente Default (ya no existe el modo Vibe), Quick Spec con árbol de decisión, nueva misión Workflows (10 misiones, ~55 min), skills importadas (Anthropic, AWS) |
+| CONT-004 | Auditoría de prompts: File Save solo con cambios del agente, eventos de hooks actuales, ruta de custom agents, Power Builder y formato Agent Plugins, config oficial del MCP de AWS Documentation |
+| CONT-005 | Ortografía con tildes en todo el texto visible |
+| PRIV-001 | Consent Mode de Google Analytics: analytics apagado hasta que la persona acepta en el banner |
+
+## v1.5.0 — 2026-10-05 — Claridad del tutorial + vista de orador
+
+| ID | Descripcion |
+|----|-------------|
+| UX-012 | Pasos numerados (1, 2, 3...) en cada mision |
+| UX-013 | "Resultado" pasa a ser un checkbox "Verifica" con criterio concreto; marca el dot como completado |
+| UX-014 | Panel "Tu proyecto": estructura `.kiro/` que crece mision a mision (el que, el plan, el cuando, el quien, el como) |
+| UX-015 | El fantasma salta sobre los dots al avanzar; salto grande al cruzar de fase y festejo al verificar |
+| UX-016 | M3 Specs: wizard reemplazado por los 3 documentos reales (requirements.md con EARS, design.md con diagrama, tasks.md con checkboxes) y sus puertas de aprobacion, segun kiro.dev/docs/specs |
+| PRES-001 | Modo presentador reemplazado por `orador.html`: vista de orador en ventana aparte, sincronizada con el tutorial, con cronometros y bloques Decir / Mostrar / Preguntar / Confirma |
+| PRES-002 | Navegacion con clickers de presentacion (PageUp/PageDown) en ambas ventanas |
+| CONT-002 | M3: se corrige "Solo requeridas / Todas" (no existe; "Run all Tasks" ejecuta las requeridas pendientes), se agregan Quick Spec y Sync Files |
+
 ## v1.4.0 — 2026-10-05 — Auditoria
 
 | ID | Descripcion |

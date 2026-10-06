@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><title>Askiro — mascota</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #000; color: #f2f1f4; font-family: Inter, sans-serif; padding: 40px; }
+  h1 { font-size: 22px; margin: 0 0 6px; } p { color: #938f9b; margin: 0 0 28px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; }
+  .card { border: 1px solid #352f3d; border-radius: 16px; padding: 28px; background: #19161d; text-align: center;
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 0); background-size: 18px 18px; }
+  .hero img { width: 240px; filter: drop-shadow(0 0 34px rgba(145,71,255,0.35)); animation: f 4s ease-in-out infinite; }
+  .ref img { width: 170px; opacity: 0.9; }
+  @keyframes f { 50% { transform: translateY(-12px) rotate(-1.5deg); } }
+  .shadow { width: 150px; height: 14px; margin: 6px auto 0; border-radius: 50%; background: radial-gradient(rgba(145,71,255,0.35), transparent 70%); animation: s 4s ease-in-out infinite; }
+  @keyframes s { 50% { transform: scaleX(0.8); opacity: 0.6; } }
+  h2 { font-size: 16px; margin: 16px 0 4px; } span { font-size: 13px; color: #938f9b; }
+  .small { display: flex; justify-content: center; gap: 16px; margin-top: 18px; align-items: end; }
+  .small img { width: 64px } .small img:nth-child(2) { width: 32px } .small img:nth-child(3) { width: 18px }
+</style></head><body>
+<h1>Askiro · version A3 (fantasma original + bigote)</h1>
+<p>Mismo fantasma, sin cambios, mas un bigote negro tupido que sigue la inclinacion de los ojos. Pendiente de aprobacion del equipo de Kiro antes de publicar.</p>
+<div class="grid">
+  <div class="card ref"><img src="referencia-kiro.svg" alt=""><h2>Referencia actual</h2><span>kiro.svg (oficial, no se modifica)</span></div>
+  <div class="card hero"><img src="askiro.svg" alt=""><div class="shadow"></div><h2>Askiro A3</h2><span>Fantasma original + bigote negro tupido</span>
+    <div class="small"><img src="askiro.svg" alt=""><img src="askiro.svg" alt=""><img src="askiro.svg" alt=""></div></div>
+</div></body></html>

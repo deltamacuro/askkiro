@@ -4,9 +4,15 @@
   /** @type {number} Mision actual (1-based) */
   let current = 1;
   /** @type {number} Total de misiones */
-  const total = 9;
+  const total = document.querySelectorAll('.mission').length;
   /** @type {Object<number, boolean>} Misiones visitadas */
   let visited = {};
+  /** @type {Object<number, boolean>} Misiones verificadas por el usuario */
+  let checked = {};
+  /** @type {number} Mision donde estaba el fantasma la ultima vez que se movio */
+  let ghostAt = 0;
+  /** @type {number} Mision cuyas demos animadas ya se reprodujeron */
+  let demoAt = 0;
   /** @type {boolean} Indica si hay una transicion de pantalla en curso */
   let transitioning = false;
   /** @type {string|null} Pantalla guardada en localStorage */
@@ -15,10 +21,12 @@
   const FADE_MS = 350;
 
   /** Primera mision de cada fase */
-  const PHASE_START = { 1: 1, 2: 4, 3: 7 };
+  const PHASE_START = { 1: 1, 2: 4, 3: 8 };
 
   /** @type {Object<string, string>} Clave de localStorage que marca cada overlay como visto al cerrarlo */
-  const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard', 'presenter-onboard-overlay': 'kiroPresenterOnboard' };
+  const OVERLAY_SEEN_KEYS = { 'onboard-overlay': 'kiroOnboard' };
+  /** @type {BroadcastChannel|null} Canal de sincronizacion con la vista de orador (orador.html) */
+  const speakerChannel = typeof BroadcastChannel === 'function' ? new BroadcastChannel('askkiro') : null;
   /** @type {Element|null} Elemento con foco antes de abrir un overlay */
   let lastFocus = null;
 
@@ -80,19 +88,107 @@
   }
 
   /**
-   * Actualiza el hash de la URL segun el modo activo.
-   * Permite trackear en analytics si el usuario juega o ensena.
-   * @param {string} mode - 'play' o 'presenter'
+   * Marca la URL con #play para distinguir en analytics a quien hace el tutorial.
    */
-  function setModeHash(mode) {
-    try { history.replaceState(null, '', '#' + mode); } catch (e) {}
+  function setPlayHash() {
+    if (location.hash && location.hash !== '#') return;
+    try { history.replaceState(null, '', '#play'); } catch (e) {}
   }
 
   /**
-   * Lee el hash de la URL y activa el modo correspondiente al cargar.
+   * Abre la vista de orador en una ventana aparte.
+   * @param {string} source - Desde donde se abrio (para analytics)
    */
-  function restoreMode() {
-    if (location.hash === '#presenter') document.body.classList.add('mode-presenter');
+  function openSpeakerView(source) {
+    trackEvent('mode_select', { mode: 'presenter', source: source });
+    const win = window.open('orador.html', 'askkiro-orador', 'popup,width=600,height=860');
+    if (win) win.focus();
+    else location.href = 'orador.html';
+  }
+
+  /**
+   * Envia el estado actual (mision y pantalla) a la vista de orador.
+   * @param {string} [screenId] - Pantalla destino si hay una transicion en curso
+   */
+  function broadcastState(screenId) {
+    if (!speakerChannel) return;
+    const active = document.querySelector('.screen.active');
+    speakerChannel.postMessage({ type: 'state', current: current, screen: screenId || (active ? active.id : 'screen-start') });
+  }
+
+  /**
+   * Avanza o retrocede una mision, saliendo de la portada o del final si hace falta.
+   * Lo usan las flechas, los clickers de presentacion y la vista de orador.
+   * @param {number} dir - 1 para avanzar, -1 para retroceder
+   */
+  function step(dir) {
+    const active = document.querySelector('.screen.active');
+    const screen = active ? active.id : 'screen-start';
+    if (screen === 'screen-start') { if (dir > 0) { setPlayHash(); switchScreen('screen-play'); } return; }
+    if (screen === 'screen-end') { if (dir < 0) switchScreen('screen-play'); return; }
+    if (dir > 0) { if (current < total) goTo(current + 1); else finishTutorial(); }
+    else if (current > 1) goTo(current - 1);
+  }
+
+  /**
+   * Escucha los comandos de la vista de orador: pedir estado, navegar o saltar a una mision.
+   */
+  function setupSpeakerSync() {
+    if (!speakerChannel) return;
+    speakerChannel.onmessage = function (e) {
+      const msg = e.data || {};
+      if (msg.type === 'hello') broadcastState();
+      else if (msg.type === 'step') step(msg.dir);
+      else if (msg.type === 'goto' && msg.n >= 1 && msg.n <= total) {
+        const active = document.querySelector('.screen.active');
+        if (!active || active.id !== 'screen-play') switchScreen('screen-play');
+        goTo(msg.n);
+      }
+    };
+    broadcastState();
+    window.addEventListener('pagehide', function () { speakerChannel.postMessage({ type: 'bye' }); });
+  }
+
+  /**
+   * Muestra el banner de consentimiento si la persona aun no eligio, y actualiza Consent Mode.
+   */
+  function setupConsent() {
+    const banner = document.getElementById('consent');
+    if (!banner) return;
+    let choice = null;
+    try { choice = localStorage.getItem('kiroConsent'); } catch (e) {}
+    if (choice) return;
+    banner.hidden = false;
+    /** @param {string} value - 'granted' o 'denied' */
+    function decide(value) {
+      try { localStorage.setItem('kiroConsent', value); } catch (e) {}
+      if (typeof gtag === 'function') gtag('consent', 'update', { analytics_storage: value });
+      banner.hidden = true;
+    }
+    document.getElementById('consent-yes').addEventListener('click', function () { decide('granted'); });
+    document.getElementById('consent-no').addEventListener('click', function () { decide('denied'); });
+  }
+
+  /**
+   * Abre el tutorial en una ventana angosta para ponerla al lado de Kiro (atencion dividida).
+   */
+  function setupCompact() {
+    const btn = document.getElementById('btn-compact');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      saveState();
+      trackEvent('compact_open', { mission: current });
+      const w = window.open(location.pathname + '#play', 'askkiro-compacto', 'popup,width=440,height=900');
+      if (w) w.focus();
+    });
+  }
+
+  /**
+   * Vuelve a la portada y actualiza sus botones al terminar la transicion.
+   */
+  function goHome() {
+    switchScreen('screen-start');
+    setTimeout(updateStartButtons, FADE_MS + 50);
   }
 
   /**
@@ -100,18 +196,24 @@
    */
   function init() {
     try {
-      restoreMode();
+      if (location.hash === '#presenter') { try { history.replaceState(null, '', '#play'); } catch (e) {} }
       cacheMissionTitles();
       buildDots();
       setupNav();
       setupCopy();
+      setupChecks();
+      setupQuiz();
+      setupDemos();
+      setupTree();
+      setupSpecFlow();
       setupScreens();
       setupHelp();
-      setupPresenterOnboard();
       loadState();
       updateUI();
-      updateModeLinks();
       restoreScreen();
+      setupSpeakerSync();
+      setupConsent();
+      setupCompact();
     } catch (e) { console.error('Error al inicializar:', e); }
   }
 
@@ -122,7 +224,7 @@
     document.querySelectorAll('.mission').forEach(function (m) {
       const idx = parseInt(m.getAttribute('data-mission'));
       const h2 = m.querySelector('h2');
-      missionTitles[idx] = h2 ? h2.textContent : 'Mision ' + idx;
+      missionTitles[idx] = h2 ? h2.textContent : 'Misión ' + idx;
     });
   }
 
@@ -142,13 +244,51 @@
       const d = document.createElement('button');
       d.className = 'nav-dot';
       d.setAttribute('data-m', i);
-      d.setAttribute('aria-label', 'Mision ' + i + ': ' + (missionTitles[i] || ''));
+      d.setAttribute('aria-label', 'Misión ' + i + ': ' + (missionTitles[i] || ''));
       d.addEventListener('click', function () {
         if (!isPhaseUnlocked(phaseOf(i))) return;
         goTo(i);
       });
       c.appendChild(d);
     }
+    const ghost = document.createElement('span');
+    ghost.className = 'nav-ghost';
+    ghost.id = 'nav-ghost';
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.innerHTML = '<img src="kiro.svg" alt="">';
+    c.appendChild(ghost);
+    if (typeof ResizeObserver === 'function') new ResizeObserver(function () { placeGhost(false); }).observe(c);
+  }
+
+  /**
+   * Ubica el fantasma sobre el dot de la mision actual.
+   * Si cambio de mision, salta en la direccion del movimiento (salto grande al cruzar de fase).
+   * @param {boolean} animate - Si debe animar el salto
+   */
+  function placeGhost(animate) {
+    const ghost = document.getElementById('nav-ghost');
+    const dot = document.querySelector('.nav-dot[data-m="' + current + '"]');
+    if (!ghost || !dot || !dot.offsetWidth) return;
+    const x = dot.offsetLeft + dot.offsetWidth / 2 - ghost.offsetWidth / 2;
+    ghost.style.setProperty('--ghost-x', x + 'px');
+    if (animate && ghostAt && ghostAt !== current) {
+      ghost.style.setProperty('--ghost-dir', current > ghostAt ? '-1' : '1');
+      hop(ghost, phaseOf(current) !== phaseOf(ghostAt) ? 'jump-big' : 'jump');
+    }
+    ghostAt = current;
+    /* Habilitar la transicion despues del primer posicionamiento para que no se deslice al cargar */
+    requestAnimationFrame(function () { ghost.classList.add('ready'); });
+  }
+
+  /**
+   * Reinicia una animacion del fantasma.
+   * @param {HTMLElement} ghost - Elemento del fantasma
+   * @param {string} cls - 'jump', 'jump-big' o 'cheer'
+   */
+  function hop(ghost, cls) {
+    ghost.classList.remove('jump', 'jump-big', 'cheer');
+    void ghost.offsetWidth; /* forzar reflow para reiniciar la animacion */
+    ghost.classList.add(cls);
   }
 
   /**
@@ -169,7 +309,7 @@
    */
   function finishTutorial() {
     visited[current] = true;
-    trackEvent('tutorial_complete', { mode: location.hash.replace('#', '') || 'play' });
+    trackEvent('tutorial_complete', { mode: 'play' });
     switchScreen('screen-end');
     setTimeout(saveState, FADE_MS + 50);
   }
@@ -197,11 +337,13 @@
     document.querySelectorAll('.nav-dot').forEach(function (d) {
       const n = parseInt(d.getAttribute('data-m'));
       const locked = !isPhaseUnlocked(phaseOf(n));
-      d.classList.remove('active', 'visited', 'dot-locked');
+      d.classList.remove('active', 'visited', 'done', 'dot-locked');
       if (locked) {
         d.classList.add('dot-locked');
       } else if (n === current) {
         d.classList.add('active');
+      } else if (checked[n]) {
+        d.classList.add('done');
       } else if (visited[n]) {
         d.classList.add('visited');
       }
@@ -252,6 +394,167 @@
 
     const counter = document.getElementById('topbar-count');
     if (counter) counter.textContent = current + '/' + total;
+
+    document.querySelectorAll('.mission-check-input').forEach(function (input) {
+      input.checked = !!checked[missionOf(input)];
+    });
+    document.querySelectorAll('.m-quiz').forEach(function (quiz) {
+      if (checked[missionOf(quiz)] && !quiz.classList.contains('solved')) markQuiz(quiz, quiz.getAttribute('data-answer'));
+    });
+    if (active && demoAt !== current) { active.querySelectorAll('.hook-demo').forEach(playDemo); demoAt = current; }
+    updateTree();
+    placeGhost(true);
+    broadcastState();
+  }
+
+  /**
+   * Devuelve el numero de mision que contiene un elemento.
+   * @param {Element} el - Elemento dentro de una mision
+   * @returns {number}
+   */
+  function missionOf(el) {
+    const m = el.closest('.mission');
+    return m ? parseInt(m.getAttribute('data-mission')) : 0;
+  }
+
+  /**
+   * Configura los checkbox "Verifica": guardan la mision como completada.
+   */
+  function setupChecks() {
+    document.querySelectorAll('.mission-check-input').forEach(function (input) {
+      input.addEventListener('change', function () {
+        const n = missionOf(input);
+        if (input.checked) checked[n] = true;
+        else delete checked[n];
+        trackEvent('mission_check', { mission: n, checked: input.checked });
+        updateUI();
+        saveState();
+        const ghost = document.getElementById('nav-ghost');
+        if (ghost && input.checked) hop(ghost, 'cheer');
+      });
+    });
+  }
+
+  /**
+   * Marca visualmente una opcion del quiz y muestra su feedback.
+   * @param {HTMLElement} quiz - Contenedor .m-quiz
+   * @param {string} opt - Valor data-opt elegido
+   * @returns {boolean} Si la opcion es la correcta
+   */
+  function markQuiz(quiz, opt) {
+    const right = opt === quiz.getAttribute('data-answer');
+    quiz.querySelectorAll('.m-quiz-opt').forEach(function (b) {
+      const isThis = b.getAttribute('data-opt') === opt;
+      b.classList.toggle('is-right', isThis && right);
+      b.classList.toggle('is-wrong', isThis && !right);
+      b.setAttribute('aria-pressed', isThis ? 'true' : 'false');
+      if (isThis) quiz.querySelector('.m-quiz-fb').textContent = b.getAttribute('data-feedback') || '';
+    });
+    quiz.classList.toggle('solved', right);
+    return right;
+  }
+
+  /**
+   * Configura los quiz de recuerdo: al acertar, la mision queda completada (igual que el checkbox "Verifica").
+   */
+  function setupQuiz() {
+    document.querySelectorAll('.m-quiz').forEach(function (quiz) {
+      quiz.querySelectorAll('.m-quiz-opt').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const n = missionOf(quiz);
+          const right = markQuiz(quiz, btn.getAttribute('data-opt'));
+          trackEvent('mission_quiz', { mission: n, answer: btn.getAttribute('data-opt'), right: right });
+          if (!right || checked[n]) return;
+          checked[n] = true;
+          updateUI();
+          saveState();
+          const ghost = document.getElementById('nav-ghost');
+          if (ghost) hop(ghost, 'cheer');
+        });
+      });
+    });
+  }
+
+  /**
+   * Reinicia la animacion de una demo (se reproduce una sola vez, menos de 5 s).
+   * @param {HTMLElement} demo - Contenedor .hook-demo
+   */
+  function playDemo(demo) {
+    demo.classList.remove('play');
+    void demo.offsetWidth; /* forzar reflow para reiniciar la animacion */
+    demo.classList.add('play');
+  }
+
+  /**
+   * Configura el boton "Repetir" de las demos animadas.
+   */
+  function setupDemos() {
+    document.querySelectorAll('.hook-demo').forEach(function (demo) {
+      const btn = demo.querySelector('.hd-replay');
+      if (btn) btn.addEventListener('click', function () { playDemo(demo); });
+    });
+  }
+
+  /**
+   * Configura las pestanas de documentos del spec (M3): clic o flechas para cambiar de documento.
+   * Numera los checkbox de tasks.md para que se completen en secuencia.
+   */
+  function setupSpecFlow() {
+    document.querySelectorAll('.spec-flow').forEach(function (flow) {
+      const tabs = Array.from(flow.querySelectorAll('.spec-stage'));
+      flow.querySelectorAll('.md-box').forEach(function (box, i) { box.style.setProperty('--i', i); });
+
+      /** @param {HTMLElement} tab - Pestana a activar */
+      function select(tab) {
+        tabs.forEach(function (t) {
+          const on = t === tab;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) { panel.hidden = !on; panel.classList.toggle('active', on); }
+        });
+        trackEvent('spec_doc_view', { doc: tab.getAttribute('data-doc') });
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab); });
+        tab.addEventListener('keydown', function (e) {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          e.preventDefault();
+          e.stopPropagation();
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus();
+          select(next);
+        });
+      });
+    });
+  }
+
+  /**
+   * Abre el arbol del proyecto por defecto solo en pantallas anchas (en angostas queda colapsado bajo la mision).
+   */
+  function setupTree() {
+    const tree = document.getElementById('kiro-tree');
+    if (tree && window.matchMedia('(min-width: 1101px)').matches) tree.open = true;
+  }
+
+  /**
+   * Actualiza el arbol del proyecto segun la mision actual:
+   * lo ya creado se ve normal, lo nuevo se resalta y lo que viene queda atenuado.
+   */
+  function updateTree() {
+    const tree = document.getElementById('kiro-tree');
+    if (!tree) return;
+    tree.querySelectorAll('.tree-item').forEach(function (item) {
+      const from = parseInt(item.getAttribute('data-from'));
+      item.classList.toggle('is-future', from > current);
+      item.classList.toggle('is-new', from === current && !item.classList.contains('tree-root'));
+    });
+    tree.querySelectorAll('.tree-note').forEach(function (note) {
+      note.classList.toggle('show', parseInt(note.getAttribute('data-only')) === current);
+    });
+    tree.classList.toggle('is-packed', current === total);
   }
 
   /**
@@ -261,8 +564,8 @@
     const prev = document.getElementById('btn-prev');
     const next = document.getElementById('btn-next');
     if (prev) prev.addEventListener('click', function () {
-      if (current <= 1) { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); }
-      else { goTo(current - 1); }
+      if (current <= 1) goHome();
+      else goTo(current - 1);
     });
     if (next) next.addEventListener('click', function () {
       if (current >= total) { finishTutorial(); }
@@ -278,15 +581,13 @@
         return;
       }
 
+      if (e.repeat) return;
+      /* PageDown/PageUp: los clickers de presentacion envian estas teclas */
+      if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); step(e.key === 'PageDown' ? 1 : -1); return; }
       const play = document.getElementById('screen-play');
       if (!play || !play.classList.contains('active')) return;
-      if (e.repeat) return;
       if (['BUTTON', 'A', 'SUMMARY'].includes(e.target.tagName)) return;
-      if (e.key === 'ArrowRight' || e.key === 'Enter') {
-        e.preventDefault();
-        if (current < total) goTo(current + 1);
-        else if (current >= total) { finishTutorial(); }
-      }
+      if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); step(1); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); if (current > 1) goTo(current - 1); }
     });
 
@@ -373,6 +674,7 @@
     const nextScreen = document.getElementById(id);
     if (!nextScreen || currentScreen === nextScreen) return;
     trackEvent('screen_view', { screen: id });
+    broadcastState(id);
 
     if (currentScreen) {
       transitioning = true;
@@ -381,35 +683,11 @@
         currentScreen.classList.remove('active', 'fading');
         nextScreen.classList.add('active');
         transitioning = false;
+        broadcastState();
       }, FADE_MS);
     } else {
       nextScreen.classList.add('active');
     }
-  }
-
-  /**
-   * Muestra el modal de onboarding del presentador si no lo ha visto antes.
-   * Guarda en localStorage para no repetir.
-   */
-  function showPresenterOnboard() {
-    let seen = false;
-    try { seen = localStorage.getItem('kiroPresenterOnboard') === '1'; } catch (e) {}
-    if (seen) return;
-    const overlay = document.getElementById('presenter-onboard-overlay');
-    if (!overlay) return;
-    setTimeout(function () {
-      openOverlay(overlay, document.getElementById('btn-presenter-go'));
-    }, FADE_MS + 50);
-  }
-
-  /**
-   * Configura el boton de cerrar del modal de presentador.
-   */
-  function setupPresenterOnboard() {
-    const goBtn = document.getElementById('btn-presenter-go');
-    const overlay = document.getElementById('presenter-onboard-overlay');
-    if (goBtn && overlay) goBtn.addEventListener('click', function () { closeOverlay(overlay); });
-    if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(overlay); });
   }
 
   /**
@@ -420,7 +698,7 @@
     const btnPlay = document.getElementById('btn-play');
     const btnContinue = document.getElementById('btn-continue');
     const btnReset = document.getElementById('btn-reset');
-    const hasProgress = current > 1 || Object.keys(visited).length > 0 || savedScreen === 'screen-end';
+    const hasProgress = current > 1 || Object.keys(visited).length > 0 || Object.keys(checked).length > 0 || savedScreen === 'screen-end';
     if (btnPlay) {
       const wasHidden = btnPlay.hidden;
       btnPlay.hidden = hasProgress;
@@ -435,18 +713,6 @@
   }
 
   /**
-   * Actualiza el estado visual del toggle de modo presentador.
-   * Sincroniza aria-checked con el estado real del body.
-   */
-  function updateModeLinks() {
-    const toggle = document.getElementById('toggle-presenter');
-    if (toggle) {
-      const isActive = document.body.classList.contains('mode-presenter');
-      toggle.setAttribute('aria-checked', isActive ? 'true' : 'false');
-    }
-  }
-
-  /**
    * Configura los eventos de las pantallas: empezar, home, reiniciar, modos.
    */
   function setupScreens() {
@@ -457,7 +723,8 @@
     if (play) play.addEventListener('click', function () {
       current = 1;
       visited = {};
-      if (!location.hash || location.hash === '#') setModeHash('play');
+      checked = {};
+      setPlayHash();
       trackEvent('mode_select', { mode: 'play' });
       updateUI();
       saveState();
@@ -473,7 +740,7 @@
     });
 
     if (btnContinue) btnContinue.addEventListener('click', function () {
-      if (!location.hash || location.hash === '#') setModeHash('play');
+      setPlayHash();
       trackEvent('mode_select', { mode: 'continue' });
       switchScreen('screen-play');
     });
@@ -493,6 +760,7 @@
       closeOverlay(resetOverlay);
       current = 1;
       visited = {};
+      checked = {};
       savedScreen = null;
       try { localStorage.removeItem('kiroWS'); } catch (e) {}
       updateUI();
@@ -508,38 +776,16 @@
     });
 
     const home = document.getElementById('btn-home');
-    if (home) home.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
+    if (home) home.addEventListener('click', goHome);
 
     const btnBackStart = document.getElementById('btn-back-start');
-    if (btnBackStart) btnBackStart.addEventListener('click', function () { switchScreen('screen-start'); setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50); });
+    if (btnBackStart) btnBackStart.addEventListener('click', goHome);
 
     const btnTeach = document.getElementById('btn-teach');
-    if (btnTeach) btnTeach.addEventListener('click', function () {
-      document.body.classList.add('mode-presenter');
-      setModeHash('presenter');
-      trackEvent('mode_select', { mode: 'presenter', source: 'end_screen' });
-      switchScreen('screen-start');
-      setTimeout(function () { updateStartButtons(); updateModeLinks(); }, FADE_MS + 50);
-      showPresenterOnboard();
-    });
+    if (btnTeach) btnTeach.addEventListener('click', function () { openSpeakerView('end_screen'); });
 
-    const togglePresenter = document.getElementById('toggle-presenter');
-    if (togglePresenter) togglePresenter.addEventListener('click', function () {
-      const isActive = document.body.classList.contains('mode-presenter');
-      document.body.classList.remove('mode-presenter');
-      if (isActive) {
-        setModeHash('play');
-        trackEvent('mode_select', { mode: 'play', source: 'toggle_off' });
-        updateModeLinks();
-        return;
-      }
-      document.body.classList.add('mode-presenter');
-      setModeHash('presenter');
-      trackEvent('mode_select', { mode: 'presenter' });
-      updateModeLinks();
-      switchScreen('screen-play');
-      showPresenterOnboard();
-    });
+    const btnSpeaker = document.getElementById('btn-speaker');
+    if (btnSpeaker) btnSpeaker.addEventListener('click', function (e) { e.preventDefault(); openSpeakerView('start_screen'); });
   }
 
   /**
@@ -563,7 +809,7 @@
   function saveState() {
     const activeScreen = document.querySelector('.screen.active');
     const screen = activeScreen ? activeScreen.id : 'screen-start';
-    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited, screen: screen })); } catch (e) {}
+    try { localStorage.setItem('kiroWS', JSON.stringify({ current: current, visited: visited, checked: checked, screen: screen })); } catch (e) {}
   }
 
   /**
@@ -576,6 +822,7 @@
       const s = JSON.parse(data);
       if (Number.isInteger(s.current) && s.current >= 1 && s.current <= total) current = s.current;
       if (s.visited && typeof s.visited === 'object') visited = s.visited;
+      if (s.checked && typeof s.checked === 'object') checked = s.checked;
       if (typeof s.screen === 'string') savedScreen = s.screen;
     } catch (e) {}
   }

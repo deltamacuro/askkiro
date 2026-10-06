@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-label="Askiro con bigote">
+  <path d="M100 18 C150 18 172 58 172 104 L172 166 Q172 194 150 190 Q134 187 126 199 Q113 214 100 200 Q87 214 74 199 Q66 187 50 190 Q28 194 28 166 L28 104 C28 58 50 18 100 18 Z" fill="#ffffff"/>
+  <ellipse cx="78" cy="98" rx="9" ry="13" fill="#0a0a0c"/><ellipse cx="122" cy="98" rx="9" ry="13" fill="#0a0a0c"/><circle cx="81" cy="92" r="3" fill="#ffffff"/><circle cx="125" cy="92" r="3" fill="#ffffff"/>
+  <path d="M100 126 C93 117 77 116 68 124 C62 130 54 130 49 123 C50 139 69 145 85 138 C92 135 97 132 100 129 C103 132 108 135 115 138 C131 145 150 139 151 123 C146 130 138 130 132 124 C123 116 107 117 100 126 Z" fill="#9147ff"/>
+</svg>
