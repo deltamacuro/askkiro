@@ -42,27 +42,33 @@
 
   <!-- SCREEN: INICIO -->
   <div class="screen screen-start active" id="screen-start" role="region" aria-label="Pantalla de inicio">
+    <div class="start-scan" aria-hidden="true"></div>
+    <a href="https://github.com/deltamacuro/askkiro" class="fork-corner" target="_blank" rel="noopener noreferrer" aria-label="Haz tu fork en GitHub">
+      <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path class="octo-arm" d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor"></path>
+      </svg>
+    </a>
     <div class="start-content">
       <div class="start-ghost-wrap anim-ghost">
         <img src="askiro.svg" alt="Askiro, el fantasma con bigote que guía el tutorial" class="start-ghost-img" fetchpriority="high">
       </div>
-      <div class="start-left anim-stagger">
+      <div class="start-left">
         <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a></p>
-        <h1>De vibe coding<br>a software real</h1>
-        <p class="start-sub">3 fases &middot; 10 misiones &middot; 55 minutos</p>
-        <div class="start-actions" id="start-actions">
-          <button class="start-btn" id="btn-play">Empezar</button>
-          <button class="start-btn start-btn-secondary" id="btn-continue" hidden>Continuar</button>
-          <button class="start-btn-reset" id="btn-reset" hidden>Reiniciar progreso</button>
-        </div>
-        <a href="#help" class="start-help" id="btn-help">¿Necesitas ayuda?</a>
-        <a href="orador.html" class="start-speaker" id="btn-speaker">
-          <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
-          <span><strong>¿Vas a dar este taller?</strong> Abre la vista de orador en otra ventana. Las notas quedan contigo, no en la pantalla proyectada.</span>
-        </a>
-        <p class="unofficial">Sitio no oficial, hecho por la comunidad. Kiro es una marca de Amazon Web Services.</p>
+        <h1 class="start-title"><span class="start-logo">Ask Kiro</span><span class="start-tagline">De vibe coding a software real</span></h1>
+        <p class="start-stats">3 mundos &middot; 10 niveles &middot; 55 min</p>
+        <nav class="start-menu" id="start-menu" aria-label="Menú principal">
+          <button class="menu-item" id="btn-continue" hidden>Continuar <span class="menu-meta" id="continue-mission"></span></button>
+          <button class="menu-item" id="btn-play">Jugar</button>
+          <button class="menu-item" id="btn-reset" hidden>Nueva partida</button>
+          <a href="orador.html" class="menu-item" id="btn-speaker">Modo orador</a>
+          <a href="#help" class="menu-item" id="btn-help">Cómo jugar</a>
+        </nav>
+        <p class="start-press" aria-hidden="true"><span class="press-key">&mdash; Pulsa Enter &mdash;</span><span class="press-touch">&mdash; Toca para jugar &mdash;</span></p>
       </div>
     </div>
+    <p class="start-legal">&copy; 2026 Comunidad &middot; No oficial &middot; Kiro es marca de AWS</p>
   </div>
 
   <!-- SCREEN: MISIONES -->
@@ -1010,7 +1016,7 @@
         </a>
         <span class="end-link-sep">&middot;</span>
         <a href="https://github.com/deltamacuro/askkiro" target="_blank" rel="noopener noreferrer" class="end-footer-link">
-          <i class="fa-brands fa-github"></i> GitHub
+          <i class="fa-brands fa-github"></i> Haz tu fork
         </a>
       </div>
       <p class="validated-stamp"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Contenido validado contra la documentación de Kiro IDE 1.2 &middot; octubre 2026 &middot; Sitio no oficial, sin afiliación con AWS</p>

@@ -40,3 +40,18 @@ En la portada de [askkiro.info](https://askkiro.info/), haz clic en "¿Vas a dar
 ## Guía web interactiva
 
 [askkiro.info](https://askkiro.info/)
+
+## Haz tu propia versión
+
+Este repo es de código abierto ([MIT](LICENSE)): haz un fork para traducirlo, adaptarlo a tu equipo o dar el taller con tus propios ejemplos.
+
+1. Haz un fork y activa GitHub Pages en **Settings → Pages**, con la rama `main` y la carpeta `/docs`.
+2. Borra `docs/CNAME` (es el dominio askkiro.info) o pon ahí el tuyo.
+3. En `docs/index.html`, quita o reemplaza el ID de Google Analytics (`G-ZDDXJ02XK6`) y cambia las URLs de `askkiro.info` en las metaetiquetas y los botones de compartir.
+4. Edita el contenido:
+   - `docs/index.html`: las misiones, los prompts, las visuales y las notas del orador (los bloques `.pnote` de cada misión).
+   - `docs/workshop.css`: colores y tipografía (los tokens van al inicio).
+
+No hace falta build: es HTML, CSS y JS estático. Para probarlo en local, sirve la carpeta con `python3 -m http.server -d docs` y abre http://localhost:8000 (la vista de orador no carga las notas si abres el archivo directo desde el disco).
+
+La licencia cubre el código y el texto del tutorial, no la marca: Kiro y su logo son de Amazon Web Services. Si publicas tu versión, deja claro que no es oficial.
