@@ -15,7 +15,7 @@ Que la portada de askkiro.info se sienta como la intro de un juego y no como una
 - Lema: "De vibe coding a software real".
 - Línea de stats en Fragment Mono: `3 MUNDOS · 10 NIVELES · 55 MIN`.
 
-**Fantasma.** Animación idle: flota de arriba abajo (unos 3 s) y parpadea los ojos cada pocos segundos, superponiendo un párpado sobre el SVG.
+**Fantasma.** Mantiene la flotación idle que ya tiene (`ghostFloat`, 4 s). Sin parpadeo: `askiro.svg` es una imagen trazada sin los ojos como piezas separadas, así que un párpado superpuesto se desalinearía.
 
 **Menú arcade.** Es una lista vertical de entradas en Fragment Mono, en mayúsculas. Mantiene los IDs actuales para no tocar la lógica:
 
