@@ -150,6 +150,40 @@
   }
 
   /**
+   * Muestra el banner de consentimiento si la persona aun no eligio, y actualiza Consent Mode.
+   */
+  function setupConsent() {
+    const banner = document.getElementById('consent');
+    if (!banner) return;
+    let choice = null;
+    try { choice = localStorage.getItem('kiroConsent'); } catch (e) {}
+    if (choice) return;
+    banner.hidden = false;
+    /** @param {string} value - 'granted' o 'denied' */
+    function decide(value) {
+      try { localStorage.setItem('kiroConsent', value); } catch (e) {}
+      if (typeof gtag === 'function') gtag('consent', 'update', { analytics_storage: value });
+      banner.hidden = true;
+    }
+    document.getElementById('consent-yes').addEventListener('click', function () { decide('granted'); });
+    document.getElementById('consent-no').addEventListener('click', function () { decide('denied'); });
+  }
+
+  /**
+   * Abre el tutorial en una ventana angosta para ponerla al lado de Kiro (atencion dividida).
+   */
+  function setupCompact() {
+    const btn = document.getElementById('btn-compact');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      saveState();
+      trackEvent('compact_open', { mission: current });
+      const w = window.open(location.pathname + '#play', 'askkiro-compacto', 'popup,width=440,height=900');
+      if (w) w.focus();
+    });
+  }
+
+  /**
    * Carga el fantasma 3D de la portada despues del primer pintado, solo si hay WebGL
    * y el usuario no pidio reducir animaciones. Si falla, queda el SVG.
    */
@@ -200,6 +234,8 @@
       restoreScreen();
       setupSpeakerSync();
       setupHero3D();
+      setupConsent();
+      setupCompact();
     } catch (e) { console.error('Error al inicializar:', e); }
   }
 
