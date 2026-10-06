@@ -41,4 +41,17 @@
 <path d="" fill="#FFFFFF" transform="translate(0,0)"/>
 <path d="" fill="#FFFFFF" transform="translate(0,0)"/>
 <path d="" fill="#FFFFFF" transform="translate(0,0)"/>
+
+  <!-- Askiro: bigote agregado sobre el fantasma original (uso pendiente de aprobacion del equipo de Kiro) -->
+  <defs>
+    <linearGradient id="ak-stache" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000000"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+  </defs>
+  <g id="askiro-bigote" transform="translate(800 1190) rotate(7.7) scale(4.2) translate(-100 -36)">
+    <!-- Bigote tupido: puntas curvadas hacia arriba y borde inferior ondulado -->
+    <path d="M100 18 C88 6 62 2 42 10 C24 17 10 30 4 46 C2 54 8 60 16 56 C20 64 30 66 36 60 C42 68 54 68 60 60 C68 68 80 66 86 58 C92 62 97 58 100 52 C103 58 108 62 114 58 C120 66 132 68 140 60 C146 68 158 68 164 60 C170 66 180 64 184 56 C192 60 198 54 196 46 C190 30 176 17 158 10 C138 2 112 6 100 18 Z" fill="url(#ak-stache)"/>
+    <path d="M28 24 C50 12 78 12 94 24 M106 24 C122 12 150 12 172 24" fill="none" stroke="#3a3540" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  </g>
 </g></svg>

@@ -256,7 +256,7 @@
     ghost.className = 'nav-ghost';
     ghost.id = 'nav-ghost';
     ghost.setAttribute('aria-hidden', 'true');
-    ghost.innerHTML = '<img src="kiro.svg" alt="">';
+    ghost.innerHTML = '<img src="askiro.svg" alt="">';
     c.appendChild(ghost);
     if (typeof ResizeObserver === 'function') new ResizeObserver(function () { placeGhost(false); }).observe(c);
   }
