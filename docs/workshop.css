@@ -548,7 +548,7 @@ a:hover { text-decoration-color: var(--accent-bright); }
   left: -0.55rem; top: 50%;
   width: 1.5rem; height: 1.5rem;
   transform: translateY(-50%) scaleX(-1);
-  background: url('kiro.svg') center/contain no-repeat;
+  background: url('askiro.svg') center/contain no-repeat;
   border-radius: 50%;
   filter: drop-shadow(0 0 4px rgba(145,71,255,0.4));
   transition: filter 0.3s;
