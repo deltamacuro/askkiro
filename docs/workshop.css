@@ -235,14 +235,6 @@ a:hover { text-decoration-color: var(--accent-bright); }
     drop-shadow(0 0 150px rgba(145,71,255,0.3))
     drop-shadow(0 20px 40px rgba(0,0,0,0.4));
 }
-/* Askiro 3D (hero3d.js): canvas sobre el SVG, mas grande para que el giro no se corte */
-.start-ghost-3d {
-  position: absolute; left: -20%; top: -15%; width: 140%; height: 130%;
-  pointer-events: none; opacity: 0;
-  filter: drop-shadow(0 0 50px rgba(145,71,255,0.45));
-}
-.start-ghost-wrap.has-3d { cursor: pointer; }
-.start-ghost-wrap.has-3d .start-ghost-img { animation: none; filter: none; }
 @keyframes ghostFloat {
   0%,100% { transform: scaleX(-1) rotate(-3deg) translateY(0); }
   50% { transform: scaleX(-1) rotate(-3deg) translateY(-18px); }

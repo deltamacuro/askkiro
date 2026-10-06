@@ -184,27 +184,6 @@
   }
 
   /**
-   * Carga el fantasma 3D de la portada despues del primer pintado, solo si hay WebGL
-   * y el usuario no pidio reducir animaciones. Si falla, queda el SVG.
-   */
-  function setupHero3D() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const probe = document.createElement('canvas');
-    if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) return;
-    const wrap = document.querySelector('.start-ghost-wrap');
-    const img = wrap ? wrap.querySelector('.start-ghost-img') : null;
-    const screen = document.getElementById('screen-start');
-    if (!wrap || !img || !screen) return;
-    const load = function () {
-      import('./hero3d.js')
-        .then(function (m) { return m.mountHero3D(wrap, img, screen); })
-        .catch(function (err) { console.warn('Askiro 3D no disponible, se usa el SVG:', err); });
-    };
-    if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 2500 });
-    else setTimeout(load, 1200);
-  }
-
-  /**
    * Vuelve a la portada y actualiza sus botones al terminar la transicion.
    */
   function goHome() {
@@ -233,7 +212,6 @@
       updateUI();
       restoreScreen();
       setupSpeakerSync();
-      setupHero3D();
       setupConsent();
       setupCompact();
     } catch (e) { console.error('Error al inicializar:', e); }

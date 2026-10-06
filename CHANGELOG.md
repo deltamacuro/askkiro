@@ -1,11 +1,11 @@
 # Changelog — Ask Kiro
 
-## v1.6.0 — 2026-10-06 — Rediseño, Kiro IDE 1.2 y Askiro 3D
+## v1.6.0 — 2026-10-06 — Rediseño, Kiro IDE 1.2 y Askiro
 
 | ID | Descripción |
 |----|-------------|
 | BRAND-001 | Tokens alineados a kiro.dev: fondo #000, grises con tinte morado, morado #9147ff / #c59eff, Fragment Mono, cuadrícula de puntos de 18px |
-| BRAND-002 | Askiro: fantasma con bigote negro tupido; versión 3D en la portada (Three.js por import map, carga diferida, el SVG queda si no hay WebGL o con reduced-motion) |
+| BRAND-002 | Askiro: fantasma con bigote negro tupido en la portada (SVG; se probó una versión 3D con Three.js y se descartó) |
 | BRAND-003 | Aviso "Sitio no oficial, sin afiliación con AWS" en portada y pantalla final |
 | UX-017 | Plantilla v2 en las 10 misiones: gancho, una visual central, pasos con resultado esperado, quiz de recuerdo, "Más detalles" y ayuda con nombre específico |
 | UX-018 | Jerarquía visual (Refactoring UI / NN/g): acción y prompt en alto contraste; gancho, resultado, quiz y ayudas desenfatizados |
