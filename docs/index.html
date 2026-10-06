@@ -32,6 +32,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fragment+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="workshop.css">
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+    } }
+  </script>
   <script src="https://kit.fontawesome.com/c4d3502012.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -40,7 +46,7 @@
   <div class="screen screen-start active" id="screen-start" role="region" aria-label="Pantalla de inicio">
     <div class="start-content">
       <div class="start-ghost-wrap anim-ghost">
-        <img src="kiro.svg" alt="Fantasma de Kiro, mascota del tutorial" class="start-ghost-img">
+        <img src="askiro.svg" alt="Askiro, el fantasma con bigote que guia el tutorial" class="start-ghost-img" fetchpriority="high">
       </div>
       <div class="start-left anim-stagger">
         <p class="start-eyebrow">Tutorial interactivo para <a href="https://kiro.dev" target="_blank" rel="noopener noreferrer">Kiro</a></p>
