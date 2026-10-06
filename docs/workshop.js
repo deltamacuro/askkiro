@@ -207,6 +207,7 @@
       setupTree();
       setupSpecFlow();
       setupScreens();
+      setupStartMenu();
       setupHelp();
       loadState();
       updateUI();
@@ -692,7 +693,7 @@
 
   /**
    * Actualiza visibilidad de botones en screen-start segun progreso.
-   * Sin progreso: solo "Empezar". Con progreso: "Continuar" (primario) + "Reiniciar" (destructivo).
+   * Sin progreso: "Jugar" es la principal. Con progreso: "Continuar · M{n}" (principal) + "Nueva partida".
    */
   function updateStartButtons() {
     const btnPlay = document.getElementById('btn-play');
@@ -710,6 +711,11 @@
     }
     if (btnContinue) btnContinue.hidden = !hasProgress;
     if (btnReset) btnReset.hidden = !hasProgress;
+    const meta = document.getElementById('continue-mission');
+    if (meta) meta.textContent = '· M' + current;
+    [btnPlay, btnContinue].forEach(function (el) { if (el) el.classList.remove('is-primary'); });
+    const primary = hasProgress ? btnContinue : btnPlay;
+    if (primary) primary.classList.add('is-primary');
   }
 
   /**
@@ -786,6 +792,37 @@
 
     const btnSpeaker = document.getElementById('btn-speaker');
     if (btnSpeaker) btnSpeaker.addEventListener('click', function (e) { e.preventDefault(); openSpeakerView('start_screen'); });
+  }
+
+  /**
+   * Menú de la portada estilo arcade: flechas arriba/abajo recorren las opciones visibles,
+   * Espacio activa también los enlaces y Enter sin nada enfocado activa la opción principal.
+   */
+  function setupStartMenu() {
+    const menu = document.getElementById('start-menu');
+    const start = document.getElementById('screen-start');
+    if (!menu || !start) return;
+    function items() {
+      return Array.from(menu.querySelectorAll('.menu-item')).filter(function (el) { return !el.hidden; });
+    }
+
+    menu.addEventListener('keydown', function (e) {
+      if (e.key === ' ' && e.target.tagName === 'A') { e.preventDefault(); e.target.click(); return; }
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      const list = items();
+      const i = list.indexOf(document.activeElement);
+      list[(i + (e.key === 'ArrowDown' ? 1 : -1) + list.length) % list.length].focus();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!start.classList.contains('active') || getOpenOverlay()) return;
+      if (document.activeElement && document.activeElement !== document.body) return;
+      const primary = menu.querySelector('.is-primary:not([hidden])') || items()[0];
+      if (!primary) return;
+      if (e.key === 'Enter') { e.preventDefault(); primary.click(); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); primary.focus(); }
+    });
   }
 
   /**
