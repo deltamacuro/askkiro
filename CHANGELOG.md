@@ -1,5 +1,13 @@
 # Changelog — Ask Kiro
 
+## v1.7.0 — 2026-10-06 — Portada de juego y código abierto
+
+| ID | Descripción |
+|----|-------------|
+| UX-021 | Portada como pantalla de inicio de juego: logo ASK KIRO que cae con rebote, menú arcade (Continuar · M{n}, Jugar, Nueva partida, Modo orador, Cómo jugar) navegable con ↑/↓ y Enter, "Pulsa Enter" parpadeante y scanlines sutiles |
+| UX-022 | Esquina "fork me" de GitHub con el octocat en el morado de la marca; el aviso legal queda en una línea al pie |
+| OSS-001 | Licencia MIT y sección "Haz tu propia versión" en el README (fork, GitHub Pages, CNAME, Analytics) |
+
 ## v1.6.0 — 2026-10-06 — Rediseño, Kiro IDE 1.2 y Askiro
 
 | ID | Descripción |
