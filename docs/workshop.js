@@ -246,7 +246,7 @@
     document.querySelectorAll('.mission').forEach(function (m) {
       const idx = parseInt(m.getAttribute('data-mission'));
       const h2 = m.querySelector('h2');
-      missionTitles[idx] = h2 ? h2.textContent : 'Mision ' + idx;
+      missionTitles[idx] = h2 ? h2.textContent : 'Misión ' + idx;
     });
   }
 
@@ -266,7 +266,7 @@
       const d = document.createElement('button');
       d.className = 'nav-dot';
       d.setAttribute('data-m', i);
-      d.setAttribute('aria-label', 'Mision ' + i + ': ' + (missionTitles[i] || ''));
+      d.setAttribute('aria-label', 'Misión ' + i + ': ' + (missionTitles[i] || ''));
       d.addEventListener('click', function () {
         if (!isPhaseUnlocked(phaseOf(i))) return;
         goTo(i);

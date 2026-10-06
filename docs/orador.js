@@ -72,7 +72,7 @@
         missions[n] = {
           phase: parseInt(m.getAttribute('data-phase')) || 1,
           tag: (m.querySelector('.mission-tag') || {}).textContent || '',
-          title: (m.querySelector('h2') || {}).textContent || 'Mision ' + n,
+          title: (m.querySelector('h2') || {}).textContent || 'Misión ' + n,
           say: plain.slice(0, 1).map(function (p) { return p.innerHTML; }),
           show: plain.slice(1).map(function (p) { return p.innerHTML; }),
           ask: note ? Array.from(note.querySelectorAll('.pnote-ask')).map(function (p) { return p.innerHTML.replace(/^Pregunta( a la audiencia)?:\s*/i, ''); }) : [],
@@ -115,8 +115,8 @@
 
     if (linked && screen === 'screen-start') {
       document.getElementById('sp-cover-tag').textContent = 'Portada';
-      document.getElementById('sp-cover-title').textContent = 'El tutorial esta en la portada';
-      document.getElementById('sp-cover-text').textContent = 'Presenta el objetivo: en 55 minutos pasamos de vibe coding a software real. Presiona Siguiente para empezar la mision 1.';
+      document.getElementById('sp-cover-title').textContent = 'El tutorial está en la portada';
+      document.getElementById('sp-cover-text').textContent = 'Presenta el objetivo: en 55 minutos pasamos de vibe coding a software real. Presiona Siguiente para empezar la misión 1.';
     } else if (linked && screen === 'screen-end') {
       document.getElementById('sp-cover-tag').textContent = 'Cierre';
       document.getElementById('sp-cover-title').textContent = '"Eso no es vibe coding. Eso es software."';
@@ -125,7 +125,7 @@
 
     const m = missions[current];
     if (m && screen === 'screen-play') {
-      document.getElementById('sp-tag').textContent = 'Mision ' + current + ' · ' + m.tag.replace(/^Fase \d+\s*·\s*/, '');
+      document.getElementById('sp-tag').textContent = 'Misión ' + current + ' · ' + m.tag.replace(/^(Fase|Misi[oó]n) \d+\s*·\s*/, '');
       document.getElementById('sp-title').textContent = m.title;
       document.getElementById('sp-budget').textContent = m.budgetMin ? '/ ~' + m.budgetMin + ' min' : '';
       fill('sp-say', m.say);
@@ -136,7 +136,7 @@
     }
 
     const nextLabel = document.getElementById('sp-next-label');
-    if (screen === 'screen-play' && current < total && missions[current + 1]) nextLabel.textContent = 'Sigue: ' + (current + 1) + ' · ' + missions[current + 1].tag.replace(/^Fase \d+\s*·\s*/, '');
+    if (screen === 'screen-play' && current < total && missions[current + 1]) nextLabel.textContent = 'Sigue: ' + (current + 1) + ' · ' + missions[current + 1].tag.replace(/^(Fase|Misi[oó]n) \d+\s*·\s*/, '');
     else if (screen === 'screen-play' && current === total) nextLabel.textContent = 'Sigue: cierre';
     else if (screen === 'screen-start') nextLabel.textContent = 'Sigue: 1 · Vibe Coding';
     else nextLabel.textContent = '';
@@ -219,7 +219,7 @@
       b.className = 'sp-jump-btn';
       b.setAttribute('data-n', i);
       b.textContent = i;
-      b.setAttribute('aria-label', 'Ir a la mision ' + i);
+      b.setAttribute('aria-label', 'Ir a la misión ' + i);
       b.addEventListener('click', function () { send({ type: 'goto', n: i }); });
       c.appendChild(b);
     }
@@ -273,7 +273,7 @@
   function init() {
     setupControls();
     if (!channel) {
-      document.getElementById('sp-link-text').textContent = 'Tu browser no soporta sincronizacion';
+      document.getElementById('sp-link-text').textContent = 'Tu browser no soporta sincronización';
       return;
     }
     channel.onmessage = function (e) {
