@@ -1276,6 +1276,8 @@ a:hover { text-decoration-color: var(--accent-bright); }
 
 /* AVISO NO OFICIAL */
 .unofficial { margin-top: 1rem; font-size: 0.68rem; color: var(--dim); max-width: 340px; line-height: 1.5; }
+.unofficial a { color: var(--body); text-decoration: underline; text-underline-offset: 2px; }
+.unofficial a:hover { color: var(--accent-bright); }
 
 /* CONSENTIMIENTO DE ANALYTICS */
 .consent {
