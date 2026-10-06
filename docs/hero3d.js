@@ -1,6 +1,6 @@
 /**
  * Askiro 3D: fantasma modelado con volumen real (no extrusion) y animado con Three.js.
- * Cuerpo = cupula en torno + 3 lobulos esfericos + bulto de la cola; ojos y bigote se apoyan
+ * Cuerpo = una sola pieza en torno con dobladillo ondulado (lobulos y cola); ojos y bigote se apoyan
  * sobre la superficie curva. Se carga en diferido desde workshop.js solo si hay WebGL y el
  * usuario no pidio reducir animaciones. El <img> del SVG queda como estado final si algo falla.
  */
@@ -29,28 +29,65 @@ function toonGradient(tones) {
 }
 
 /**
- * Cuerpo: cupula redonda que baja con los costados apenas abiertos (como el fantasma original).
+ * Cuerpo en una sola pieza: cupula, costados y un dobladillo ondulado sin costuras.
  * @param {THREE.Material} mat - Material del cuerpo
  * @returns {THREE.Mesh}
  */
 function makeDome(mat) {
   const R = 0.95;
   const yc = 0.3;
-  const top = [];
+  const pts = [];
+  const weights = []; /* cuanto le afecta la onda del dobladillo a cada punto del perfil */
+  /* A: cupula */
   for (let i = 0; i <= 24; i++) {
     const a = (i / 24) * (Math.PI / 2);
-    top.push(new THREE.Vector2(Math.sin(a) * R, yc + Math.cos(a) * R));
+    pts.push(new THREE.Vector2(Math.sin(a) * R, yc + Math.cos(a) * R));
+    weights.push(0);
   }
-  /* Costados y base con curva suave; la base queda escondida dentro de los lobulos */
-  const sides = new THREE.SplineCurve([
-    new THREE.Vector2(R, yc),
-    new THREE.Vector2(0.99, -0.2),
-    new THREE.Vector2(0.92, -0.55),
-    new THREE.Vector2(0.6, -0.7),
-    new THREE.Vector2(0.001, -0.72)
-  ]).getPoints(32).slice(1);
-  const profile = top.concat(sides).reverse(); /* LatheGeometry espera el perfil de abajo hacia arriba */
-  const mesh = new THREE.Mesh(new THREE.LatheGeometry(profile, 72), mat);
+  /* A: costados */
+  new THREE.SplineCurve([new THREE.Vector2(R, yc), new THREE.Vector2(1.0, -0.05), new THREE.Vector2(1.03, -0.35)])
+    .getPoints(10).slice(1).forEach(function (v) { pts.push(v); weights.push(0); });
+  /* B: falda que baja hacia el dobladillo (la onda crece hacia abajo) */
+  for (let i = 1; i <= 14; i++) {
+    const t = i / 14;
+    pts.push(new THREE.Vector2(1.03 * (1 - 0.03 * t * t), -0.35 - 0.42 * t));
+    weights.push(Math.pow(t, 1.6));
+  }
+  /* C: borde redondeado que se mete por debajo hasta el eje */
+  for (let i = 1; i <= 10; i++) {
+    const u = i / 10;
+    pts.push(new THREE.Vector2(Math.max(1.0 * Math.cos(u * Math.PI / 2), 0.001), -0.77 + 0.22 * Math.sin(u * Math.PI / 2)));
+    weights.push(1);
+  }
+  /* LatheGeometry espera el perfil de abajo hacia arriba (si no, las normales quedan hacia adentro) */
+  pts.reverse();
+  weights.reverse();
+  const segments = 96;
+  const PHI0 = Math.PI; /* la costura del torno queda atras, no al frente */
+  const geo = new THREE.LatheGeometry(pts, segments, PHI0);
+  const pos = geo.attributes.position;
+  const AMP = 0.24;
+  for (let i = 0; i <= segments; i++) {
+    const theta = PHI0 + (i / segments) * Math.PI * 2; /* 0 = frente (+Z) */
+    /* La onda se calcula sobre el eje horizontal visto de frente (x normalizado = sin theta):
+       3 lobulos del mismo ancho en -2/3, 0 y +2/3, muescas en +-1/3 y los extremos curvados hacia arriba */
+    const xn = Math.sin(theta);
+    const lobe = Math.pow(Math.abs(Math.cos(1.5 * Math.PI * xn)), 0.6);
+    const wave = -AMP * lobe + 0.06;
+    /* Cola: el lobulo izquierdo de la portada se estira un poco hacia afuera, como el original */
+    const tail = Math.max(0, -xn - 0.45);
+    for (let j = 0; j < pts.length; j++) {
+      const k = i * pts.length + j;
+      const w = weights[j];
+      if (!w) continue;
+      pos.setY(k, pos.getY(k) + wave * w);
+      const grow = 1 + (0.06 * lobe + 0.12 * tail) * w; /* los lobulos se inflan un poco: gordito */
+      pos.setX(k, pos.getX(k) * grow);
+      pos.setZ(k, pos.getZ(k) * (1 + 0.06 * lobe * w));
+    }
+  }
+  geo.computeVertexNormals();
+  const mesh = new THREE.Mesh(geo, mat);
   mesh.scale.z = DEPTH;
   return mesh;
 }
@@ -123,12 +160,7 @@ export async function mountHero3D(wrap, img, screen) {
   /* Cuerpo con la orientacion de la portada: ojos a la derecha, cola abajo a la izquierda */
   const body = new THREE.Group();
   body.add(makeDome(bodyMat));
-  /* Lobulos mas profundos que anchos para quedar al ras del frente del cuerpo (sin "escalon") */
-  body.add(blob(0.44, bodyMat, [-0.5, -0.66, 0.04], [1, 1, 1.32]));
-  body.add(blob(0.46, bodyMat, [0.1, -0.76, 0.04], [1, 1, 1.3]));
-  body.add(blob(0.42, bodyMat, [0.6, -0.64, 0.04], [1, 1, 1.34]));
-  body.add(blob(0.36, bodyMat, [-0.84, -0.42, 0], [0.95, 1.2, 1.2]));
-  body.scale.set(0.92, 1.1, 1); /* mas alto que ancho, como el original */
+  body.scale.set(0.98, 1.02, 1);
   body.updateMatrixWorld(true);
 
   /* Ojos apoyados sobre la superficie: el externo un poco mas alto, como el original */
