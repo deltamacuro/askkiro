@@ -1,5 +1,21 @@
 # Changelog — Ask Kiro
 
+## v1.6.0 — 2026-10-06 — Rediseño, Kiro IDE 1.2 y Askiro 3D
+
+| ID | Descripción |
+|----|-------------|
+| BRAND-001 | Tokens alineados a kiro.dev: fondo #000, grises con tinte morado, morado #9147ff / #c59eff, Fragment Mono, cuadrícula de puntos de 18px |
+| BRAND-002 | Askiro: fantasma con bigote negro tupido; versión 3D en la portada (Three.js por import map, carga diferida, el SVG queda si no hay WebGL o con reduced-motion) |
+| BRAND-003 | Aviso "Sitio no oficial, sin afiliación con AWS" en portada y pantalla final |
+| UX-017 | Plantilla v2 en las 10 misiones: gancho, una visual central, pasos con resultado esperado, quiz de recuerdo, "Más detalles" y ayuda con nombre específico |
+| UX-018 | Jerarquía visual (Refactoring UI / NN/g): acción y prompt en alto contraste; gancho, resultado, quiz y ayudas desenfatizados |
+| UX-019 | Visuales nuevas por misión: barra del chat, antes/después del steering, spec en 3 documentos, demo del hook, permisos del agente, respuesta con fuentes, workflow, steering/skill/agent, flujo MCP, qué viaja en un Power |
+| UX-020 | Botón de ventana compacta para poner el tutorial al lado de Kiro; menos animaciones dentro de las misiones (WCAG 2.2.2) |
+| CONT-003 | Actualizado contra Kiro IDE 1.2: agente Default (ya no existe el modo Vibe), Quick Spec con árbol de decisión, nueva misión Workflows (10 misiones, ~55 min), skills importadas (Anthropic, AWS) |
+| CONT-004 | Auditoría de prompts: File Save solo con cambios del agente, eventos de hooks actuales, ruta de custom agents, Power Builder y formato Agent Plugins, config oficial del MCP de AWS Documentation |
+| CONT-005 | Ortografía con tildes en todo el texto visible |
+| PRIV-001 | Consent Mode de Google Analytics: analytics apagado hasta que la persona acepta en el banner |
+
 ## v1.5.0 — 2026-10-05 — Claridad del tutorial + vista de orador
 
 | ID | Descripcion |
